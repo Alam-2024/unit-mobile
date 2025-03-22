@@ -34,7 +34,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: "Early Learning",
           tabBarIcon: ({ color }) => (
             <TabBarIcon size={24} name="header" color={color} />
           ),
@@ -57,7 +57,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="two"
         options={{
-          title: "School",
+          title: "Elementary",
           tabBarShowLabel: false,
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="home" size={34} color={color} />
@@ -67,9 +67,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="third"
         options={{
-          title: "Profile",
+          title: "Rubrics",
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="anchor" size={30} color={color} />
+            <TabBarIcon name="bars" size={30} color={color} />
           ),
         }}
       />
