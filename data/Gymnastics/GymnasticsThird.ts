@@ -1,5 +1,5 @@
-import { GradeLevel, LengthInWeeks } from "../../interfaces/ICommon";
-import { IUnits } from "../../interfaces/IUnits";
+import { GradeLevel, LengthInWeeks } from "@/interfaces/units/ICommon";
+import { IUnits } from "@/interfaces/units/IUnit";
 
 const gymnasticsThird: IUnits = {
   unitTitle: "Gymnastics",

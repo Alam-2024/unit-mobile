@@ -1,6 +1,6 @@
 // Definición de interfaces para la estructura del contenido
 
-import { Pk3ShortTitlesTypes } from "../../../interfaces/pk3/pkTypes";
+import { Pk3ShortTitlesTypes } from "@/../interfaces/pk3/pkTypes";
 
 const exploringLocomotionWonderlandUnit: Pk3ShortTitlesTypes = {
   unitTitle: "Exploring Locomotion Wonderland",

@@ -1,5 +1,5 @@
-import { IUnits } from "../../interfaces/IUnits";
-import { GradeLevel, LengthInWeeks } from "../../interfaces/ICommon";
+import { IUnits } from "@/interfaces/units/IUnit";
+import { GradeLevel, LengthInWeeks } from "@/interfaces/units/ICommon";
 
 export const SwimmingForThirdGrade: IUnits = {
   unitTitle: "Swimming for 3rd Grade (Ages 8-9, 4 Weeks, 8 Sessions)",

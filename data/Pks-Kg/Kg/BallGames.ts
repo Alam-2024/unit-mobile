@@ -1,4 +1,4 @@
-import { Pk3ShortTitlesTypes } from "../../../interfaces/pk3/pkTypes";
+import { Pk3ShortTitlesTypes } from "@/../interfaces/pk3/pkTypes";
 
 const ballGames: Pk3ShortTitlesTypes = {
   unitTitle:

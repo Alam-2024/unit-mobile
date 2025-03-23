@@ -1,4 +1,4 @@
-import { Pk3ShortTitlesTypes } from "../../../interfaces/pk3/pkTypes";
+import { Pk3ShortTitlesTypes } from "@/../interfaces/pk3/pkTypes";
 
 const funAndFairPlayInCompetitions: Pk3ShortTitlesTypes = {
   unitTitle: "Fun and Fair Play in Friendly Competitions",

@@ -1,4 +1,4 @@
-import { Pk3ShortTitlesTypes } from '../../../interfaces/pk3/pkTypes';
+import { Pk3ShortTitlesTypes } from "@/../interfaces/pk3/pkTypes";
 
 export const GymnasticsPkFourthData: Pk3ShortTitlesTypes = {
   unitTitle: "Gymnastics",
@@ -11,17 +11,23 @@ export const GymnasticsPkFourthData: Pk3ShortTitlesTypes = {
       "What is gymnastics?",
       "What are the benefits of gymnastics?",
       "What are the challenges of gymnastics?",
-    ]
+    ],
   },
   LearningGoals: {
-    GrossMotorSkills: ['Gymnastics', 'Balance', 'Running', 'Jumping', 'Climbing'],
-    NonLocomotorSkills: ['Social interaction', 'Teamwork', 'Communication'],
+    GrossMotorSkills: [
+      "Gymnastics",
+      "Balance",
+      "Running",
+      "Jumping",
+      "Climbing",
+    ],
+    NonLocomotorSkills: ["Social interaction", "Teamwork", "Communication"],
     LocomotorSkills: [
       // You can add specific locomotor skills here if needed
     ],
     ObjectControlSkills: [
       // You can add specific object control skills here if needed
-    ]
+    ],
   },
   InstructionAndLearningPlan: {
     knowledgeAndVocabulary: [
@@ -32,15 +38,15 @@ export const GymnasticsPkFourthData: Pk3ShortTitlesTypes = {
     ],
   },
   Resources: [
-    'Inclined bench for wood climbing wall.',
-    'Wood climbing wall',
-    'Climbing Angle Shapes',
-    'Low Balance Beam',
-    '3-Section & 4-Section Trapezoid Trainers',
-    'Leap Gymnastics High Bar Kit for Kids with Mats included (can be used for grades 1-4)',
-    '8” Crash/Throw Mat',
-    'Gym Mini Trampoline with Safety Pad',
-    'Fluffy gymnastic mats',
-    'Preschool Octagon Mats',
+    "Inclined bench for wood climbing wall.",
+    "Wood climbing wall",
+    "Climbing Angle Shapes",
+    "Low Balance Beam",
+    "3-Section & 4-Section Trapezoid Trainers",
+    "Leap Gymnastics High Bar Kit for Kids with Mats included (can be used for grades 1-4)",
+    "8” Crash/Throw Mat",
+    "Gym Mini Trampoline with Safety Pad",
+    "Fluffy gymnastic mats",
+    "Preschool Octagon Mats",
   ],
 };

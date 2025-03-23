@@ -1,7 +1,7 @@
-import { GradeLevel, LengthInWeeks } from "../../interfaces/ICommon";
-import { IUnits } from "../../interfaces/IUnits";
-
 // dodgeball.ts
+
+import { GradeLevel, LengthInWeeks } from "@/interfaces/units/ICommon";
+import { IUnits } from "@/interfaces/units/IUnit";
 
 // Interface for the rules of Dodgeball
 interface Rule {
