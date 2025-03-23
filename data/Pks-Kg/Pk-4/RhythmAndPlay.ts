@@ -1,0 +1,34 @@
+import { Pk3ShortTitlesTypes } from '../../../interfaces/pk3/pkTypes';
+
+export const RhythmAndPlayFourthData: Pk3ShortTitlesTypes = {
+  unitTitle: 'Rhythm and Play',
+  TheBigIdea: {
+    description: 'Moving to music and stories helps us express ourselves and enjoy being active.',
+  },
+  EssentialQuestions: {
+    questions: [
+      'What is the difference between balance and static balance?',
+      'What is the difference between dynamic balance and static balance?',
+    ]
+  },
+  LearningGoals: {
+    GrossMotorSkills: ['Music, rhythm, and movement activities'],
+    NonLocomotorSkills: ['swinging', 'swaying'],
+    LocomotorSkills: ['agility - the ability to change speed, direction, react proficiently'],
+    ObjectControlSkills: []
+  },
+  InstructionAndLearningPlan: {
+    disciplinarySkills: [
+      'Following simple choreographed movements, like step-touch or clapping sequences.',
+      'Dancing with props, such as ribbons or scarves, to match rhythm.',
+      'Responding to music tempo changes with more complex movements, like hopping or spinning.',
+      'Acting out short stories through coordinated movements.',
+    ],
+    knowledgeAndVocabulary: [
+      'Following choreographed movements',
+      'Dancing with props',
+      'Responding to music tempo changes',
+      'Acting out short stories',
+    ],
+  },
+};
