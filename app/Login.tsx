@@ -13,6 +13,7 @@ import * as Yup from "yup";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { db } from "@/firebase/fireConfig";
 import { useAppContext } from "@/hooks/useContextHook";
+import { initialUserValues, StoredUsers } from "@/interfaces/user/IUser";
 
 // Yup validation schema
 const loginSchema = Yup.object().shape({
@@ -24,7 +25,13 @@ const loginSchema = Yup.object().shape({
 });
 
 const Login = () => {
-  const { setLoggedInUser, loggedInUser } = useAppContext();
+  const {
+    setLoggedInUser,
+    loggedInUser,
+    isAuthenticatedAdminUser,
+    isUserAuthenticated,
+    setIsUserAuthenticated,
+  } = useAppContext();
   const [formState, setFormState] = useState({
     email: "",
     password: "",
@@ -87,7 +94,8 @@ const Login = () => {
 
         // Update state
         // setIsAuthenticatedUser(true);
-        setLoggedInUser(true);
+        setLoggedInUser(userToStore as StoredUsers);
+        setIsUserAuthenticated(true);
 
         setFormState((prev) => ({
           ...prev,
@@ -111,16 +119,30 @@ const Login = () => {
     }
   };
 
-  if (loggedInUser) {
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.removeItem("user");
+      await AsyncStorage.removeItem("loginTime");
+
+      setLoggedInUser(initialUserValues);
+      setIsUserAuthenticated(false);
+      setFormState((prev) => ({
+        ...prev,
+        infoMessage: "",
+        errorMessage: "",
+      }));
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
+
+  if (isUserAuthenticated) {
     return (
       <View>
         <Text style={{ fontWeight: "bold", fontSize: 20 }}>
           You have logged in successfully
         </Text>
-        <TouchableOpacity
-          onPress={() => setLoggedInUser(false)}
-          style={styles.btn}
-        >
+        <TouchableOpacity onPress={handleLogout} style={styles.btn}>
           <Text style={styles.btnText}>Logout</Text>
         </TouchableOpacity>
       </View>

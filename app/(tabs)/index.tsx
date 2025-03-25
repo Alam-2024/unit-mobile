@@ -4,10 +4,8 @@ import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 import { useAppContext } from "@/hooks/useContextHook";
 import Navbar from "@/components/navbar/Navbar";
-import { router } from "expo-router";
 
 export default function TabOneScreen() {
-  const { setLoggedInUser, loggedInUser } = useAppContext();
   const links = [
     { id: 1, url: "/pk-third", text: "PK-3" },
     { id: 2, url: "/pk-fourth", text: "PK-4" },
@@ -38,7 +36,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    // justifyContent: "center",
   },
   title: {
     fontSize: 20,

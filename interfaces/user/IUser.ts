@@ -1,11 +1,17 @@
-type AuthorizedUser = "user" | "admin";
+import { UserActivity } from "./../../node_modules/expo-router/build/head/ExpoHeadModule.d";
+import { string } from "yup";
+
+enum AuthorizedUsers {
+  ADMIN,
+  USER,
+}
 
 export interface StoredUsers {
-  id: string;
+  id?: string;
   name: string;
   email: string;
   password: string;
-  role: AuthorizedUser;
+  role: string;
   baned: boolean;
   pk3: { [key: string]: boolean };
   pk4: { [key: string]: boolean };

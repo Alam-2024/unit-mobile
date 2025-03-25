@@ -18,7 +18,7 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
-  const { loggedInUser } = useAppContext();
+  const { isUserAuthenticated } = useAppContext();
 
   const colorScheme = useColorScheme();
 
@@ -43,7 +43,7 @@ export default function TabLayout() {
               <Pressable>
                 {({ pressed }) => (
                   <FontAwesome
-                    name={!loggedInUser ? "info-circle" : "sign-out"}
+                    name={!isUserAuthenticated ? "info-circle" : "sign-out"}
                     size={25}
                     color={Colors[colorScheme ?? "light"].text}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}

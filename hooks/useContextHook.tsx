@@ -1,8 +1,14 @@
+import { initialUserValues, StoredUsers } from "@/interfaces/user/IUser";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useState, useEffect } from "react";
 
 interface AppContextProps {
-  loggedInUser: boolean;
-  setLoggedInUser: React.Dispatch<React.SetStateAction<boolean>>;
+  isUserAuthenticated: boolean;
+  setIsUserAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+  isAuthenticatedAdminUser: boolean;
+  setIsAuthenticatedAdminUser: React.Dispatch<React.SetStateAction<boolean>>;
+  loggedInUser: StoredUsers;
+  setLoggedInUser: React.Dispatch<React.SetStateAction<StoredUsers>>;
   isSessionExpired: boolean;
   setIsSessionExpired: React.Dispatch<React.SetStateAction<boolean>>;
   sessionTimeLeft: number;
@@ -10,7 +16,11 @@ interface AppContextProps {
 }
 
 export const AppContext = React.createContext<AppContextProps>({
-  loggedInUser: false,
+  isUserAuthenticated: false,
+  setIsUserAuthenticated: () => {},
+  isAuthenticatedAdminUser: false,
+  setIsAuthenticatedAdminUser: () => {},
+  loggedInUser: initialUserValues,
   setLoggedInUser: () => {},
   isSessionExpired: true,
   setIsSessionExpired: () => {},
@@ -21,7 +31,12 @@ export const AppContext = React.createContext<AppContextProps>({
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [loggedInUser, setLoggedInUser] = useState(false);
+  const [isAuthenticatedAdminUser, setIsAuthenticatedAdminUser] =
+    React.useState<boolean>(false);
+  const [isUserAuthenticated, setIsUserAuthenticated] =
+    React.useState<boolean>(false);
+  const [loggedInUser, setLoggedInUser] =
+    useState<StoredUsers>(initialUserValues);
   const [isSessionExpired, setIsSessionExpired] = useState(true);
   const [sessionTimeLeft, setSessionTimeLeft] = useState(0);
 
@@ -40,11 +55,37 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
 
       return () => clearInterval(timer);
     }
+    setIsAuthenticatedAdminUser(true);
   }, [loggedInUser, sessionTimeLeft]);
+
+  useEffect(() => {
+    if (isSessionExpired) {
+      handleSessionExpiration();
+    }
+  }, [isSessionExpired]);
+
+  const handleLoggedInUser = async () => {
+    try {
+      const storedUser = await AsyncStorage.getItem("user");
+      const loginTime = await AsyncStorage.getItem("loginTime");
+
+      if (!storedUser || !loginTime) {
+        setIsUserAuthenticated(false);
+        setIsSessionExpired(true);
+        return;
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  useEffect(() => {
+    handleLoggedInUser();
+  }, []);
 
   const handleSessionExpiration = () => {
     setIsSessionExpired(true);
-    setLoggedInUser(false);
+    setLoggedInUser(initialUserValues);
     // localStorage.removeItem("user");
     // localStorage.removeItem("loginTime");
   };
@@ -58,6 +99,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
         setIsSessionExpired,
         sessionTimeLeft,
         setSessionTimeLeft,
+        isAuthenticatedAdminUser,
+        setIsAuthenticatedAdminUser,
+        isUserAuthenticated,
+        setIsUserAuthenticated,
       }}
     >
       {children}
