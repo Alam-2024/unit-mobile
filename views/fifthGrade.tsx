@@ -1,11 +1,29 @@
 import { View, Text } from "react-native";
 import React from "react";
+import { dodgeballFifth } from "@/data/Dodgeball/DodgeballFifth";
+import floorHockeyFifth from "@/data/Hockey/FloorHockeyFifth";
+import soccerFifth from "@/data/Soccer/SoccerFifth";
+import pesaPalloFifth from "@/data/Pesapallo/PesaPalloFifth";
+import swimmingUnit from "@/data/Swimming/SwimmingFifth";
+import { IUnits } from "@/interfaces/units/IUnit";
+import CustomGradeContainer from "@/components/views/CustomGradeContainer";
 
 const FifthGrade = () => {
+  const [unitTitle, setUnitTitle] = React.useState<string>("");
+
+  const units: { [key: string]: IUnits } = {
+    Dodgeball: dodgeballFifth,
+    Swimming: swimmingUnit,
+    FloorHockey: floorHockeyFifth,
+    Soccer: soccerFifth,
+    FinnishBaseball: pesaPalloFifth,
+  };
   return (
-    <View>
-      <Text>FifthGrade</Text>
-    </View>
+    <CustomGradeContainer
+      units={units}
+      unitTitle={unitTitle}
+      setUnitTitle={setUnitTitle}
+    />
   );
 };
 
