@@ -7,11 +7,12 @@ import {
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/components/useColorScheme";
 import { AppProvider, useAppContext } from "@/hooks/useContextHook";
+import Splash from "./splash/Splash";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -23,28 +24,29 @@ export const unstable_settings = {
   initialRouteName: "(tabs)",
 };
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  useEffect(() => {
-    if (error) throw error;
-  }, [error]);
+  const [showApp, setShowApp] = useState(false);
 
   useEffect(() => {
+    SplashScreen.preventAutoHideAsync();
+
     if (loaded) {
-      SplashScreen.hideAsync();
+      const timeoutId = setTimeout(() => {
+        SplashScreen.hideAsync();
+        setShowApp(true);
+      }, 2000);
+
+      return () => clearTimeout(timeoutId);
     }
   }, [loaded]);
 
-  if (!loaded) {
-    return null;
+  if (!showApp) {
+    return <Splash />;
   }
 
   return <RootLayoutNav />;
@@ -61,6 +63,15 @@ function RootLayoutNav() {
           <Stack.Screen
             name="modal"
             options={{ presentation: "modal", headerShown: false }}
+          />
+          <Stack.Screen
+            name="data"
+            options={{
+              title: "Units",
+              headerBackButtonMenuEnabled: false,
+              headerTitleStyle: { fontSize: 20 },
+              headerBackTitle: "Back",
+            }}
           />
         </Stack>
       </ThemeProvider>
