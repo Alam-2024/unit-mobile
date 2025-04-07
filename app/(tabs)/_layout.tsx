@@ -1,5 +1,6 @@
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Link, Tabs } from "expo-router";
 import { Pressable } from "react-native";
 
@@ -18,7 +19,7 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
-  const { isUserAuthenticated } = useAppContext();
+  const { isUserAuthenticated, isAuthenticatedAdminUser } = useAppContext();
 
   const colorScheme = useColorScheme();
 
@@ -35,6 +36,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Early Learning",
+          tabBarShowLabel: false,
           tabBarIcon: ({ color }) => (
             <TabBarIcon size={24} name="header" color={color} />
           ),
@@ -52,6 +54,22 @@ export default function TabLayout() {
               </Pressable>
             </Link>
           ),
+          headerLeft: () => (
+            <>
+              {isAuthenticatedAdminUser && (
+                <Pressable style={{ marginLeft: 15 }}>
+                  {({ pressed }) => (
+                    <MaterialCommunityIcons
+                      name="guy-fawkes-mask"
+                      size={38}
+                      color="#656565"
+                      style={{ marginLeft: 5, opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
+              )}
+            </>
+          ),
         }}
       />
       <Tabs.Screen
@@ -68,6 +86,7 @@ export default function TabLayout() {
         name="third"
         options={{
           title: "Rubrics",
+          tabBarShowLabel: false,
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="bars" size={30} color={color} />
           ),
