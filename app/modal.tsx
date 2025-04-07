@@ -1,8 +1,5 @@
-import { StatusBar } from "expo-status-bar";
-import { Platform, StyleSheet, TouchableOpacity } from "react-native";
-
-import EditScreenInfo from "@/components/EditScreenInfo";
-import { Text, View } from "@/components/Themed";
+import { StyleSheet } from "react-native";
+import { View } from "@/components/Themed";
 import { useAppContext } from "@/hooks/useContextHook";
 import Login from "./Login";
 

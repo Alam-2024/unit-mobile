@@ -1,8 +1,7 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet } from "react-native";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
-import { useAppContext } from "@/hooks/useContextHook";
 import Navbar from "@/components/navbar/Navbar";
 
 export default function TabOneScreen() {
