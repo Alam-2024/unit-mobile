@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 import { useAppContext } from "@/hooks/useContextHook";
 import CustomText from "../customs/CustomText";
@@ -31,9 +31,10 @@ const UnitNavbar = ({
   return (
     <View
       style={{
-        marginHorizontal: 5,
+        marginLeft: 5,
+        marginRight: 65,
         marginBottom: 20,
-        marginTop: 10,
+        marginTop: 9,
         flexDirection: "row",
         justifyContent: "space-around",
         flexWrap: "wrap",
@@ -103,32 +104,29 @@ function UnitNameButton({
 
     return unitNameMapping[name] || name;
   };
+
   return (
-    <View
-      style={{
-        paddingVertical: 10,
-        paddingHorizontal: 6,
-        borderColor: unitNameActive === unitName ? "#f40707" : "#ccc",
-        borderWidth: 1,
-        borderRadius: 8,
-        marginBottom: 10,
-      }}
-    >
+    <View style={styles(unitNameActive, unitName).container}>
       <CustomText
         value={getFriendlyUnitName(unitName)}
-        color={unitNameActive === unitName ? "#f40707" : "#333"}
+        color={unitNameActive === unitName ? "#006222" : "#333"}
         center
         bold
-        big
+        medium
+        bgColor="#ffffff"
       />
-      {/* {!access && isAuthenticatedUser && <CustomText value="🚫" />} */}
+      {!access && isAuthenticatedUser && (
+        <View style={styles(unitNameActive, unitName).icon}>
+          <CustomText value="🚫" bgColor="#FFFFFFF0" />
+        </View>
+      )}
     </View>
   );
 }
 
 function Expiration() {
   return (
-    <View>
+    <View style={styles("", "").textContainer}>
       <CustomText
         value="Seems like your session has expired or you are not logged in yet"
         big
@@ -138,3 +136,32 @@ function Expiration() {
     </View>
   );
 }
+
+const styles = (unitNameActive: string, unitName: string) =>
+  StyleSheet.create({
+    container: {
+      paddingVertical: 10,
+      paddingHorizontal: 6,
+      borderColor: unitNameActive === unitName ? "#006222" : "#ccc",
+      borderWidth: 1,
+      borderRadius: 8,
+      marginBottom: 10,
+      position: "relative",
+      backgroundColor: "#ffffff",
+    },
+    icon: {
+      position: "absolute",
+      top: -9,
+      right: -7,
+      backgroundColor: "#ffffff",
+      borderRadius: 30,
+      padding: 2,
+    },
+    textContainer: {
+      padding: 10,
+      borderColor: "#f40707",
+      borderWidth: 1,
+      borderRadius: 8,
+      marginBottom: 10,
+    },
+  });
