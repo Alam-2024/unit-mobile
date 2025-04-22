@@ -4,8 +4,7 @@ import React from "react";
 import CustomText from "../customs/CustomText";
 import CustomContent from "../customs/CustomContent";
 import UnitNavbar from "../navbar/UnitNavbar";
-import { View } from "../Themed";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 type Props = {
   units: { [key: string]: IUnits };

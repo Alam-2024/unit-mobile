@@ -1,10 +1,7 @@
-import { StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
-import { Text, View } from "@/components/Themed";
 import { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "@/firebase/fireConfig";
 import Navbar from "@/components/navbar/Navbar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -40,11 +37,6 @@ export default function TabTwoScreen() {
     <View style={styles.container}>
       <Navbar links={links} />
       <Text style={styles.title}>Tab Two</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
       <EditScreenInfo path="app/(tabs)/two.tsx" />
     </View>
   );

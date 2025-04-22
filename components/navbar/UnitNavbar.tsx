@@ -29,17 +29,7 @@ const UnitNavbar = ({
     setUnitTitle(unit);
   };
   return (
-    <View
-      style={{
-        marginLeft: 5,
-        marginRight: 65,
-        marginBottom: 20,
-        marginTop: 9,
-        flexDirection: "row",
-        justifyContent: "space-around",
-        flexWrap: "wrap",
-      }}
-    >
+    <View style={styles(unitTitle, "").mainContainer}>
       {showExpiration && <Expiration />}
       {list.map((unit) => (
         <TouchableOpacity key={unit} onPress={() => handleClick({ unit })}>
@@ -139,6 +129,15 @@ function Expiration() {
 
 const styles = (unitNameActive: string, unitName: string) =>
   StyleSheet.create({
+    mainContainer: {
+      marginHorizontal: 10,
+      marginBottom: 20,
+      paddingHorizontal: 10,
+      marginTop: 9,
+      flexDirection: "row",
+      justifyContent: "space-around",
+      flexWrap: "wrap",
+    },
     container: {
       paddingVertical: 10,
       paddingHorizontal: 6,

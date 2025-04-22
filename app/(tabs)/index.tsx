@@ -1,7 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
-import { Text, View } from "@/components/Themed";
 import Navbar from "@/components/navbar/Navbar";
 
 export default function TabOneScreen() {
@@ -21,11 +20,6 @@ export default function TabOneScreen() {
       <Text style={styles.title} onPress={() => {}}>
         Tab One
       </Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
       <EditScreenInfo path="app/(tabs)/index.tsx" />
     </View>
   );
