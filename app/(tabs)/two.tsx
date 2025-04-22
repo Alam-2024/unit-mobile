@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/firebase/fireConfig";
 import Navbar from "@/components/navbar/Navbar";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function TabTwoScreen() {
   const links = [
@@ -16,22 +17,25 @@ export default function TabTwoScreen() {
     { id: 8, url: "/fifth", text: "5°" },
   ];
 
-  // const fetchUsers = async () => {
-  //   try {
-  //     const querySnapshot = await getDocs(collection(db, "users-data"));
-  //     const usersData = querySnapshot.docs.map((doc) => ({
-  //       ...doc.data(),
-  //       id: doc.id,
-  //     }));
-  //     setData(usersData);
-  //   } catch (error) {
-  //     console.error("Error fetching users:", error);
-  //   }
-  // };
+  //TODO: Check the use of this function
+  const checkAsyncStorage = async () => {
+    try {
+      const value = await AsyncStorage.getItem("user");
+      const timer = await AsyncStorage.getItem("loginTime");
 
-  // useEffect(() => {
-  //   fetchUsers();
-  // }, []);
+      if (value !== null && timer !== null) {
+        console.log("User is logged in");
+        console.log("User data:", JSON.parse(value));
+        console.log("Login time:", timer);
+      }
+    } catch (e) {
+      console.error("Error fetching users:", e);
+    }
+  };
+
+  useEffect(() => {
+    checkAsyncStorage();
+  }, []);
   return (
     <View style={styles.container}>
       <Navbar links={links} />
