@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   Alert,
   StyleSheet,
   TouchableOpacity,
@@ -15,6 +14,10 @@ import { db } from "@/firebase/fireConfig";
 import { useAppContext } from "@/hooks/useContextHook";
 import { initialUserValues, StoredUsers } from "@/interfaces/user/IUser";
 
+interface LoginProps {
+  onCloseModal?: () => void;
+}
+
 // Yup validation schema
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -24,14 +27,13 @@ const loginSchema = Yup.object().shape({
   password: Yup.string().required("Password is required"),
 });
 
-const Login = () => {
+const Login = ({ onCloseModal }: LoginProps) => {
   const {
     setLoggedInUser,
-    loggedInUser,
-    isAuthenticatedAdminUser,
-    isUserAuthenticated,
     setIsUserAuthenticated,
+    setIsAuthenticatedAdminUser,
   } = useAppContext();
+
   const [formState, setFormState] = useState({
     email: "",
     password: "",
@@ -65,11 +67,10 @@ const Login = () => {
           ...prev,
           errorMessage: "Invalid email or password.",
         }));
-        //TODO: #1 Check this error message
       } else if (user.baned) {
         setFormState((prev) => ({
           ...prev,
-          errorMessage: "User is banned.",
+          errorMessage: "User is banned. Please contact the admin.",
         }));
       } else {
         // Keep user data
@@ -88,12 +89,20 @@ const Login = () => {
           fifth: user.fifth || {},
         };
 
+        if (user.role === "admin") {
+          setIsAuthenticatedAdminUser(true);
+          setFormState((prev) => ({
+            ...prev,
+            infoMessage: "Welcome admin!",
+            errorMessage: "",
+          }));
+        }
+
         // Store user data
         await AsyncStorage.setItem("user", JSON.stringify(userToStore));
         await AsyncStorage.setItem("loginTime", Date.now().toString());
 
         // Update state
-        // setIsAuthenticatedUser(true);
         setLoggedInUser(userToStore as StoredUsers);
         setIsUserAuthenticated(true);
 
@@ -102,6 +111,11 @@ const Login = () => {
           infoMessage: "Login successful.",
           errorMessage: "",
         }));
+
+        if (onCloseModal) {
+          onCloseModal(); // Close the modal if provided
+        }
+
         Alert.alert("Login successful, welcome " + user.name + "!");
       }
     } catch (err) {
@@ -118,36 +132,6 @@ const Login = () => {
       }
     }
   };
-
-  const handleLogout = async () => {
-    try {
-      await AsyncStorage.removeItem("user");
-      await AsyncStorage.removeItem("loginTime");
-
-      setLoggedInUser(initialUserValues);
-      setIsUserAuthenticated(false);
-      setFormState((prev) => ({
-        ...prev,
-        infoMessage: "",
-        errorMessage: "",
-      }));
-    } catch (error) {
-      console.error("Error logging out:", error);
-    }
-  };
-
-  if (isUserAuthenticated) {
-    return (
-      <View>
-        <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-          You have logged in successfully
-        </Text>
-        <TouchableOpacity onPress={handleLogout} style={styles.btn}>
-          <Text style={styles.btnText}>Logout</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
 
   return (
     <View>
@@ -191,23 +175,7 @@ const Login = () => {
   );
 };
 
-export default Login;
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
   textInput: {
     height: 40,
     borderColor: "#ccc",
@@ -231,3 +199,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
+
+export default Login;
