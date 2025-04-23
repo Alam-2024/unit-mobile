@@ -1,6 +1,8 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import React from "react";
 import { router } from "expo-router";
+import CustomButton from "../customs/CustomButton";
+import CustomText from "../customs/CustomText";
 
 type NavbarProps = {
   id: number;
@@ -15,7 +17,7 @@ const Navbar = ({ links }: { links: NavbarProps[] }) => {
   return (
     <View style={styles.container}>
       {links.map((link) => (
-        <TouchableOpacity
+        <CustomButton
           key={link.id}
           onPress={() =>
             router.push({
@@ -23,10 +25,21 @@ const Navbar = ({ links }: { links: NavbarProps[] }) => {
               params: { grade: link.text },
             })
           }
-          style={styles.itemsText}
+          id={link.id}
+          shadowColor="#3d3d3d"
+          shadowWidth={1}
+          shadowHeight={2}
+          shadowOpacity={0.25}
+          shadowRadius={3.84}
         >
-          <Text style={styles.itemText}>{link.text}</Text>
-        </TouchableOpacity>
+          <CustomText
+            value={link.text}
+            medium
+            center
+            bold
+            bgColor="transparent"
+          />
+        </CustomButton>
       ))}
     </View>
   );
@@ -42,20 +55,5 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 20,
     flexWrap: "wrap",
-  },
-  itemsText: {
-    paddingVertical: 10,
-    paddingHorizontal: 25,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 8,
-    minWidth: 80,
-    textAlign: "center",
-    marginHorizontal: 10,
-    marginBottom: 10,
-  },
-  itemText: {
-    fontSize: 16,
-    fontWeight: "bold",
   },
 });

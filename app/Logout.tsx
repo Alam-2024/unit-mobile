@@ -1,13 +1,14 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import { useAppContext } from "@/hooks/useContextHook";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { initialUserValues } from "@/interfaces/user/IUser";
+import CustomButton from "@/components/customs/CustomButton";
+import CustomText from "@/components/customs/CustomText";
 
 const Logout = ({ onCloseModal }: { onCloseModal?: () => void }) => {
   const {
     setLoggedInUser,
-    isUserAuthenticated,
     setIsUserAuthenticated,
     setIsAuthenticatedAdminUser,
     setIsSessionExpired,
@@ -33,32 +34,38 @@ const Logout = ({ onCloseModal }: { onCloseModal?: () => void }) => {
     }
   };
 
-  if (isUserAuthenticated) {
-    return (
-      <View>
-        <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-          You have logged in successfully
-        </Text>
-        <TouchableOpacity onPress={handleLogout} style={{ marginTop: 10 }}>
-          <Text style={{ color: "red" }}>Logout</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
   return (
     <View>
-      <Text>Logout page</Text>
-      <TouchableOpacity
-        onPress={handlingModalClose}
+      <CustomText
+        value="Are you sure you want to logout?"
+        center
+        bold
+        medium
+        bgColor="transparent"
+      />
+      <CustomButton
+        onPress={handleLogout}
         style={{
+          backgroundColor: "#ff0000",
           padding: 10,
-          backgroundColor: "lightgray",
-          borderRadius: 5,
+          borderRadius: 12,
           marginTop: 10,
         }}
+        shadowColor="#3d3d3d"
+        shadowWidth={1}
+        shadowHeight={2}
+        shadowOpacity={0.25}
+        shadowRadius={3.84}
       >
-        <Text>Close this page</Text>
-      </TouchableOpacity>
+        <CustomText
+          value="Logout"
+          center
+          bold
+          color="white"
+          bgColor="transparent"
+          big
+        />
+      </CustomButton>
     </View>
   );
 };

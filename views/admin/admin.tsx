@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
+import CustomButton from "@/components/customs/CustomButton";
 
 const Admin = ({ onCloseModal }: { onCloseModal?: () => void }) => {
   const handlingModalClose = () => {
@@ -10,7 +11,7 @@ const Admin = ({ onCloseModal }: { onCloseModal?: () => void }) => {
   return (
     <View>
       <Text>Admin view</Text>
-      <TouchableOpacity
+      <CustomButton
         onPress={handlingModalClose}
         style={{
           padding: 10,
@@ -20,7 +21,7 @@ const Admin = ({ onCloseModal }: { onCloseModal?: () => void }) => {
         }}
       >
         <Text>Close this page</Text>
-      </TouchableOpacity>
+      </CustomButton>
     </View>
   );
 };

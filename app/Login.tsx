@@ -1,18 +1,13 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Alert,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, TextInput, Alert, StyleSheet } from "react-native";
 import { collection, getDocs } from "firebase/firestore";
 import * as Yup from "yup";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { db } from "@/firebase/fireConfig";
 import { useAppContext } from "@/hooks/useContextHook";
-import { initialUserValues, StoredUsers } from "@/interfaces/user/IUser";
+import { StoredUsers } from "@/interfaces/user/IUser";
+import CustomButton from "@/components/customs/CustomButton";
+import CustomText from "@/components/customs/CustomText";
 
 interface LoginProps {
   onCloseModal?: () => void;
@@ -168,9 +163,24 @@ const Login = ({ onCloseModal }: LoginProps) => {
           autoCapitalize="none"
         />
       </View>
-      <TouchableOpacity onPress={handleLogin} style={styles.btn}>
-        <Text style={styles.btnText}>Login</Text>
-      </TouchableOpacity>
+      <CustomButton
+        onPress={handleLogin}
+        style={styles.btn}
+        shadowColor="#2e78b7"
+        shadowWidth={1}
+        shadowHeight={3}
+        shadowOpacity={0.25}
+        shadowRadius={20}
+      >
+        <CustomText
+          value="Login"
+          big
+          center
+          bold
+          bgColor="#2e78b7"
+          color="#ffffff"
+        />
+      </CustomButton>
     </View>
   );
 };
@@ -187,7 +197,6 @@ const styles = StyleSheet.create({
   },
   btn: {
     marginTop: 10,
-    padding: 10,
     borderRadius: 8,
     alignItems: "center",
     backgroundColor: "#2e78b7",

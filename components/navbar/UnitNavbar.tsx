@@ -2,6 +2,7 @@ import { View, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 import { useAppContext } from "@/hooks/useContextHook";
 import CustomText from "../customs/CustomText";
+import CustomButton from "../customs/CustomButton";
 
 type UnitNavbarProps = {
   list: string[];
@@ -31,13 +32,12 @@ const UnitNavbar = ({
   return (
     <View style={styles(unitTitle, "").mainContainer}>
       {showExpiration && <Expiration />}
-      {list.map((unit) => (
+      {list.map((unit, index) => (
         <TouchableOpacity key={unit} onPress={() => handleClick({ unit })}>
           <UnitNameButton
             unitName={unit}
             unitNameActive={unitTitle}
             access={accessToUnits[unit]}
-            isAuthenticatedUser={isAuthenticatedAdminUser}
           />
         </TouchableOpacity>
       ))}
@@ -51,12 +51,10 @@ function UnitNameButton({
   unitName,
   unitNameActive,
   access,
-  isAuthenticatedUser,
 }: {
   unitName: string;
   unitNameActive: string;
   access: boolean;
-  isAuthenticatedUser: boolean;
 }) {
   const getFriendlyUnitName = (name: string): string => {
     const unitNameMapping: { [key: string]: string } = {
@@ -105,7 +103,7 @@ function UnitNameButton({
         medium
         bgColor="#ffffff"
       />
-      {!access && isAuthenticatedUser && (
+      {!access && (
         <View style={styles(unitNameActive, unitName).icon}>
           <CustomText value="🚫" bgColor="#FFFFFFF0" />
         </View>
