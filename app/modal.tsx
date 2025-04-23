@@ -1,6 +1,7 @@
+import CustomButton from "@/components/customs/CustomButton";
 import CustomIcon from "@/components/customs/CustomIcon";
 import React from "react";
-import { Modal, StyleSheet, View, TouchableOpacity, Text } from "react-native";
+import { Modal, StyleSheet, View } from "react-native";
 
 type DynamicModalProps = {
   visible: boolean;
@@ -22,9 +23,17 @@ const DynamicModal: React.FC<DynamicModalProps> = ({
     >
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
-          <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+          <CustomButton
+            onPress={onClose}
+            style={styles.closeButton}
+            shadowColor="#000000"
+            shadowWidth={1}
+            shadowHeight={2}
+            shadowOpacity={0.025}
+            shadowRadius={13.84}
+          >
             <CustomIcon iconName="close" iconSize={30} iconColor="#ff0000" />
-          </TouchableOpacity>
+          </CustomButton>
           {children}
         </View>
       </View>
@@ -37,17 +46,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(61, 61, 61, 0.813)",
+    backgroundColor: "#7e7e7eda",
   },
   modalContent: {
     width: "80%",
     paddingHorizontal: 20,
     paddingVertical: 50,
-    backgroundColor: "#fff",
+    backgroundColor: "#ffffffd6",
     borderWidth: 1,
     borderColor: "#00000047",
     borderStyle: "solid",
-    shadowColor: "#adadad",
+    shadowColor: "#ffffff",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -64,7 +73,7 @@ const styles = StyleSheet.create({
     left: 0,
     marginHorizontal: "auto",
     borderWidth: 1,
-    borderColor: "#000000e8",
+    borderColor: "#ffffff50",
     borderStyle: "solid",
     borderRadius: 15,
     paddingHorizontal: 40,
