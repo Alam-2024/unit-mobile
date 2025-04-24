@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  Pressable,
-} from "react-native";
+import { View, TouchableOpacity, StyleSheet, Pressable } from "react-native";
 // import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Tabs } from "expo-router";
 
@@ -35,14 +29,17 @@ const TAB_ITEMS: TabItems[] = [
   { name: "index", label: "Early Learning", icon: "header" },
   { name: "two", label: "Elementary", icon: "home" },
   { name: "third", label: "Rubrics", icon: "bars" },
+  { name: "profile", label: "Profile", icon: "user" },
 ];
 
 function CustomTabBar({
   state,
   navigation,
+  isUserAuthenticated,
 }: {
   state: { routes: Route[]; index: number };
   navigation: any;
+  isUserAuthenticated: boolean;
 }) {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? "light"];
@@ -72,8 +69,8 @@ function CustomTabBar({
               isFocused && {
                 backgroundColor: colors.tint,
                 shadowColor: colors.tint,
-                shadowOpacity: 0.4,
-                shadowRadius: 8,
+                shadowOpacity: 0.24,
+                shadowRadius: 6,
                 elevation: 5,
                 transform: [{ scale: 1.1 }],
               },
@@ -82,7 +79,9 @@ function CustomTabBar({
             <CustomIcon
               iconName={icon as keyof (typeof FontAwesome)["glyphMap"]}
               iconSize={icon === "home" ? 30 : isFocused ? 30 : 24}
-              iconColor={isFocused ? "#fff" : colors.text + "cc"}
+              iconColor={
+                isFocused ? "#fff" : isUserAuthenticated ? "#690000" : "#313131"
+              }
             />
           </TouchableOpacity>
         );
@@ -133,7 +132,9 @@ export default function TabLayout() {
           },
           headerTintColor: colors.text,
         }}
-        tabBar={(props) => <CustomTabBar {...props} />}
+        tabBar={(props) => (
+          <CustomTabBar {...props} isUserAuthenticated={isUserAuthenticated} />
+        )}
       >
         <Tabs.Screen
           name={TAB_ITEMS[0].name}
@@ -213,6 +214,22 @@ export default function TabLayout() {
                 }
                 iconColor={color}
                 iconSize={26}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name={TAB_ITEMS[3].name}
+          options={{
+            title: `${TAB_ITEMS[3].label}`,
+            tabBarShowLabel: false,
+            tabBarIcon: ({ color }) => (
+              <CustomIcon
+                iconName={
+                  TAB_ITEMS[3].icon as keyof (typeof FontAwesome)["glyphMap"]
+                }
+                iconColor={isUserAuthenticated ? color : colors.text + "cc"}
+                iconSize={28}
               />
             ),
           }}

@@ -25,7 +25,7 @@ export const unstable_settings = {
 };
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
+  const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
   });
@@ -70,7 +70,13 @@ function RootLayoutNav() {
               title: "Units",
               headerBackButtonMenuEnabled: false,
               headerTitleStyle: { fontSize: 20 },
-              headerBackTitle: "Back",
+              headerBackTitle: "<-",
+              headerTintColor: "#000000",
+              headerStyle: {
+                backgroundColor: "#ffffff",
+              },
+              headerTitleAlign: "center",
+              headerShadowVisible: false,
             }}
           />
         </Stack>
