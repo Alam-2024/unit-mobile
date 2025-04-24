@@ -110,6 +110,24 @@ export default function TabLayout() {
     setModalType(null);
   };
 
+  const adminView = () => {
+    if (isAuthenticatedAdminUser) {
+      return (
+        <TouchableOpacity
+          onPress={() => openModal("admin")}
+          style={{ marginLeft: 15 }}
+        >
+          <CustomIcon
+            iconName="user-secret"
+            iconSize={34}
+            iconColor={colors.text}
+          />
+        </TouchableOpacity>
+      );
+    }
+    return null;
+  };
+
   return (
     <>
       <DynamicModal visible={isModalVisible} onClose={closeModal}>
@@ -159,22 +177,7 @@ export default function TabLayout() {
                 />
               </Pressable>
             ),
-            headerLeft: () =>
-              isAuthenticatedAdminUser ? (
-                <Pressable
-                  onPress={() => openModal("admin")}
-                  style={({ pressed }) => ({
-                    marginLeft: 15,
-                    opacity: pressed ? 0.6 : 1,
-                  })}
-                >
-                  <CustomIcon
-                    iconName="user-secret"
-                    iconSize={30}
-                    iconColor={colors.text}
-                  />
-                </Pressable>
-              ) : null,
+            headerLeft: () => adminView(),
             tabBarIcon: ({ color }) => (
               <CustomIcon
                 iconName={
