@@ -6,6 +6,7 @@ type Props = {
   big?: boolean;
   medium?: boolean;
   center?: boolean;
+  right?: boolean;
   bold?: boolean;
   color?: string;
   bgColor?: string;
@@ -16,6 +17,7 @@ const CustomText = ({
   big,
   medium,
   center,
+  right,
   bold,
   color,
   bgColor,
@@ -24,7 +26,11 @@ const CustomText = ({
     <Text
       style={[
         big ? { fontSize: 20 } : medium ? { fontSize: 16 } : { fontSize: 12 },
-        center ? { textAlign: "center" } : { textAlign: "left" },
+        center
+          ? { textAlign: "center" }
+          : right
+          ? { textAlign: "right" }
+          : { textAlign: "left" },
         bold ? { fontWeight: "bold" } : { fontWeight: "normal" },
         { color: color ? color : "#000" },
         {

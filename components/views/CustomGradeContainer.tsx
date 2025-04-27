@@ -106,7 +106,8 @@ export default function CustomGradeContainer({
             value="You are not logged in"
             center
             big
-            bgColor="#ebebeb9d"
+            bgColor="transparent"
+            bold
           />
         )}
       </View>

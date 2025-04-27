@@ -137,9 +137,17 @@ const ProfileView = () => {
             </CustomButton>
           </>
         ) : (
-          <CustomButton onPress={() => openModal("login")}>
-            <CustomText value="Login" bgColor="transparent" big center />
-          </CustomButton>
+          <>
+            <CustomText
+              value="Please login to view your profile."
+              bgColor="transparent"
+              medium
+              bold
+            />
+            <CustomButton onPress={() => openModal("login")}>
+              <CustomText value="Login" bgColor="transparent" big center />
+            </CustomButton>
+          </>
         )}
       </View>
 
@@ -165,7 +173,6 @@ export default ProfileView;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 24,
     paddingBottom: 70,
   },
   header: {
@@ -178,7 +185,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     paddingHorizontal: 16,
     marginBottom: 16,
-    marginTop: 16,
+    marginTop: 2,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
