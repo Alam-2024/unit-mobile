@@ -2,7 +2,7 @@ import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 
 type SeparatorProps = {
-  width?: number | `${number}%`; // solo números o strings tipo '50%'
+  width?: number | `${number}%`;
   height?: number;
   opacity?: number;
   marginTop?: number;
