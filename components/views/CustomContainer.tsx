@@ -81,11 +81,7 @@ export default function CustomContainer({
         unitTitle={unitTitle}
         accessToUnits={accessToUnits}
       />
-      <View
-        className={`custom-grade-container ${
-          unitTitle ? "custom-grade-container--active" : ""
-        }`}
-      >
+      <View>
         {isUserAuthenticated && loggedInUser ? (
           renderContent()
         ) : (

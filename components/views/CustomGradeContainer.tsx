@@ -58,13 +58,7 @@ export default function CustomGradeContainer({
   const renderContent = (): JSX.Element | null => {
     if (!unitTitle) {
       return (
-        <CustomText
-          value="Please select a unit"
-          center
-          big
-          color="#ff0000"
-          bgColor="#ecececa4"
-        />
+        <CustomText value="Please select a unit" center big color="#ff0000" />
       );
     }
     if (!hasAccess) {
@@ -76,13 +70,8 @@ export default function CustomGradeContainer({
             big
             color="#ff0000"
             bold
-            bgColor="#fff8f839"
           />
-          <CustomText
-            value="Please contact your teacher"
-            center
-            bgColor="ecececa4"
-          />
+          <CustomText value="Please contact your teacher" center bold />
         </View>
       );
     }
