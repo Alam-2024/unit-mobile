@@ -160,5 +160,11 @@ const styles = (unitNameActive: string, unitName: string) =>
       borderWidth: 1,
       borderRadius: 8,
       marginBottom: 10,
+      backgroundColor: "#ffffff",
+      shadowColor: "#000",
+      shadowOffset: { width: -1, height: 5 },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
     },
   });

@@ -102,13 +102,7 @@ export default function CustomGradeContainer({
         {isUserAuthenticated && loggedInUser ? (
           renderContent()
         ) : (
-          <CustomText
-            value="You are not logged in"
-            center
-            big
-            bgColor="transparent"
-            bold
-          />
+          <CustomText value="You are not logged in" center big bold />
         )}
       </View>
     </>

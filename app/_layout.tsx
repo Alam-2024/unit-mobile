@@ -79,6 +79,10 @@ function RootLayoutNav() {
               headerShadowVisible: false,
             }}
           />
+          <Stack.Screen
+            name="SmallModal"
+            options={{ presentation: "modal", headerShown: false }}
+          />
         </Stack>
       </ThemeProvider>
     </AppProvider>

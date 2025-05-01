@@ -94,10 +94,12 @@ const ProfileView = () => {
       })
     );
 
+    const unitCount = Object.keys(sportsObj).length;
+
     return (
       <View style={styles.gradeContainer}>
         <Text style={styles.gradeTitle}>
-          {item[0].toUpperCase() + item.slice(1)}
+          {item[0].toUpperCase() + item.slice(1)} - ({unitCount}) units
         </Text>
         <FlatList
           data={sportsArray}
@@ -124,28 +126,23 @@ const ProfileView = () => {
             <View>
               <CustomText
                 value={`Welcome, ${loggedInUser?.name || "User"}.`}
-                bgColor="transparent"
                 medium
               />
-              <CustomText
-                value={`${loggedInUser?.email}`}
-                bgColor="transparent"
-              />
+              <CustomText value={`${loggedInUser?.email}`} />
             </View>
             <CustomButton onPress={() => openModal("logout")}>
-              <CustomText value="Logout" bgColor="transparent" big center />
+              <CustomText value="Logout" big center />
             </CustomButton>
           </>
         ) : (
           <>
             <CustomText
               value="Please login to view your profile."
-              bgColor="transparent"
               medium
               bold
             />
             <CustomButton onPress={() => openModal("login")}>
-              <CustomText value="Login" bgColor="transparent" big center />
+              <CustomText value="Login" big center />
             </CustomButton>
           </>
         )}

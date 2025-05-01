@@ -32,13 +32,7 @@ const Navbar = ({ links }: { links: NavbarProps[] }) => {
           shadowOpacity={0.25}
           shadowRadius={3.84}
         >
-          <CustomText
-            value={link.text}
-            medium
-            center
-            bold
-            bgColor="transparent"
-          />
+          <CustomText value={link.text} medium center bold />
         </CustomButton>
       ))}
     </View>

@@ -36,13 +36,7 @@ const Logout = ({ onCloseModal }: { onCloseModal?: () => void }) => {
 
   return (
     <View>
-      <CustomText
-        value="Are you sure you want to logout?"
-        center
-        bold
-        medium
-        bgColor="transparent"
-      />
+      <CustomText value="Are you sure you want to logout?" center bold medium />
       <CustomButton
         onPress={handleLogout}
         style={{
@@ -57,14 +51,7 @@ const Logout = ({ onCloseModal }: { onCloseModal?: () => void }) => {
         shadowOpacity={0.25}
         shadowRadius={3.84}
       >
-        <CustomText
-          value="Logout"
-          center
-          bold
-          color="white"
-          bgColor="transparent"
-          big
-        />
+        <CustomText value="Logout" center bold color="white" big />
       </CustomButton>
     </View>
   );

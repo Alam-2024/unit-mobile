@@ -10,10 +10,6 @@ export default function TabOneScreen() {
     { id: 3, url: "/kg-ab", text: "KG" },
   ];
 
-  const openDataModal = () => {
-    console.log("openDataModal");
-  };
-
   return (
     <View style={styles.container}>
       <Navbar links={links} />

@@ -34,7 +34,7 @@ const CustomText = ({
         bold ? { fontWeight: "bold" } : { fontWeight: "normal" },
         { color: color ? color : "#000" },
         {
-          backgroundColor: bgColor ? bgColor : "#88b0c3",
+          backgroundColor: bgColor ? bgColor : "transparent",
           fontFamily: "Roboto",
         },
       ]}

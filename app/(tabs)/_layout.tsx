@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, TouchableOpacity, StyleSheet, Pressable } from "react-native";
 // import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { Tabs } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
 
 import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
@@ -26,9 +26,10 @@ interface TabItems {
   icon: string;
 }
 const TAB_ITEMS: TabItems[] = [
-  { name: "index", label: "Early Learning", icon: "header" },
-  { name: "two", label: "Elementary", icon: "home" },
-  { name: "third", label: "Rubrics", icon: "bars" },
+  { name: "index", label: "Early Learning", icon: "odnoklassniki" },
+  { name: "two", label: "Elementary", icon: "weibo" },
+  { name: "center", label: "Center", icon: "home" },
+  { name: "third", label: "Middle School", icon: "graduation-cap" },
   { name: "profile", label: "Profile", icon: "user" },
 ];
 
@@ -36,10 +37,12 @@ function CustomTabBar({
   state,
   navigation,
   isUserAuthenticated,
+  onCenterPress,
 }: {
   state: { routes: Route[]; index: number };
   navigation: any;
   isUserAuthenticated: boolean;
+  onCenterPress: () => void;
 }) {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? "light"];
@@ -53,11 +56,23 @@ function CustomTabBar({
     >
       {state.routes.map((route, index) => {
         const isFocused = state.index === index;
-        const { icon } = TAB_ITEMS[index];
+        const { icon, name } = TAB_ITEMS[index];
 
         const onPress = () => {
-          if (!isFocused) navigation.navigate(route.name);
+          if (name === "center") {
+            // Open modal or perform action for center button
+            onCenterPress();
+          } else {
+            if (!isFocused) navigation.navigate(route.name);
+          }
         };
+
+        // Set styles for the center button
+        const isCenter = name === "center";
+
+        const centerIcon = (
+          <CustomIcon iconName="home" iconSize={32} iconColor="#fff" />
+        );
 
         return (
           <TouchableOpacity
@@ -67,22 +82,33 @@ function CustomTabBar({
             style={[
               styles.tabItem,
               isFocused && {
-                backgroundColor: colors.tint,
+                backgroundColor: "#000000",
                 shadowColor: colors.tint,
                 shadowOpacity: 0.24,
-                shadowRadius: 6,
-                elevation: 5,
-                transform: [{ scale: 1.1 }],
+                shadowRadius: 4,
+                elevation: 4,
+                transform: [{ scale: 1.061 }],
               },
+              isCenter && styles.centerButton, // Center button styles
             ]}
           >
-            <CustomIcon
-              iconName={icon as keyof (typeof FontAwesome)["glyphMap"]}
-              iconSize={icon === "home" ? 30 : isFocused ? 30 : 24}
-              iconColor={
-                isFocused ? "#fff" : isUserAuthenticated ? "#690000" : "#313131"
-              }
-            />
+            {isCenter ? (
+              centerIcon
+            ) : isFocused ? ( // No icon for center button
+              <CustomIcon
+                iconName={icon as keyof (typeof FontAwesome)["glyphMap"]}
+                iconSize={isUserAuthenticated ? 22 : 18}
+                iconColor="#fff"
+              />
+            ) : (
+              <CustomIcon
+                iconName={icon as keyof (typeof FontAwesome)["glyphMap"]}
+                iconSize={isUserAuthenticated ? 24 : 20}
+                iconColor={
+                  isUserAuthenticated ? colors.text : colors.text + "cc"
+                }
+              />
+            )}
           </TouchableOpacity>
         );
       })}
@@ -92,6 +118,7 @@ function CustomTabBar({
 
 export default function TabLayout() {
   const { isUserAuthenticated, isAuthenticatedAdminUser } = useAppContext();
+  const router = useRouter();
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? "light"];
 
@@ -108,6 +135,10 @@ export default function TabLayout() {
   const closeModal = () => {
     setModalVisible(false);
     setModalType(null);
+  };
+
+  const handleCenterButtonPress = () => {
+    router.push("/SmallModal");
   };
 
   const adminView = () => {
@@ -151,7 +182,11 @@ export default function TabLayout() {
           headerTintColor: colors.text,
         }}
         tabBar={(props) => (
-          <CustomTabBar {...props} isUserAuthenticated={isUserAuthenticated} />
+          <CustomTabBar
+            {...props}
+            isUserAuthenticated={isUserAuthenticated}
+            onCenterPress={handleCenterButtonPress}
+          />
         )}
       >
         <Tabs.Screen
@@ -171,7 +206,7 @@ export default function TabLayout() {
                 })}
               >
                 <CustomIcon
-                  iconName={!isUserAuthenticated ? "info-circle" : "sign-out"}
+                  iconName={!isUserAuthenticated ? "user-circle-o" : "sign-out"}
                   iconSize={30}
                   iconColor={colors.text}
                 />
@@ -263,17 +298,26 @@ const styles = StyleSheet.create({
   tabItem: {
     flex: 1,
     marginHorizontal: 8,
-    borderRadius: 25,
-    paddingVertical: 8,
-    paddingHorizontal: 14,
+    borderRadius: 30,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
     alignItems: "center",
     justifyContent: "center",
-    flexDirection: "row",
+    // flexDirection: "row",
     transitionDuration: "200ms",
   },
   tabLabel: {
     marginLeft: 8,
     fontSize: 14,
     fontWeight: "600",
+  },
+  centerButton: {
+    backgroundColor: "#ff6347", // special color for center button
+    borderRadius: 35,
+    marginHorizontal: 8,
+    shadowColor: "#ff6347",
+    shadowOpacity: 0.6,
+    shadowRadius: 10,
+    elevation: 8,
   },
 });

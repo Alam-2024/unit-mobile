@@ -29,33 +29,21 @@ const CustomContent = ({
     >
       {/* Header */}
       <View style={styles.titleContainer}>
-        <CustomText
-          value={gradeLevel}
-          bgColor="transparent"
-          bold
-          medium
-          center
-        />
-        <CustomText value={lengthOfUnit} bgColor="transparent" bold />
+        <CustomText value={gradeLevel} bold medium center />
+        <CustomText value={lengthOfUnit} bold />
       </View>
 
-      <CustomText value={overallExpectation} bgColor="transparent" bold right />
+      <CustomText value={overallExpectation} bold right />
       <Separator width="100%" height={2} opacity={0.5} />
 
       {/* Essential Questions */}
       <View style={styles.listContainer}>
-        <CustomText
-          value="Essential Questions"
-          bgColor="transparent"
-          bold
-          medium
-          center
-        />
+        <CustomText value="Essential Questions" bold medium center />
         <Separator width="100%" height={1} opacity={0.095} />
         {essentialQuestions.map((question, index) => (
           <View key={index} style={styles.listItem}>
             <View style={styles.bullet} />
-            <CustomText value={question} bgColor="transparent" medium />
+            <CustomText value={question} medium />
           </View>
         ))}
       </View>
@@ -64,12 +52,12 @@ const CustomContent = ({
 
       {/* Skills */}
       <View style={styles.listContainer}>
-        <CustomText value="Skills" bgColor="transparent" bold medium center />
+        <CustomText value="Skills" bold medium center />
         <Separator width="100%" height={1} opacity={0.095} />
         {skills.map((skill, index) => (
           <View key={index} style={styles.listItem}>
             <View style={styles.bullet} />
-            <CustomText value={skill} bgColor="transparent" medium />
+            <CustomText value={skill} medium />
           </View>
         ))}
       </View>
@@ -78,47 +66,24 @@ const CustomContent = ({
 
       {/* Weekly Plan */}
       <View style={styles.listContainer}>
-        <CustomText
-          value="Weekly Plan"
-          bgColor="transparent"
-          bold
-          medium
-          center
-        />
+        <CustomText value="Weekly Plan" bold medium center />
         <Separator width="100%" height={1} opacity={0.095} />
         {weeklyPlan.map((week) => (
           <View key={week.week} style={styles.weekContainer}>
-            <CustomText
-              value={`Week ${week.week}`}
-              bgColor="transparent"
-              bold
-            />
+            <CustomText value={`Week ${week.week}`} bold />
             {week.sessions.map((session) => (
               <View key={session.sessionNumber} style={styles.sessionContainer}>
                 <CustomText
                   value={`${session.sessionNumber}. ${session.title}`}
-                  bgColor="transparent"
                   medium
                   bold
                 />
-                <CustomText
-                  value={session.objective}
-                  bgColor="transparent"
-                  medium
-                />
+                <CustomText value={session.objective} medium />
                 {session.activities.map((activity, idx) => (
                   <View key={idx} style={styles.activityContainer}>
-                    <CustomText
-                      value={`- ${activity.description}`}
-                      bgColor="transparent"
-                      medium
-                    />
+                    <CustomText value={`- ${activity.description}`} medium />
                     {activity.details.map((detail, i) => (
-                      <CustomText
-                        key={i}
-                        value={`  • ${detail}`}
-                        bgColor="transparent"
-                      />
+                      <CustomText key={i} value={`  • ${detail}`} />
                     ))}
                   </View>
                 ))}
@@ -133,15 +98,15 @@ const CustomContent = ({
       {/* Rubric */}
       {hasSkills(rubric) ? (
         <View style={[styles.listContainer, { marginBottom: 120 }]}>
-          <CustomText value="Rubric" bgColor="transparent" bold medium center />
+          <CustomText value="Rubric" bold medium center />
           <Separator width="100%" height={1} opacity={0.095} />
 
           {/* Skills List */}
-          <CustomText value="Skills Assessed:" bgColor="transparent" bold />
+          <CustomText value="Skills Assessed:" bold />
           <View style={styles.skillsList}>
             {rubric.skills.map((skill, idx) => (
               <View key={idx} style={styles.skillItem}>
-                <CustomText value={`• ${skill}`} bgColor="transparent" medium />
+                <CustomText value={`• ${skill}`} medium />
               </View>
             ))}
           </View>
@@ -149,19 +114,15 @@ const CustomContent = ({
           {/* Levels */}
           {rubric.levels.map((level, idx) => (
             <View key={idx} style={styles.levelContainer}>
-              <CustomText value={level.level} bgColor="transparent" bold />
+              <CustomText value={level.level} bold />
               <View style={styles.levelDetails}>
                 {rubric.skills.map((skill, sIdx) => {
                   const skillKey = skill.toLowerCase().replace(/\s/g, "");
                   const description = (level as any)[skillKey] || "N/A";
                   return (
                     <View key={sIdx} style={styles.skillDescription}>
-                      <CustomText
-                        value={`${skill}:`}
-                        bgColor="transparent"
-                        bold
-                      />
-                      <CustomText value={description} bgColor="transparent" />
+                      <CustomText value={`${skill}:`} bold />
+                      <CustomText value={description} />
                     </View>
                   );
                 })}
@@ -174,7 +135,6 @@ const CustomContent = ({
           <Separator width="100%" height={1} opacity={0.095} />
           <CustomText
             value="No rubric available for this unit."
-            bgColor="transparent"
             medium
             center
             bold
