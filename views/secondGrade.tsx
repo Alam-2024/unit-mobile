@@ -8,13 +8,13 @@ const SecondGrade = () => {
   const [unitTitle, setUnitTitle] = React.useState<string>("");
   const units: { [key: string]: IUnits } = {
     InvasionGames: SwimmingUnitSecondGrade,
-    Dodgeball: SwimmingUnitSecondGrade,
+    NetWallFundamentals: SwimmingUnitSecondGrade,
     OutdoorActivities: SwimmingUnitSecondGrade,
-    Gymnastics: SwimmingUnitSecondGrade,
+    Swimming: SwimmingUnitSecondGrade,
     Athletics: SwimmingUnitSecondGrade,
     CircuitTraining: SwimmingUnitSecondGrade,
-    Swimming: SwimmingUnitSecondGrade,
-    NetWallFundamentals: SwimmingUnitSecondGrade,
+    Gymnastics: SwimmingUnitSecondGrade,
+    Dodgeball: SwimmingUnitSecondGrade,
     Basketball: SwimmingUnitSecondGrade,
   };
   return (

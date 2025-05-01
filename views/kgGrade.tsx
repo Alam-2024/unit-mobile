@@ -18,10 +18,10 @@ const KgGrade = () => {
     BatAndBall: batAndBallUnit,
     CompetitiveGames: funAndFairPlayInCompetitions,
     BallGames: ballGames,
-    ObjectControlSkills: masteringObjectControlUnit,
-    LocomotorSkills: exploringLocomotionWonderlandUnit,
     MusicRhythmsAndMovementActivities: harmonyOfMovementAndMusicUnit,
+    ObjectControlSkills: masteringObjectControlUnit,
     PhysicalExercises: physicalEducationActivities,
+    LocomotorSkills: exploringLocomotionWonderlandUnit,
   };
   return (
     <CustomContainer

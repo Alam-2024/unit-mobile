@@ -14,13 +14,13 @@ const ThirdGrade = () => {
   const [unitTitle, setUnitTitle] = React.useState<string>("");
 
   const units: { [key: string]: IUnits } = {
-    Gymnastics: gymnasticsThird,
-    InvasionGames: invasionGamesThird,
     CircuitTraining: circuitTrainingThird,
-    Swimming: SwimmingForThirdGrade,
+    InvasionGames: invasionGamesThird,
+    Gymnastics: gymnasticsThird,
     Athletics: athleticsThird,
-    Badminton: badmintonThird,
     StrikeAndField: trackAndFieldThirdSpeed,
+    Swimming: SwimmingForThirdGrade,
+    Badminton: badmintonThird,
   };
   return (
     <CustomGradeContainer

@@ -13,9 +13,9 @@ const FifthGrade = () => {
 
   const units: { [key: string]: IUnits } = {
     Dodgeball: dodgeballFifth,
-    Swimming: swimmingUnit,
-    FloorHockey: floorHockeyFifth,
     Soccer: soccerFifth,
+    FloorHockey: floorHockeyFifth,
+    Swimming: swimmingUnit,
     FinnishBaseball: pesaPalloFifth,
   };
   return (
