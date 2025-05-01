@@ -1,4 +1,4 @@
-import { Pk3ShortTitlesTypes } from "@/../interfaces/pk3/pkTypes";
+import { Pk3ShortTitlesTypes } from "@/interfaces/pk3/pkTypes";
 
 //TODO:Disciplinary skills as string[] instead of knowledgeAndVocabulary name(just the name of the array)
 export const MovingAndGroovingThirdData: Pk3ShortTitlesTypes = {
