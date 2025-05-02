@@ -1,4 +1,4 @@
-import { Pk3ShortTitlesTypes } from "@/../interfaces/pk3/pkTypes";
+import { Pk3ShortTitlesTypes } from "@/interfaces/pk3/pkTypes";
 
 export const TeamWorkInActionThirdData: Pk3ShortTitlesTypes = {
   unitTitle: "Team Work in Action",

@@ -1,4 +1,4 @@
-import { Pk3ShortTitlesTypes } from "@/../interfaces/pk3/pkTypes";
+import { Pk3ShortTitlesTypes } from "@/interfaces/pk3/pkTypes";
 
 export const RhythmAndPlayThirdData: Pk3ShortTitlesTypes = {
   unitTitle: "Rhythm and Play",
