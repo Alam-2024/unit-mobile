@@ -25,7 +25,7 @@ const CustomText = ({
   return (
     <Text
       style={[
-        big ? { fontSize: 20 } : medium ? { fontSize: 16 } : { fontSize: 12 },
+        big ? { fontSize: 20 } : medium ? { fontSize: 16 } : { fontSize: 14 },
         center
           ? { textAlign: "center" }
           : right
