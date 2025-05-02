@@ -3,7 +3,7 @@ import { View, TouchableOpacity, StyleSheet, Pressable } from "react-native";
 // import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Tabs, useRouter } from "expo-router";
 
-import Colors from "@/constants/Colors";
+import Colors, { globalColors } from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
 import { useAppContext } from "@/hooks/useContextHook";
@@ -51,7 +51,16 @@ function CustomTabBar({
     <View
       style={[
         styles.tabBarContainer,
-        { backgroundColor: colors.background + "ee" },
+        {
+          backgroundColor: globalColors.primary,
+          borderColor: "transparent",
+          borderWidth: 1,
+          shadowColor: colors.background,
+          shadowOffset: { width: 0, height: 1 },
+          shadowOpacity: 0.85,
+          shadowRadius: 4,
+          elevation: 1,
+        },
       ]}
     >
       {state.routes.map((route, index) => {
@@ -172,12 +181,7 @@ export default function TabLayout() {
           headerShown: useClientOnlyValue(false, true),
           tabBarStyle: { display: "none" }, // Hide default tab bar
           headerStyle: {
-            backgroundColor: colors.background + "ee",
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 1 },
-            shadowOpacity: 0.1,
-            shadowRadius: 4,
-            elevation: 3,
+            backgroundColor: globalColors.primary,
           },
           headerTintColor: colors.text,
         }}

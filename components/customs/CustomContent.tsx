@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet, Image } from "react-native";
 import { IUnits } from "@/interfaces/units/IUnit";
 import CustomText from "./CustomText";
 import Separator from "./Separator";
+import CustomButton from "./CustomButton";
 
 const CustomContent = ({
   gradeLevel,
@@ -13,6 +14,7 @@ const CustomContent = ({
   weeklyPlan,
   rubric,
 }: IUnits) => {
+  const [resizePic, setResizePic] = React.useState(false);
   function hasSkills(
     rubric: any
   ): rubric is { skills: string[]; levels: any[] } {
@@ -21,10 +23,50 @@ const CustomContent = ({
     );
   }
 
+  const ImgUrlContainer = (url: string) => {
+    return (
+      <View style={{ marginBottom: 20 }}>
+        <Image
+          source={{ uri: url }}
+          style={{
+            width: resizePic ? 300 : 200,
+            height: resizePic ? 300 : 150,
+            borderRadius: 10,
+            alignSelf: "center",
+            resizeMode: resizePic ? "contain" : "stretch",
+          }}
+          onLoad={() => setResizePic(true)}
+          onError={() => setResizePic(false)}
+        />
+        <CustomButton
+          onPress={() => setResizePic(!resizePic)}
+          shadowColor="#000"
+          shadowWidth={1}
+          shadowHeight={2}
+          shadowOpacity={resizePic ? 0.35 : 0.5}
+          shadowRadius={3.84}
+          style={{
+            marginTop: 10,
+            width: resizePic ? "92%" : "40%",
+            marginHorizontal: resizePic ? "4%" : "30%",
+            borderColor: resizePic ? "#8f8f8f" : "#b7b7b7",
+            borderWidth: 1,
+          }}
+        >
+          <CustomText
+            value={resizePic ? "Minimize" : "Maximize"}
+            medium
+            center
+            bold
+          />
+        </CustomButton>
+      </View>
+    );
+  };
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={{ padding: 10, paddingBottom: 100 }}
+      contentContainerStyle={{ paddingHorizontal: 4, paddingBottom: 100 }}
       showsVerticalScrollIndicator={false}
     >
       {/* Header */}
@@ -70,7 +112,12 @@ const CustomContent = ({
         <Separator width="100%" height={1} opacity={0.095} />
         {weeklyPlan.map((week) => (
           <View key={week.week} style={styles.weekContainer}>
-            <CustomText value={`Week ${week.week}`} bold />
+            <>
+              <View style={styles.titleContainer}>
+                <CustomText value={`Week ${week.week}`} bold medium />
+              </View>
+              <Separator width="100%" height={1} opacity={0.95} />
+            </>
             {week.sessions.map((session) => (
               <View key={session.sessionNumber} style={styles.sessionContainer}>
                 <CustomText
@@ -87,6 +134,12 @@ const CustomContent = ({
                     ))}
                   </View>
                 ))}
+                <Separator width="100%" height={1} opacity={0.095} />
+                {session.imgUrl ? (
+                  ImgUrlContainer(session.imgUrl)
+                ) : (
+                  <CustomText value="No image available" medium center bold />
+                )}
               </View>
             ))}
           </View>

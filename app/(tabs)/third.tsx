@@ -1,11 +1,12 @@
 import { View, Text } from "react-native";
 import React from "react";
+import CustomView from "@/components/customs/CustomView";
 
 const TabThirdScreen = () => {
   return (
-    <View>
+    <CustomView>
       <Text>TabThirdScreen</Text>
-    </View>
+    </CustomView>
   );
 };
 

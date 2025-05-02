@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import Navbar from "@/components/navbar/Navbar";
+import CustomView from "@/components/customs/CustomView";
 
 export default function TabOneScreen() {
   const links = [
@@ -11,21 +12,17 @@ export default function TabOneScreen() {
   ];
 
   return (
-    <View style={styles.container}>
+    <CustomView>
       <Navbar links={links} />
       <Text style={styles.title} onPress={() => {}}>
         Tab One
       </Text>
       <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
+    </CustomView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-  },
   title: {
     fontSize: 20,
     fontWeight: "bold",

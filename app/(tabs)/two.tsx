@@ -4,6 +4,7 @@ import EditScreenInfo from "@/components/EditScreenInfo";
 import { useEffect, useState } from "react";
 import Navbar from "@/components/navbar/Navbar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import CustomView from "@/components/customs/CustomView";
 
 export default function TabTwoScreen() {
   const links = [
@@ -34,19 +35,15 @@ export default function TabTwoScreen() {
     checkAsyncStorage();
   }, []);
   return (
-    <View style={styles.container}>
+    <CustomView>
       <Navbar links={links} />
       <Text style={styles.title}>Tab Two</Text>
       <EditScreenInfo path="app/(tabs)/two.tsx" />
-    </View>
+    </CustomView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-  },
   title: {
     fontSize: 20,
     fontWeight: "bold",

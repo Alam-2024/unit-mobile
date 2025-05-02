@@ -6,6 +6,7 @@ import Login from "../Login";
 import Logout from "../Logout";
 import CustomButton from "@/components/customs/CustomButton";
 import CustomText from "@/components/customs/CustomText";
+import CustomView from "@/components/customs/CustomView";
 
 type SportStatus = {
   name: string;
@@ -115,7 +116,7 @@ const ProfileView = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <CustomView style={styles.container}>
       <DynamicModal visible={isModalVisible} onClose={closeModal}>
         {modalType === "login" && <Login onCloseModal={closeModal} />}
         {modalType === "logout" && <Logout onCloseModal={closeModal} />}
@@ -161,7 +162,7 @@ const ProfileView = () => {
           </View>
         }
       />
-    </View>
+    </CustomView>
   );
 };
 
@@ -169,7 +170,6 @@ export default ProfileView;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     paddingBottom: 70,
   },
   header: {
