@@ -5,6 +5,16 @@ export const TeamWorkInActionThirdData: Pk3ShortTitlesTypes = {
   TheBigIdea: {
     description:
       "Playing with others helps us build friendships, share, and have fun as a team.",
+    goals: [
+      "Developing gross motor skills through teamwork activities.",
+      "Enhancing communication and cooperation skills during group play.",
+      "Fostering spatial awareness and body control through team games.",
+      "Encouraging fair play and respect for others in cooperative settings.",
+      "Building confidence in social skills through practice and interaction.",
+      "Understanding the importance of teamwork in achieving common goals.",
+      "Learning to communicate and support each other during group activities.",
+      "Recognizing the value of sharing and taking turns in team settings.",
+    ],
   },
   EssentialQuestions: {
     questions: [
@@ -17,7 +27,12 @@ export const TeamWorkInActionThirdData: Pk3ShortTitlesTypes = {
       "Games with physical exercise",
       "Fair play and showing respect for opponents",
     ],
-    LocomotorSkills: [],
+    LocomotorSkills: [
+      "Teamwork",
+      "Communication",
+      "Sportsmanship",
+      "Fair play",
+    ],
     NonLocomotorSkills: [
       "Teamwork",
       "Communication",
@@ -25,7 +40,17 @@ export const TeamWorkInActionThirdData: Pk3ShortTitlesTypes = {
       "Fair play",
       "Respect for opponents",
     ],
-    ObjectControlSkills: [],
+    ObjectControlSkills: [
+      "Rolling balls to a partner",
+      "Throwing underhand at short distances",
+      "Attempting to catch a large ball with both hands",
+      "Kicking a stationary ball",
+      "Bouncing a ball with two hands",
+      "Catching a ball with two hands",
+      "Throwing a ball overhand",
+      "Kicking a ball toward a target",
+      "Rolling a ball back and forth with a partner",
+    ],
   },
   InstructionAndLearningPlan: {
     disciplinarySkills: [

@@ -10,7 +10,7 @@ export interface Pk3ShortTitlesTypes {
   EssentialQuestions: {
     questions: string[];
   };
-  InstructionAndLearningPlan?: Plan;
+  InstructionAndLearningPlan: Plan;
   //TODO: Check these two and add them to all Pks
   Resources?: string[];
   instructionalPlan?: {
@@ -34,7 +34,7 @@ export type Plan = {
 
 export type Idea = {
   description: string;
-  goals?: string[];
+  goals: string[];
 };
 
 interface LearningExperience {

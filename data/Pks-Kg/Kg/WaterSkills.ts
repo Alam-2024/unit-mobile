@@ -5,6 +5,24 @@ export const WaterSkillsKgData: Pk3ShortTitlesTypes = {
   TheBigIdea: {
     description:
       "Kindergarten students embark on a journey of discovery and exploration as they engage in water-based activities. Through hands-on experiences, they develop fundamental water skills, learn about water safety, and deepen their understanding of the importance of water in our lives and the environment.",
+    goals: [
+      "Developing gross motor skills through water play and exploration.",
+      "Enhancing sensory awareness and understanding of water properties.",
+      "Building confidence and comfort in water environments.",
+      "Fostering teamwork and cooperation during group water activities.",
+      "Understanding the importance of water safety and conservation.",
+      "Encouraging creativity and imagination through water-based activities.",
+      "Promoting respect for the environment and water resources.",
+      "Recognizing the role of water in ecosystems and daily life.",
+      "Exploring the concept of buoyancy and floating.",
+      "Learning to express feelings and sensations associated with water play.",
+      "Understanding the importance of practice in developing water skills.",
+      "Learning to communicate and support each other during water activities.",
+      "Recognizing the value of fair play and respect for others in water games.",
+      "Identifying feelings associated with winning and losing in water-based games.",
+      "Understanding the basic rules of various water games and activities.",
+      "The importance of cooperation, communication, and supporting teammates during water activities.",
+    ],
   },
   EssentialQuestions: {
     questions: [
@@ -28,10 +46,18 @@ export const WaterSkillsKgData: Pk3ShortTitlesTypes = {
   },
   InstructionAndLearningPlan: {
     knowledgeAndVocabulary: [
-      // You can add specific knowledge and vocabulary here if needed
+      "Understanding the importance of water safety.",
+      "Recognizing different properties of water (liquid, solid, gas).",
+      "Identifying ways to conserve and protect water resources.",
+      "Learning about the role of water in ecosystems and daily life.",
+      "Exploring the concept of buoyancy and floating.",
     ],
     disciplinarySkills: [
-      // You can add specific disciplinary skills here if needed
+      "Participating in water-based activities and games.",
+      "Following safety rules and guidelines during water play.",
+      "Demonstrating respect for the environment and water resources.",
+      "Cooperating with peers during group water activities.",
+      "Expressing creativity through water exploration and play.",
     ],
   },
 };

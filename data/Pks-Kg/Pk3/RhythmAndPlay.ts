@@ -5,6 +5,16 @@ export const RhythmAndPlayThirdData: Pk3ShortTitlesTypes = {
   TheBigIdea: {
     description:
       "Moving to music and stories helps us express ourselves and enjoy being active.",
+    goals: [
+      "Developing rhythm and coordination through music and movement.",
+      "Exploring creativity and self-expression through dance and play.",
+      "Building confidence in movement skills through rhythmic activities.",
+      "Fostering teamwork and cooperation during group dance activities.",
+      "Understanding the connection between music and movement.",
+      "Encouraging imagination and storytelling through movement.",
+      "Promoting physical fitness and well-being through active play.",
+      "Enhancing listening skills and body awareness through rhythmic activities.",
+    ],
   },
   EssentialQuestions: {
     questions: [
@@ -13,10 +23,29 @@ export const RhythmAndPlayThirdData: Pk3ShortTitlesTypes = {
     ],
   },
   LearningGoals: {
-    LocomotorSkills: [],
+    LocomotorSkills: [
+      "running",
+      "walking",
+      "jumping",
+      "hopping",
+      "skipping",
+      "galloping",
+      "leaping",
+    ],
     NonLocomotorSkills: ["swinging", "swaying"],
     GrossMotorSkills: ["Music, rhythm, and movement activities"],
-    ObjectControlSkills: [],
+    ObjectControlSkills: [
+      "Following simple choreographed movements, like step-touch or clapping sequences.",
+      "Rolling balls toward a target.",
+      "Throwing underhand at short distances.",
+      "Attempting to catch a large ball with both hands.",
+      "Kicking a stationary ball.",
+      "Bouncing a ball with two hands.",
+      "Catching a ball with two hands.",
+      "Throwing a ball overhand.",
+      "Kicking a ball toward a target.",
+      "Rolling a ball back and forth with a partner.",
+    ],
   },
   InstructionAndLearningPlan: {
     disciplinarySkills: [

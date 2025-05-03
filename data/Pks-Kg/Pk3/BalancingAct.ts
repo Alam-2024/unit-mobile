@@ -5,6 +5,18 @@ export const BalancingActThirdData: Pk3ShortTitlesTypes = {
   TheBigIdea: {
     description:
       "Balancing helps us stay steady, strong, and confident as we explore new movements.",
+    goals: [
+      "Developing gross motor skills through balancing activities.",
+      "Enhancing spatial awareness and body control through balance exercises.",
+      "Fostering teamwork and communication skills during group balancing games.",
+      "Encouraging fair play and respect for others in cooperative settings.",
+      "Building confidence in physical abilities through practice and repetition.",
+      "Understanding the importance of balance in various physical activities.",
+      "Learning to communicate and support each other during balancing tasks.",
+      "Recognizing the value of sharing and taking turns in balancing games.",
+      "Identifying feelings associated with success and challenges in balancing.",
+      "Understanding the concept of balance and its application in different contexts.",
+    ],
   },
 
   EssentialQuestions: {
@@ -21,8 +33,27 @@ export const BalancingActThirdData: Pk3ShortTitlesTypes = {
       "balancing (dynamic)",
     ],
     NonLocomotorSkills: ["swinging", "balancing (stabile)"],
-    LocomotorSkills: [],
-    ObjectControlSkills: [],
+    LocomotorSkills: [
+      "running",
+      "walking",
+      "jumping",
+      "dodging",
+      "leaping",
+      "galloping",
+      "sliding",
+      "crawling",
+      "skipping",
+    ],
+    ObjectControlSkills: [
+      "hand-eye coordination",
+      "foot-eye coordination",
+      "spatial awareness",
+      "body control",
+      "balance and stability",
+      "coordination",
+      "agility",
+      "reaction time",
+    ],
   },
   InstructionAndLearningPlan: {
     disciplinarySkills: [

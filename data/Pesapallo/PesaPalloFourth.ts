@@ -33,8 +33,8 @@ const pesaPalloFourth: IUnits = {
       sessions: [
         {
           sessionNumber: 1,
-          title:
-            "Introduction to Finnish Baseball: Basic Concepts and Cultural Background",
+          focus: "Introduction to Finnish Baseball",
+          title: "Basic Concepts and Cultural Background",
           objective:
             "Introduce the basic concepts and cultural background of Finnish baseball, and start developing key skills.",
           activities: [
@@ -63,7 +63,8 @@ const pesaPalloFourth: IUnits = {
         },
         {
           sessionNumber: 2,
-          title: "Fielding Techniques and Teamwork",
+          focus: "Batting Techniques and Teamwork",
+          title: "Batting and Teamwork",
           objective:
             "Introduce fielding techniques and start building teamwork through simple collaborative drills.",
           activities: [
@@ -94,6 +95,7 @@ const pesaPalloFourth: IUnits = {
       sessions: [
         {
           sessionNumber: 3,
+          focus: "Hand-Eye Coordination and Problem Solving",
           title: "Batting Techniques and Problem Solving",
           objective:
             "Improve batting techniques and accuracy in Finnish baseball.",
@@ -116,7 +118,8 @@ const pesaPalloFourth: IUnits = {
         },
         {
           sessionNumber: 4,
-          title: "Pitching Techniques and Teamwork",
+          focus: "Pitching Techniques and Teamwork",
+          title: "Pitching and Team Strategy",
           objective:
             "Introduce basic game strategy and the roles within a Finnish baseball team.",
           activities: [
@@ -145,7 +148,8 @@ const pesaPalloFourth: IUnits = {
       sessions: [
         {
           sessionNumber: 5,
-          title: "Fielding Techniques and Problem Solving",
+          focus: "Fielding Techniques and Problem Solving",
+          title: "Fielding and Quick Decision-Making",
           objective:
             "Develop more advanced fielding skills and quick decision-making on the field.",
           activities: [

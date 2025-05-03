@@ -5,6 +5,14 @@ export const HandsOnFunFourthData: Pk3ShortTitlesTypes = {
   TheBigIdea: {
     description:
       "Using our hands and feet to interact with objects builds coordination and control.",
+    goals: [
+      "Developing gross motor skills through hands-on activities.",
+      "Enhancing spatial awareness and body control through object manipulation.",
+      "Fostering teamwork and communication skills during group activities.",
+      "Encouraging fair play and respect for others in cooperative settings.",
+      "Building confidence in physical abilities through practice and repetition.",
+      "Understanding the importance of object control in various physical activities.",
+    ],
   },
   EssentialQuestions: {
     questions: [

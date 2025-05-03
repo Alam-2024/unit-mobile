@@ -5,6 +5,35 @@ export const GymnasticsPkFourthData: Pk3ShortTitlesTypes = {
   TheBigIdea: {
     description:
       "Gymnastics is essential for children's overall development, as it introduces physical activity in a playful way, tailored to their needs. It helps develop basic motor skills such as running and balancing, boosting their confidence and laying the foundation for future achievements. Additionally, it promotes social interaction by teaching them to work as a team, share, and take turns, strengthening their relationships and social skills. The impact of gymnastics at this stage is long-lasting, as it establishes healthy habits that influence their physical and mental well-being throughout life. By creating a safe and encouraging environment, gymnastics motivates children to explore their abilities and enjoy movement, laying the groundwork for an active and balanced lifestyle.",
+    goals: [
+      "Developing gross motor skills through gymnastics activities.",
+      "Enhancing balance and coordination through various movements.",
+      "Building confidence and self-esteem through skill mastery.",
+      "Fostering teamwork and cooperation during group gymnastics activities.",
+      "Encouraging creativity and self-expression through movement.",
+      "Promoting safety awareness and understanding of gymnastics equipment.",
+      "Recognizing the importance of physical fitness and well-being.",
+      "Understanding the role of gymnastics in developing social skills.",
+      "Identifying feelings associated with success and challenges in gymnastics.",
+      "Learning basic gymnastics movements and techniques.",
+      "Understanding the importance of teamwork and cooperation in gymnastics.",
+      "Identifying feelings associated with winning and losing.",
+      "Learning basic rules of gymnastics and safety considerations.",
+      "The importance of cooperation, communication, and supporting teammates during gymnastics activities.",
+      "Understanding the concept of fair play in gymnastics.",
+      "Recognizing the importance of teamwork and cooperation in gymnastics.",
+      "Identifying feelings associated with winning and losing in gymnastics.",
+      "Learning basic rules of gymnastics and safety considerations.",
+      "The importance of cooperation, communication, and supporting teammates during gymnastics activities.",
+      "Recognizing the importance of teamwork and cooperation in gymnastics.",
+      "Identifying feelings associated with winning and losing in gymnastics.",
+      "Learning basic rules of gymnastics and safety considerations.",
+      "The importance of cooperation, communication, and supporting teammates during gymnastics activities.",
+      "Recognizing the importance of teamwork and cooperation in gymnastics.",
+      "Identifying feelings associated with winning and losing in gymnastics.",
+      "Learning basic rules of gymnastics and safety considerations.",
+      "The importance of cooperation, communication, and supporting teammates during gymnastics activities.",
+    ],
   },
   EssentialQuestions: {
     questions: [
@@ -22,19 +51,37 @@ export const GymnasticsPkFourthData: Pk3ShortTitlesTypes = {
       "Climbing",
     ],
     NonLocomotorSkills: ["Social interaction", "Teamwork", "Communication"],
-    LocomotorSkills: [
-      // You can add specific locomotor skills here if needed
-    ],
+    LocomotorSkills: ["Walking", "Running", "Jumping", "Climbing", "Balancing"],
     ObjectControlSkills: [
-      // You can add specific object control skills here if needed
+      "Hand-eye coordination",
+      "Foot-eye coordination",
+      "Spatial awareness",
+      "Body control",
+      "Balance and stability",
+      "Coordination",
     ],
   },
   InstructionAndLearningPlan: {
     knowledgeAndVocabulary: [
-      // You can add specific knowledge and vocabulary here if needed
+      "Gymnastics",
+      "Balance",
+      "Running",
+      "Jumping",
+      "Climbing",
     ],
     disciplinarySkills: [
-      // You can add specific disciplinary skills here if needed
+      "Participating in group gymnastics activities.",
+      "Following instructions and cues from the teacher.",
+      "Demonstrating creativity in movement expression.",
+      "Cooperating with peers during group activities.",
+      "Practicing self-control and emotional management during gymnastics.",
+      "Understanding the importance of safety in gymnastics.",
+      "Recognizing the benefits of gymnastics for physical and mental well-being.",
+      "Identifying feelings associated with success and challenges in gymnastics.",
+      "Learning basic gymnastics movements and techniques.",
+      "Understanding the importance of teamwork and cooperation in gymnastics.",
+      "Identifying feelings associated with winning and losing.",
+      "Learning basic rules of gymnastics and safety considerations.",
     ],
   },
   Resources: [

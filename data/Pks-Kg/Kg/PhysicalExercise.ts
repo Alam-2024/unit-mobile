@@ -6,6 +6,18 @@ const physicalEducationActivities: Pk3ShortTitlesTypes = {
   TheBigIdea: {
     description:
       "Kindergarten students embark on a journey of exploration and growth as they engage in physical exercise as a team. Through collaborative movement activities, they develop coordination, communication, and a sense of unity, fostering a love for movement and a supportive classroom community.",
+    goals: [
+      "Developing gross motor skills through collaborative movement activities.",
+      "Enhancing teamwork and communication skills during group exercises.",
+      "Fostering spatial awareness and body control through movement exploration.",
+      "Encouraging creativity and self-expression through movement.",
+      "Building confidence and self-esteem through physical challenges.",
+      "Promoting a sense of belonging and community within the classroom.",
+      "Understanding the importance of physical activity for health and well-being.",
+      "Learning to follow directions and cues during movement activities.",
+      "Practicing safety awareness during physical exercises.",
+      "Celebrating individual and group achievements in movement.",
+    ],
   },
 
   EssentialQuestions: {
@@ -24,20 +36,43 @@ const physicalEducationActivities: Pk3ShortTitlesTypes = {
   },
 
   LearningGoals: {
-    GrossMotorSkills: [],
-    NonLocomotorSkills: [],
-    LocomotorSkills: [],
-    ObjectControlSkills: [],
+    GrossMotorSkills: [
+      "running",
+      "jumping",
+      "hopping",
+      "skipping",
+      "galloping",
+    ],
+    NonLocomotorSkills: [
+      "balancing",
+      "stretching",
+      "bending",
+      "twisting",
+      "turning",
+    ],
+    LocomotorSkills: ["walking", "dodging", "leaping", "sliding"],
+    ObjectControlSkills: [
+      "hand-eye coordination",
+      "foot-eye coordination",
+      "spatial awareness",
+      "body control",
+      "balance and stability",
+    ],
   },
-  // [
-  //   {
-  //     goal: "Students will develop teamwork skills through collaborative movement activities.",
-  //   },
-  //   { goal: "Students will enhance their physical fitness and coordination." },
-  //   {
-  //     goal: "Students will learn to communicate effectively while engaging in physical activities.",
-  //   },
-  // ] as LearningGoal[],
+  InstructionAndLearningPlan: {
+    disciplinarySkills: [
+      "Participating in group movement activities.",
+      "Following instructions and cues from the teacher.",
+      "Demonstrating creativity in movement expression.",
+      "Cooperating with peers during group activities.",
+    ],
+    knowledgeAndVocabulary: [
+      "Understanding the importance of locomotor skills.",
+      "Recognizing different locomotor movements and their applications.",
+      "Identifying safety considerations during movement activities.",
+      "Learning about the benefits of physical activity for health and well-being.",
+    ],
+  },
 
   assessmentPlan: {
     assessments: [],

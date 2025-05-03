@@ -5,6 +5,13 @@ export const TeamWorkInActionFourthData: Pk3ShortTitlesTypes = {
   TheBigIdea: {
     description:
       "Playing with others helps us build friendships, share, and have fun as a team.",
+    goals: [
+      "Developing teamwork and cooperation skills.",
+      "Understanding the importance of communication in group activities.",
+      "Building confidence in social interactions through play.",
+      "Encouraging sharing and taking turns during games.",
+      "Learning to communicate and support each other during group activities.",
+    ],
   },
   EssentialQuestions: {
     questions: [

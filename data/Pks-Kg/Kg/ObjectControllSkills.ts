@@ -6,6 +6,20 @@ const masteringObjectControlUnit: Pk3ShortTitlesTypes = {
   TheBigIdea: {
     description:
       "In this unit, kindergarten students will explore and develop their ability to control various objects through engaging and playful activities. They will learn essential skills such as rolling, throwing, catching, kicking, and striking, focusing on improving their coordination, precision, and confidence. By participating in a range of activities and games, children will enhance their motor skills, spatial awareness, and ability to manipulate objects effectively.",
+    goals: [
+      "Developing gross motor skills through object control activities.",
+      "Enhancing coordination and precision in manipulating objects.",
+      "Building confidence in motor skills through practice and repetition.",
+      "Fostering spatial awareness and body control while engaging with objects.",
+      "Encouraging teamwork and cooperation during group activities.",
+      "Promoting patience and persistence in learning new skills.",
+      "Understanding the importance of practice in skill development.",
+      "Learning to communicate and support each other during object control activities.",
+      "Recognizing the value of fair play and respect for others in games.",
+      "Identifying feelings associated with winning and losing in competitive settings.",
+      "Understanding the basic rules of various competitive games.",
+      "The importance of cooperation, communication, and supporting teammates during games and activities.",
+    ],
   },
 
   EssentialQuestions: {
@@ -19,9 +33,29 @@ const masteringObjectControlUnit: Pk3ShortTitlesTypes = {
     ],
   },
   LearningGoals: {
-    GrossMotorSkills: [],
-    NonLocomotorSkills: [],
-    LocomotorSkills: [],
+    GrossMotorSkills: [
+      "rolling",
+      "throwing",
+      "catching",
+      "kicking",
+      "striking",
+    ],
+    NonLocomotorSkills: [
+      "balancing",
+      "stretching",
+      "bending",
+      "twisting",
+      "turning",
+    ],
+    LocomotorSkills: [
+      "running",
+      "walking",
+      "jumping",
+      "dodging",
+      "leaping",
+      "galloping",
+      "sliding",
+    ],
     ObjectControlSkills: [
       "Develop coordination through rolling, throwing, catching, kicking, and striking.",
       "Enhance precision in object control.",
@@ -31,36 +65,32 @@ const masteringObjectControlUnit: Pk3ShortTitlesTypes = {
       "Practice cooperation while engaging in object control activities.",
     ],
   },
-  // the5Cs: [
-  //   "Collaboration, Interaction, and Cultural Competence",
-  //   "Care, Community, and the World Around Me",
-  // ],
-
-  // dasLearnerProfile: {
-  //   attributes: ["Open-Minded", "Thoughtful"],
-  // },
-
-  // learningGoals: [
-  //   {
-  //     goal: "Students will develop coordination through rolling, throwing, catching, kicking, and striking.",
-  //   },
-  //   { goal: "Students will enhance precision in object control." },
-  //   { goal: "Students will build confidence in their motor skills." },
-  //   {
-  //     goal: "Students will improve spatial awareness while manipulating objects.",
-  //   },
-  //   {
-  //     goal: "Students will learn the importance of persistence in skill development.",
-  //   },
-  //   {
-  //     goal: "Students will practice cooperation while engaging in object control activities.",
-  //   },
-  // ],
+  InstructionAndLearningPlan: {
+    disciplinarySkills: [
+      "Participating in group activities focused on object control.",
+      "Following instructions and cues from the teacher during activities.",
+      "Demonstrating creativity in movement expression while controlling objects.",
+      "Cooperating with peers during group activities and games.",
+      "Practicing self-control and emotional management during games.",
+      "Understanding the concept of fair play and respect for others.",
+      "Recognizing the importance of teamwork and cooperation.",
+      "Identifying feelings associated with winning and losing.",
+      "Learning basic rules of various competitive games.",
+    ],
+    knowledgeAndVocabulary: [
+      "Understanding the importance of object control skills.",
+      "Recognizing different object control movements and their applications.",
+      "Identifying safety considerations during object control activities.",
+      "Learning about the benefits of physical activity for health and well-being.",
+      "Understanding the concept of fair play.",
+      "Recognizing the importance of teamwork and cooperation.",
+      "Identifying feelings associated with winning and losing.",
+      "Learning basic rules of various competitive games.",
+      "The importance of cooperation, communication, and supporting teammates during games and activities.",
+    ],
+  },
 
   assessmentPlan: {
-    // { method: "Learning ladders / rubrics for skill assessment." },
-    // { method: "Other evidence through observation during activities." },
-
     assessments: [
       {
         type: "Learning ladders / rubrics for skill assessment.",
@@ -72,7 +102,15 @@ const masteringObjectControlUnit: Pk3ShortTitlesTypes = {
           "Observing students' coordination, precision, and confidence in object control.",
       },
     ],
-    otherEvidence: [],
+    otherEvidence: [
+      "Student reflections on their experiences with object control activities.",
+      "Peer evaluations of teamwork and cooperation during games.",
+      "Teacher observations of students' progress in object control skills.",
+      "Student self-assessment of their object control abilities.",
+      "Feedback from students on their enjoyment and engagement in activities.",
+      "Peer feedback and support during object control activities.",
+      "Teacher observations of students' participation and cooperation.",
+    ],
     instructionalStrategies: {
       strategies: [
         "Object Control Stations with activities like rolling a ball to a partner.",

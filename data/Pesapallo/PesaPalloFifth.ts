@@ -35,7 +35,8 @@ const pesaPalloFifth: IUnits = {
       sessions: [
         {
           sessionNumber: 1,
-          title: "Introduction to Finnish Baseball – Rules and Culture",
+          focus: "Rules and Culture",
+          title: "Introduction to Finnish Baseball",
           objective:
             "Introduce the rules, history, and cultural significance of Finnish baseball.",
           activities: [
@@ -65,7 +66,8 @@ const pesaPalloFifth: IUnits = {
         },
         {
           sessionNumber: 2,
-          title: "Basic Throwing and Catching Techniques",
+          focus: "Throw and Catch",
+          title: "Throwing and Catching Fundamentals",
           objective: "Develop proper throwing and catching form.",
           activities: [
             {
@@ -103,6 +105,7 @@ const pesaPalloFifth: IUnits = {
       sessions: [
         {
           sessionNumber: 3,
+          focus: "Batting Basics",
           title: "Introduction to Batting Techniques (Pull-Throw)",
           objective:
             "Introduce and practice the pull-throw technique for batting.",
@@ -133,7 +136,8 @@ const pesaPalloFifth: IUnits = {
         },
         {
           sessionNumber: 4,
-          title: "Fielding Basics – Positioning and Strategy",
+          focus: "Fielding Basics",
+          title: "Positioning and Strategy",
           objective:
             "Develop fielding skills, focusing on positioning and teamwork.",
           activities: [
@@ -166,6 +170,7 @@ const pesaPalloFifth: IUnits = {
       sessions: [
         {
           sessionNumber: 5,
+          focus: "Throwing and Catching",
           title: "Advanced Throwing – Accuracy and Power",
           objective:
             "Enhance throwing accuracy and power for long and short throws.",
@@ -194,6 +199,7 @@ const pesaPalloFifth: IUnits = {
         },
         {
           sessionNumber: 6,
+          focus: "Fielding Techniques",
           title: "Advanced Catching and Fielding",
           objective:
             "Improve fielding through catching techniques and strategic positioning.",
@@ -229,7 +235,8 @@ const pesaPalloFifth: IUnits = {
       sessions: [
         {
           sessionNumber: 7,
-          title: "Batting Power and Precision",
+          focus: "Batting Power and Precision",
+          title: "Batting Drills and Precision",
           objective:
             "Improve batting power and precision using the pull-throw technique.",
           activities: [
@@ -255,7 +262,8 @@ const pesaPalloFifth: IUnits = {
         },
         {
           sessionNumber: 8,
-          title: "Team Fielding and Defensive Strategies",
+          focus: "Team Fielding and Defensive Strategies",
+          title: "Defensive Strategies and Teamwork",
           objective:
             "Introduce defensive strategies for effective fielding as a team.",
           activities: [
@@ -286,7 +294,8 @@ const pesaPalloFifth: IUnits = {
       sessions: [
         {
           sessionNumber: 9,
-          title: "Base Running Strategies",
+          focus: "Base Running",
+          title: "Running Techniques and Strategies",
           objective: "Develop base running techniques and strategies.",
           activities: [
             {
@@ -311,7 +320,8 @@ const pesaPalloFifth: IUnits = {
         },
         {
           sessionNumber: 10,
-          title: "Offensive Team Strategies",
+          focus: "Offensive Team Strategies",
+          title: "Offensive Play and Team Communication",
           objective:
             "Enhance offensive play through team strategy and communication.",
           activities: [
@@ -340,7 +350,8 @@ const pesaPalloFifth: IUnits = {
       sessions: [
         {
           sessionNumber: 11,
-          title: "Combining Skills – Full Game Simulation",
+          focus: "Full Game Simulation",
+          title: "Combining Skills",
           objective:
             "Combine skills learned to participate in a full game simulation.",
           activities: [
@@ -366,7 +377,8 @@ const pesaPalloFifth: IUnits = {
         },
         {
           sessionNumber: 12,
-          title: "Post-Game Analysis and Strategy Adjustment",
+          focus: "Post-Game Analysis",
+          title: "Game Reflection and Strategy Adjustment",
           objective: "Reflect on game performance and adjust strategies.",
           activities: [
             {
@@ -398,7 +410,8 @@ const pesaPalloFifth: IUnits = {
       sessions: [
         {
           sessionNumber: 13,
-          title: "Advanced Batting and Base Running",
+          focus: "Advanced Batting and Base Running",
+          title: "Advanced Batting Techniques",
           objective: "Refine advanced batting and base running techniques.",
           activities: [
             {
@@ -421,6 +434,7 @@ const pesaPalloFifth: IUnits = {
         },
         {
           sessionNumber: 14,
+          focus: "Defensive Strategies",
           title: "Advanced Defensive Play and Teamwork",
           objective: "Refine defensive skills and strategies as a team.",
           activities: [
@@ -451,7 +465,8 @@ const pesaPalloFifth: IUnits = {
       sessions: [
         {
           sessionNumber: 15,
-          title: "Final Game Day – Skills Showcase",
+          focus: "Final Game Day",
+          title: "Unit Showcase",
           objective: "Showcase all skills learned in a final game.",
           activities: [
             {
@@ -474,6 +489,7 @@ const pesaPalloFifth: IUnits = {
         },
         {
           sessionNumber: 16,
+          focus: "Reflection and Future Goals",
           title: "Unit Reflection and Next Steps",
           objective:
             "Reflect on personal and team growth, and plan for future skill development.",

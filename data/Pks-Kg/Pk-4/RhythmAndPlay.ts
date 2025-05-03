@@ -5,6 +5,32 @@ export const RhythmAndPlayFourthData: Pk3ShortTitlesTypes = {
   TheBigIdea: {
     description:
       "Moving to music and stories helps us express ourselves and enjoy being active.",
+    goals: [
+      "Developing rhythm and coordination through music and movement.",
+      "Exploring creativity in expressing emotions through dance.",
+      "Understanding the connection between music and movement.",
+      "Building confidence and self-expression through creative movement.",
+      "Fostering teamwork and cooperation during group activities.",
+      "Encouraging exploration of different movement styles.",
+      "Promoting spatial awareness and body control.",
+      "Understanding the role of music in enhancing movement experiences.",
+      "Recognizing the importance of safety while moving to music.",
+      "Encouraging patience and persistence in mastering movement skills.",
+      "Understanding the connection between music and overall physical fitness.",
+      "Recognizing the role of music in daily activities and sports.",
+      "Understanding the importance of practice in developing movement skills.",
+      "Learning to communicate and support each other during movement activities.",
+      "Recognizing the value of fair play and respect for others in games.",
+      "Identifying feelings associated with winning and losing in competitive settings.",
+      "Understanding the basic rules of various competitive games.",
+      "The importance of cooperation, communication, and supporting teammates during games and activities.",
+      "Understanding the role of music in enhancing movement experiences.",
+      "Recognizing the importance of safety while moving to music.",
+      "Encouraging patience and persistence in mastering movement skills.",
+      "Understanding the connection between music and overall physical fitness.",
+      "Recognizing the role of music in daily activities and sports.",
+      "Understanding the importance of practice in developing movement skills.",
+    ],
   },
   EssentialQuestions: {
     questions: [

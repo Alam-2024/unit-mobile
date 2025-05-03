@@ -5,6 +5,14 @@ export const SensoryAdventuresFourthData: Pk3ShortTitlesTypes = {
   TheBigIdea: {
     description:
       "Exploring with our senses helps us understand the world and enjoy movement in new ways.",
+    goals: [
+      "Developing sensory awareness through movement.",
+      "Enhancing creativity and imagination through sensory exploration.",
+      "Building confidence in movement through sensory activities.",
+      "Encouraging exploration of different movement styles.",
+      "Fostering teamwork and cooperation during group activities.",
+      "Promoting spatial awareness and body control.",
+    ],
   },
   EssentialQuestions: {
     questions: [

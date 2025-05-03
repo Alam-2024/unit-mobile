@@ -5,6 +5,12 @@ export const GrossMotorSkillsThirdData: Pk3ShortTitlesTypes = {
   TheBigIdea: {
     description:
       "Gross motor activities are important to everyday physical activities like walking, running, throwing, lifting, kicking, etc. Gross motor abilities also form the basis for fine motor skills and relate to body awareness, reaction speed, balance and strength.",
+    goals: [
+      "Developing gross motor skills through ball handling and coordination.",
+      "Enhancing teamwork and communication skills during group activities.",
+      "Fostering spatial awareness and body control through ball games.",
+      "Encouraging fair play and respect for others in competitive settings.",
+    ],
   },
   EssentialQuestions: {
     questions: [
@@ -20,9 +26,28 @@ export const GrossMotorSkillsThirdData: Pk3ShortTitlesTypes = {
       "leaping",
       "balancing (dynamic)",
     ],
-    LocomotorSkills: [],
+    LocomotorSkills: [
+      "running",
+      "walking",
+      "jumping",
+      "dodging",
+      "leaping",
+      "galloping",
+      "sliding",
+      "crawling",
+      "skipping",
+    ],
     NonLocomotorSkills: ["swinging", "balancing (stabile)"],
-    ObjectControlSkills: [],
+    ObjectControlSkills: [
+      "hand-eye coordination",
+      "foot-eye coordination",
+      "spatial awareness",
+      "body control",
+      "balance and stability",
+      "coordination",
+      "agility",
+      "reaction time",
+    ],
   },
   InstructionAndLearningPlan: {
     knowledgeAndVocabulary: [

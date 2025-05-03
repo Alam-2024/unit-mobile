@@ -7,6 +7,15 @@ const exploringLocomotionWonderlandUnit: Pk3ShortTitlesTypes = {
   TheBigIdea: {
     description:
       "Kindergarten students embark on an exciting journey of discovery and movement exploration as they delve into locomotive skills. Through playful activities and games, they develop fundamental locomotor skills such as running, jumping, hopping, skipping, and galloping. This journey fosters physical literacy, creativity, and a love for active play, laying a strong foundation for lifelong physical development.",
+    goals: [
+      "Developing gross motor skills through various locomotor movements.",
+      "Enhancing creativity and imagination through movement exploration.",
+      "Building confidence and self-expression through active play.",
+      "Fostering teamwork and cooperation during group activities.",
+      "Understanding the importance of physical activity for health and well-being.",
+      "Encouraging safety awareness during movement activities.",
+      "Promoting spatial awareness and body control through locomotor skills.",
+    ],
   },
 
   EssentialQuestions: {
@@ -23,20 +32,6 @@ const exploringLocomotionWonderlandUnit: Pk3ShortTitlesTypes = {
       "How can we apply locomotor skills in real-life situations, such as playing at the park or participating in sports?",
     ],
   },
-
-  // the5Cs: ["Critical Thinking and Learning to Learn"],
-  // learningGoals: [
-  //   {
-  //     goal: "Students will develop fundamental locomotor skills through various activities.",
-  //   },
-  //   { goal: "Students will enhance their physical literacy and creativity." },
-  //   {
-  //     goal: "Students will learn the importance of safety during movement activities.",
-  //   },
-  //   {
-  //     goal: "Students will understand how locomotor skills contribute to overall well-being.",
-  //   },
-  // ],
   LearningGoals: {
     GrossMotorSkills: [
       "Running",
@@ -45,9 +40,35 @@ const exploringLocomotionWonderlandUnit: Pk3ShortTitlesTypes = {
       "Skipping",
       "Galloping",
     ],
-    NonLocomotorSkills: [],
-    LocomotorSkills: [],
-    ObjectControlSkills: [],
+    NonLocomotorSkills: [
+      "Balancing",
+      "Stretching",
+      "Bending",
+      "Twisting",
+      "Turning",
+    ],
+    LocomotorSkills: ["Walking", "Dodging", "Leaping", "Sliding", "Crawling"],
+    ObjectControlSkills: [
+      "Hand-eye coordination",
+      "Foot-eye coordination",
+      "Spatial awareness",
+      "Body control",
+      "Balance and stability",
+    ],
+  },
+  InstructionAndLearningPlan: {
+    disciplinarySkills: [
+      "Participating in group movement activities.",
+      "Following instructions and cues from the teacher.",
+      "Demonstrating creativity in movement expression.",
+      "Cooperating with peers during group activities.",
+    ],
+    knowledgeAndVocabulary: [
+      "Understanding the importance of locomotor skills.",
+      "Recognizing different locomotor movements and their applications.",
+      "Identifying safety considerations during movement activities.",
+      "Learning about the benefits of physical activity for health and well-being.",
+    ],
   },
   assessmentPlan: {
     assessments: [

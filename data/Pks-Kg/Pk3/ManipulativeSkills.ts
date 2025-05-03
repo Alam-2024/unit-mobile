@@ -5,6 +5,15 @@ export const ManipulativeSkillsThirdData: Pk3ShortTitlesTypes = {
   TheBigIdea: {
     description:
       "Manipulative skills play an integral part in a child’s physical development and belong to the gross motor skills group. Manipulative skills are those in which a person learns to handle objects with accuracy, together with speed and control. There are a wide variety of fun activities that can be done to support the development of manipulative skills in children. These activities must begin at a young age so that the child can reap the benefits: Develop basic motor skills, Build strong muscles and bones, Develop stamina and fitness, Improve balance, and coordination, Prepare the brain for academic learning, Improve social interactions, Develop physical self-confidence, Establish healthful weight and sleep patterns.",
+    goals: [
+      "Developing gross motor skills through manipulative activities.",
+      "Enhancing teamwork and communication skills during group activities.",
+      "Fostering spatial awareness and body control through manipulative play.",
+      "Encouraging fair play and respect for others in cooperative settings.",
+      "Building confidence in motor skills through practice and repetition.",
+      "Understanding the importance of practice in skill development.",
+      "Learning to communicate and support each other during object control activities.",
+    ],
   },
   EssentialQuestions: {
     questions: [
@@ -20,9 +29,29 @@ export const ManipulativeSkillsThirdData: Pk3ShortTitlesTypes = {
       "leaping",
       "balancing (dynamic)",
     ],
-    LocomotorSkills: [],
+    LocomotorSkills: [
+      "running",
+      "walking",
+      "jumping",
+      "dodging",
+      "leaping",
+      "galloping",
+      "sliding",
+      "crawling",
+      "skipping",
+    ],
     NonLocomotorSkills: ["swinging", "balancing (stabile)"],
-    ObjectControlSkills: [],
+    ObjectControlSkills: [
+      "hand-eye coordination",
+      "foot-eye coordination",
+      "spatial awareness",
+      "body control",
+      "balance and stability",
+      "coordination",
+      "agility",
+      "reaction time",
+      "teamwork",
+    ],
   },
   InstructionAndLearningPlan: {
     knowledgeAndVocabulary: [

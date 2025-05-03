@@ -5,6 +5,16 @@ export const MightyMoversFourthData: Pk3ShortTitlesTypes = {
   TheBigIdea: {
     description:
       "Strong, flexible bodies help us stay active and healthy as we grow.",
+    goals: [
+      "Developing gross motor skills through various physical activities.",
+      "Enhancing spatial awareness and body control through movement.",
+      "Fostering teamwork and communication skills during group activities.",
+      "Encouraging fair play and respect for others in cooperative settings.",
+      "Building confidence in physical abilities through practice and repetition.",
+      "Understanding the importance of physical fitness in daily life.",
+      "Recognizing the role of flexibility and strength in overall health.",
+      "Learning to communicate and support each other during physical activities.",
+    ],
   },
   EssentialQuestions: {
     questions: [

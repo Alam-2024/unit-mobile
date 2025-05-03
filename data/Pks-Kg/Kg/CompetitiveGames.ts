@@ -5,6 +5,15 @@ const funAndFairPlayInCompetitions: Pk3ShortTitlesTypes = {
   TheBigIdea: {
     description:
       "Engaging kindergarten students in competitive games can significantly enhance their social and emotional development. These activities focus on fun, fairness, and cooperation, helping children learn vital skills such as teamwork, sportsmanship, and resilience while fostering a sense of community.",
+    goals: [
+      "Developing social skills through group interactions.",
+      "Enhancing emotional intelligence by managing feelings during games.",
+      "Promoting physical fitness through active participation.",
+      "Encouraging problem-solving and critical thinking in competitive scenarios.",
+      "Fostering a sense of belonging and community within the classroom.",
+      "Building self-esteem and confidence through skill development.",
+      "Teaching the importance of fair play and respect for others.",
+    ],
   },
 
   EssentialQuestions: {
@@ -21,29 +30,37 @@ const funAndFairPlayInCompetitions: Pk3ShortTitlesTypes = {
       "What new skills and abilities can we develop through participating in competitive games?",
     ],
   },
-  // the5Cs: [
-  //   "Collaboration, Interaction, and Cultural Competence",
-  //   "Care, Community, and the World Around Me",
-  // ],
-  // learningGoals: [
-  //   { goal: "Developing respect for others." },
-  //   { goal: "Practicing self-control in competitive situations." },
-  //   { goal: "Understanding the importance of fair play." },
-  //   { goal: "Enhancing cooperation skills." },
-  //   {
-  //     goal: "Exhibiting sportsmanship by accepting victories and defeats graciously.",
-  //   },
-  //   { goal: "Following instructions from teachers and peers." },
-  //   { goal: "Building resilience through overcoming setbacks." },
-  //   { goal: "Communicating effectively with teammates." },
-  //   { goal: "Cultivating empathy towards others’ feelings." },
-  //   { goal: "Demonstrating adaptability in changing game conditions." },
-  // ],
   LearningGoals: {
-    GrossMotorSkills: [],
-    NonLocomotorSkills: [],
-    LocomotorSkills: [],
-    ObjectControlSkills: [],
+    GrossMotorSkills: ["jumping", "running", "skipping", "dodging"],
+    NonLocomotorSkills: [
+      "balancing",
+      "stretching",
+      "bending",
+      "twisting",
+      "turning",
+    ],
+    LocomotorSkills: ["walking", "galloping", "leaping", "sliding"],
+    ObjectControlSkills: [
+      "hand-eye coordination",
+      "foot-eye coordination",
+      "spatial awareness",
+      "body control",
+      "balance and stability",
+    ],
+  },
+  InstructionAndLearningPlan: {
+    disciplinarySkills: [
+      "Participating in group games and activities.",
+      "Following rules and guidelines during competitive games.",
+      "Demonstrating respect for teammates and opponents.",
+      "Practicing self-control and emotional management during games.",
+    ],
+    knowledgeAndVocabulary: [
+      "Understanding the concept of fair play.",
+      "Recognizing the importance of teamwork and cooperation.",
+      "Identifying feelings associated with winning and losing.",
+      "Learning basic rules of various competitive games.",
+    ],
   },
 
   assessmentPlan: {
