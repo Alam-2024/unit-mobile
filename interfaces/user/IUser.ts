@@ -23,88 +23,20 @@ export interface StoredUsers {
   fifth: { [key: string]: boolean };
 }
 
-export const initialUserValues = {
-  name: "",
-  email: "",
-  password: "",
-  role: "user",
-  baned: false,
-  pk3: {
-    BalancingAct: false,
-    HandsOnFun: false,
-    MightyMovers: false,
-    MovingAndGrooving: false,
-    RhythmAndPlay: false,
-    SensoryAdventures: false,
-    TeamworkInAction: false,
-  },
-  pk4: {
-    BalancingAct: false,
-    Gymnastics: false,
-    HandsOnFun: false,
-    MightyMovers: false,
-    MovingAndGrooving: false,
-    RhythmAndPlay: false,
-    SensoryAdventures: false,
-    TeamworkInAction: false,
-  },
-  kg: {
-    BallGames: false,
-    BatAndBall: false,
-    CompetitiveGames: false,
-    LocomotorSkills: false,
-    MusicRhythmsAndMovementActivities: false,
-    ObjectControlSkills: false,
-    PhysicalExercises: false,
-    WaterSkills: false,
-  },
-  first: {
-    InvasionGames: false,
-    TargetGames: false,
-    Gymnastics: false,
-    BasicTrackAndField: false,
-    FitnessFun: false,
-    AttackingAndDefending: false,
-    Swimming: false,
-    DancePlants: false,
-    BatAndBall: false,
-  },
-  second: {
-    InvasionGames: false,
-    OutdoorActivities: false,
-    DodgeBall: false,
-    Gymnastics: false,
-    Athletics: false,
-    CircuitTraining: false,
-    Swimming: false,
-    NetWallFundamentals: false,
-    Basketball: false,
-  },
-  third: {
-    Athletics: false,
-    CircuitTraining: false,
-    Gymnastics: false,
-    InvasionGames: false,
-    Badminton: false,
-    StrikeAndField: false,
-  },
-  fourth: {
-    Badminton: false,
-    Basketball: false,
-    CircuitTraining: false,
-    FinnishBaseball: false,
-    Football: false,
-    Gymnastics: false,
-    InvasionGames: false,
-    RollerSkating: false,
-    Swimming: false,
-    TrackAndField: false,
-  },
-  fifth: {
-    Dodgeball: false,
-    FinnishBaseball: false,
-    Soccer: false,
-    Swimming: false,
-    FloorHockey: false,
-  },
-};
+//TODO: Check what Record means...
+// export interface StoredUsers {
+//   id?: string;
+//   name: string;
+//   email: string;
+//   password: string;
+//   role: string;
+//   baned: boolean;
+//   pk3: Record<string, boolean>;
+//   pk4: Record<string, boolean>;
+//   kg: Record<string, boolean>;
+//   first: Record<string, boolean>;
+//   second: Record<string, boolean>;
+//   third: Record<string, boolean>;
+//   fourth: Record<string, boolean>;
+//   fifth: Record<string, boolean>;
+// }
