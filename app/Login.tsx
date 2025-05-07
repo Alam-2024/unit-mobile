@@ -138,7 +138,7 @@ const Login = ({ onCloseModal }: LoginProps) => {
       )}
 
       <View style={{ marginBottom: 10 }}>
-        <Text style={{ fontWeight: "bold" }}>Email:</Text>
+        <CustomText value="Email" big bold />
         <TextInput
           placeholder="your-email@das.ac.ma"
           value={formState.email}
@@ -151,7 +151,7 @@ const Login = ({ onCloseModal }: LoginProps) => {
       </View>
 
       <View style={{ marginBottom: 10 }}>
-        <Text style={{ fontWeight: "bold" }}>Password:</Text>
+        <CustomText value="Password" big bold />
         <TextInput
           placeholder="**********"
           secureTextEntry={true}
@@ -189,9 +189,11 @@ const styles = StyleSheet.create({
   textInput: {
     height: 40,
     borderColor: "#ccc",
+    borderStyle: "solid",
+    backgroundColor: "#ffffffe0",
     borderWidth: 1,
     borderRadius: 8,
-    marginBottom: 10,
+    marginVertical: 10,
     paddingHorizontal: 10,
     minWidth: 250,
   },
