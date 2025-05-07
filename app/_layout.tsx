@@ -11,8 +11,10 @@ import React, { useEffect, useState } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/components/useColorScheme";
-import { AppProvider, useAppContext } from "@/hooks/useContextHook";
+import { AppProvider } from "@/hooks/useContextHook";
 import Splash from "./splash/Splash";
+import { Platform } from "react-native";
+import { globalColors } from "@/constants/Colors";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -55,6 +57,29 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
+  const iosModalOptions = {
+    title: "Rubric",
+    presentation: "formSheet",
+    gestureDirection: "vertical",
+    animation: "slide_from_bottom",
+    headerTitleAlign: "center",
+    sheetAllowedDetents: [0.5, 0.75, 1],
+  } as const;
+
+  const androidModalOptions = {
+    title: "Rubric",
+    presentation: "modal",
+    headerBackButtonMenuEnabled: false,
+    headerTitleStyle: { fontSize: 20 },
+    headerBackTitle: "<-",
+    headerTintColor: "#000000",
+    headerStyle: { backgroundColor: globalColors.primary },
+    headerTitleAlign: "center",
+  } as const;
+
+  const modalOptions =
+    Platform.OS === "ios" ? iosModalOptions : androidModalOptions;
+
   return (
     <AppProvider>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
@@ -65,24 +90,14 @@ function RootLayoutNav() {
             options={{ presentation: "modal", headerShown: false }}
           />
           <Stack.Screen
-            name="data"
-            options={{
-              title: "Units",
-              headerBackButtonMenuEnabled: false,
-              headerTitleStyle: { fontSize: 20 },
-              headerBackTitle: "<-",
-              headerTintColor: "#000000",
-              headerStyle: {
-                backgroundColor: "#ffffff",
-              },
-              headerTitleAlign: "center",
-              headerShadowVisible: false,
-            }}
-          />
-          <Stack.Screen
-            name="SmallModal"
+            name="adminModal"
             options={{ presentation: "modal", headerShown: false }}
           />
+          <Stack.Screen
+            name="data"
+            options={{ presentation: "modal", headerShown: false }}
+          />
+          <Stack.Screen name="SmallModal" options={modalOptions} />
         </Stack>
       </ThemeProvider>
     </AppProvider>

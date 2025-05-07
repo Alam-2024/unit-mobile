@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { View, TouchableOpacity, StyleSheet, Pressable } from "react-native";
-// import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Tabs, useRouter } from "expo-router";
 
 import Colors, { globalColors } from "@/constants/Colors";
@@ -10,7 +9,6 @@ import { useAppContext } from "@/hooks/useContextHook";
 import DynamicModal from "../modal";
 import Login from "../Login";
 import CustomIcon from "@/components/customs/CustomIcon";
-import Admin from "@/views/admin/admin";
 import Logout from "../Logout";
 import { FontAwesome } from "@expo/vector-icons";
 
@@ -133,11 +131,9 @@ export default function TabLayout() {
 
   // Modal control global para todo el layout
   const [isModalVisible, setModalVisible] = useState(false);
-  const [modalType, setModalType] = useState<
-    "login" | "admin" | "logout" | null
-  >(null);
+  const [modalType, setModalType] = useState<"login" | "logout" | null>(null);
 
-  const openModal = (type: "login" | "admin" | "logout") => {
+  const openModal = (type: "login" | "logout") => {
     setModalType(type);
     setModalVisible(true);
   };
@@ -154,7 +150,7 @@ export default function TabLayout() {
     if (isAuthenticatedAdminUser) {
       return (
         <TouchableOpacity
-          onPress={() => openModal("admin")}
+          onPress={() => router.push("/adminModal")}
           style={{ marginLeft: 15 }}
         >
           <CustomIcon
@@ -172,7 +168,6 @@ export default function TabLayout() {
     <>
       <DynamicModal visible={isModalVisible} onClose={closeModal}>
         {modalType === "login" && <Login onCloseModal={closeModal} />}
-        {modalType === "admin" && <Admin onCloseModal={closeModal} />}
         {modalType === "logout" && <Logout onCloseModal={closeModal} />}
       </DynamicModal>
 
@@ -184,6 +179,7 @@ export default function TabLayout() {
             backgroundColor: globalColors.primary,
           },
           headerTintColor: colors.text,
+          headerTitleAlign: "center",
         }}
         tabBar={(props) => (
           <CustomTabBar
@@ -307,7 +303,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     alignItems: "center",
     justifyContent: "center",
-    // flexDirection: "row",
     transitionDuration: "200ms",
   },
   tabLabel: {
