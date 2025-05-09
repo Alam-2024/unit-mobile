@@ -7,7 +7,7 @@ enum AuthorizedUsers {
 }
 
 export interface StoredUsers {
-  id?: string;
+  id: string;
   name: string;
   email: string;
   password: string;

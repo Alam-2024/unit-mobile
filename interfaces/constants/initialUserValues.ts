@@ -1,6 +1,7 @@
 import { StoredUsers } from "../user/IUser";
 
 export const initialUserState: StoredUsers = {
+  id: "",
   name: "",
   email: "",
   password: "",
