@@ -1,4 +1,3 @@
-import { View, Text } from "react-native";
 import React from "react";
 import SwimmingUnitSecondGrade from "@/data/Swimming/SwimmingSecond";
 import { IUnits } from "@/interfaces/units/IUnit";

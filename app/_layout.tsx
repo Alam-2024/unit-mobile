@@ -91,7 +91,11 @@ function RootLayoutNav() {
           />
           <Stack.Screen
             name="adminModal"
-            options={{ presentation: "modal", headerShown: false }}
+            options={{
+              presentation: "modal",
+              headerTitle: "Admin",
+              headerStyle: { backgroundColor: globalColors.primary },
+            }}
           />
           <Stack.Screen
             name="data"

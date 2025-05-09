@@ -1,6 +1,6 @@
 import { useAppContext } from "@/hooks/useContextHook";
 import { IUnits } from "@/interfaces/units/IUnit";
-import React from "react";
+import React, { JSX } from "react";
 import CustomText from "../customs/CustomText";
 import CustomContent from "../customs/CustomContent";
 import UnitNavbar from "../navbar/UnitNavbar";

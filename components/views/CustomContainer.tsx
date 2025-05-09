@@ -1,6 +1,6 @@
 import { useAppContext } from "@/hooks/useContextHook";
 import { Pk3ShortTitlesTypes } from "@/interfaces/pk3/pkTypes";
-import React from "react";
+import React, { JSX } from "react";
 import CustomText from "../customs/CustomText";
 import UnitNavbar from "../navbar/UnitNavbar";
 import PkCustomContent from "./PkCustomContent";
@@ -54,7 +54,9 @@ export default function CustomContainer({
 
   const renderContent = (): JSX.Element | null => {
     if (!unitTitle) {
-      return <CustomText value="Please select a unit" center big />;
+      return (
+        <CustomText value="Please select a unit" center big color="#ff0000" />
+      );
     }
     if (!hasAccess) {
       return (

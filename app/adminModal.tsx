@@ -1,6 +1,6 @@
-import { View, Text } from "react-native";
 import React from "react";
 import Admin from "@/views/admin/admin";
+import { View } from "react-native";
 
 /**
  * AdminModal is a modal that displays the admin view.
@@ -8,9 +8,9 @@ import Admin from "@/views/admin/admin";
  */
 const AdminModal = () => {
   return (
-    <View>
+    <>
       <Admin />
-    </View>
+    </>
   );
 };
 

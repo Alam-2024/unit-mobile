@@ -22,20 +22,18 @@ const DynamicModal: React.FC<DynamicModalProps> = ({
       onRequestClose={onClose}
     >
       <View style={styles.modalOverlay}>
-        <View style={styles.modalContent}>
-          <CustomButton
-            onPress={onClose}
-            style={styles.closeButton}
-            shadowColor="#000000"
-            shadowWidth={1}
-            shadowHeight={2}
-            shadowOpacity={0.025}
-            shadowRadius={13.84}
-          >
-            <CustomIcon iconName="close" iconSize={30} iconColor="#ff0000" />
-          </CustomButton>
-          {children}
-        </View>
+        <CustomButton
+          onPress={onClose}
+          style={styles.closeButton}
+          shadowColor="#000000"
+          shadowWidth={1}
+          shadowHeight={2}
+          shadowOpacity={0.025}
+          shadowRadius={13.84}
+        >
+          <CustomIcon iconName="close" iconSize={30} iconColor="#ff0000" />
+        </CustomButton>
+        {children}
       </View>
     </Modal>
   );
@@ -46,38 +44,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#7e7e7eda",
-  },
-  modalContent: {
-    width: "80%",
-    paddingHorizontal: 20,
-    paddingVertical: 50,
-    backgroundColor: "#ffffffd6",
-    borderWidth: 1,
-    borderColor: "#00000047",
-    borderStyle: "solid",
-    shadowColor: "#ffffff",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    borderRadius: 10,
-    elevation: 5,
+    backgroundColor: "#7e7e7ef3",
     position: "relative",
   },
   closeButton: {
     position: "absolute",
-    bottom: -196,
-    right: 0,
-    left: 0,
+    bottom: 100,
+    right: "40%",
     marginHorizontal: "auto",
     borderWidth: 1,
     borderColor: "#ffffff50",
     borderStyle: "solid",
-    borderRadius: 15,
-    paddingHorizontal: 40,
-    paddingVertical: 10,
+    borderRadius: 35,
+    paddingHorizontal: 30,
+    paddingVertical: 20,
     backgroundColor: "#000000e8",
     alignItems: "center",
     justifyContent: "center",
