@@ -37,5 +37,6 @@ export interface Objective {
 }
 
 export interface LadderFSInterface {
+  title: string;
   objectives: Objective[];
 }

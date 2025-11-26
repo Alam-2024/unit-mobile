@@ -10,6 +10,7 @@ type Props = {
   bold?: boolean;
   color?: string;
   bgColor?: string;
+  style?: any;
 };
 
 const CustomText = ({
@@ -21,6 +22,7 @@ const CustomText = ({
   bold,
   color,
   bgColor,
+  style,
 }: Props) => {
   return (
     <Text
@@ -38,6 +40,7 @@ const CustomText = ({
           fontFamily: "Roboto",
         },
       ]}
+      {...style}
     >
       {value}
     </Text>
