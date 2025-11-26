@@ -9,6 +9,7 @@ import {
   Switch,
   ActivityIndicator,
   Alert,
+  FlatList,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import {
@@ -22,7 +23,26 @@ import {
 import { db } from "@/firebase/fireConfig";
 import { StoredUsers } from "@/interfaces/user/IUser";
 import { initialUserState } from "@/interfaces/constants/initialUserValues";
+import CustomText from "@/components/customs/CustomText";
+import Separator from "@/components/customs/Separator";
+import CustomButton from "@/components/customs/CustomButton";
+import { globalColors } from "@/constants/Colors";
+import CustomIcon from "@/components/customs/CustomIcon";
 
+/**
+ * Admin
+ *
+ * This component is the main admin panel. It renders a list of all users
+ * and provides a form to add new users or edit existing ones.
+ *
+ * The form is divided into two parts: the first part is for the user's name,
+ * email and password, the second part is for the user's role and the switches
+ * for the different sections of the app.
+ *
+ * The component also handles the deletion of users.
+ *
+ * @returns JSX.Element
+ */
 const Admin: React.FC = () => {
   const [data, setData] = useState<StoredUsers[]>([]);
   const [loadingMsg, setLoadingMsg] = useState<string>("");
@@ -34,6 +54,7 @@ const Admin: React.FC = () => {
   const [editedUser, setEditedUser] = useState<StoredUsers | any>(
     initialUserState
   );
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   // --- Helpers ---
   const resetEditedUser = (): void => setEditedUser(initialUserState);
@@ -46,6 +67,9 @@ const Admin: React.FC = () => {
     !editedUser.email ||
     !editedUser.password ||
     !editedUser.role;
+
+  const unAuthorizedRole = (role: string): boolean =>
+    role !== "admin" && role !== "user";
 
   // --- Handlers ---
   const handleUserToBeEdited = (user: StoredUsers): void => {
@@ -98,6 +122,7 @@ const Admin: React.FC = () => {
   const fetchUsers = async (): Promise<void> => {
     try {
       setLoading(true);
+      setLoadingMsg("Fetching users...");
       const querySnapshot = await getDocs(collection(db, "users-data"));
       const usersData = querySnapshot.docs.map((doc) => ({
         ...doc.data(),
@@ -108,6 +133,7 @@ const Admin: React.FC = () => {
       setError("Error fetching users");
     } finally {
       setLoading(false);
+      setLoadingMsg("");
     }
   };
 
@@ -120,21 +146,34 @@ const Admin: React.FC = () => {
 
   const handleSaveOrEditUser = async (): Promise<void> => {
     setLoading(true);
+    setLoadingMsg(isUserEditing ? "Editing user..." : "Saving user...");
+
     try {
-      if (userId) {
+      const isEdit = Boolean(userId);
+      const { email, role } = editedUser;
+
+      if (!isEdit && isEmailTaken(email)) {
+        Alert.alert("Error", "Email already exists");
+        return;
+      }
+
+      if (isUserMissingData()) {
+        Alert.alert("Error", "Email, password, or name is missing");
+        return;
+      }
+
+      if (unAuthorizedRole(role)) {
+        Alert.alert("Error", "Invalid role");
+        return;
+      }
+
+      if (isEdit) {
         const userDocRef = doc(db, "users-data", userId);
         await updateDoc(userDocRef, editedUser);
       } else {
-        if (isEmailTaken(editedUser.email)) {
-          Alert.alert("Error", "Email already exists");
-          return;
-        }
-        if (isUserMissingData()) {
-          Alert.alert("Error", "Email, password or name is missing");
-          return;
-        }
         await addDoc(collection(db, "users-data"), editedUser);
       }
+
       resetEditedUser();
       setIsUserEditing(false);
       fetchUsers();
@@ -142,11 +181,13 @@ const Admin: React.FC = () => {
       setError(error.message);
     } finally {
       setLoading(false);
+      setLoadingMsg("");
     }
   };
 
   const handleDeleteUser = async (id: string): Promise<void> => {
     setLoading(true);
+    setLoadingMsg("Deleting user...");
     try {
       const userDocRef = doc(db, "users-data", id);
       await deleteDoc(userDocRef);
@@ -155,13 +196,13 @@ const Admin: React.FC = () => {
       setError("Error deleting user");
     } finally {
       setLoading(false);
+      setLoadingMsg("");
     }
   };
 
   // --- UI ---
-  const renderUser = (user: StoredUsers | any) => (
+  const renderUser = (user: StoredUsers) => (
     <TouchableOpacity
-      key={user.id}
       style={[
         styles.userContainer,
         user.baned && styles.userBanned,
@@ -169,26 +210,40 @@ const Admin: React.FC = () => {
       ]}
       onPress={() => handleUserToBeEdited(user)}
     >
-      <Text style={styles.userName}>{user.name}</Text>
-      <Text style={styles.userEmail}>{user.email}</Text>
+      <CustomText value={user.name} bold color={globalColors.secondary} />
+      <CustomText value={user.email} color={globalColors.secondary} />
       <TouchableOpacity
         style={styles.deleteIcon}
         onPress={() => handleDeleteUser(user.id)}
       >
-        <MaterialIcons name="delete-forever" size={28} color="#b00" />
+        <MaterialIcons name="delete-forever" size={38} color="#b00" />
       </TouchableOpacity>
     </TouchableOpacity>
   );
+
+  const generatePassword = (): string => {
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=<>?";
+    const passwordLength = 12;
+    return Array.from({ length: passwordLength }, () =>
+      characters.charAt(Math.floor(Math.random() * characters.length))
+    ).join("");
+  };
+
+  const handleGeneratePassword = (): void => {
+    const password = generatePassword();
+    handleInputChange("password", password);
+  };
 
   const renderSwitchSection = (
     sectionKey: keyof StoredUsers,
     label: string
   ) => (
     <View style={styles.section} key={sectionKey}>
-      <Text style={styles.sectionTitle}>{label}</Text>
+      <CustomText value={label} bold big color="#007AFF" />
       {Object.keys(editedUser[sectionKey] || {}).map((key) => (
         <View key={`${sectionKey}-${key}`} style={styles.switchRow}>
-          <Text style={styles.switchLabel}>{key}</Text>
+          <CustomText value={key} color="#333" />
           <Switch
             value={!!editedUser[sectionKey][key]}
             onValueChange={(val) =>
@@ -205,20 +260,30 @@ const Admin: React.FC = () => {
       {loading && (
         <View style={styles.loadingOverlay}>
           <ActivityIndicator size="large" color="#007AFF" />
-          <Text>{loadingMsg || "Loading..."}</Text>
+          <CustomText value={loadingMsg || "Loading..."} medium />
         </View>
       )}
       {error && <Text style={styles.errorMsg}>{error}</Text>}
-
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.usersList}>
-          {data.map((user) => renderUser(user))}
-        </View>
-
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <Separator opacity={0.36} height={6} />
+        <FlatList
+          data={data}
+          keyExtractor={(item) => item.id || item.email}
+          renderItem={({ item }) => renderUser(item)}
+          contentContainerStyle={styles.usersList}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+        />
         <View style={styles.formContainer}>
-          <Text style={styles.formTitle}>
-            {isUserEditing ? "Edit User" : "Add User"}
-          </Text>
+          <CustomText
+            value={isUserEditing ? "Edit User" : "Add User"}
+            bold
+            big
+          />
+          <Separator opacity={0.56} />
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Name</Text>
             <TextInput
@@ -232,7 +297,7 @@ const Admin: React.FC = () => {
             <Text style={styles.label}>Email</Text>
             <TextInput
               style={styles.input}
-              placeholder="Email"
+              placeholder="email@das.ac.ma"
               value={editedUser.email}
               onChangeText={(text) => handleInputChange("email", text)}
               autoCapitalize="none"
@@ -243,11 +308,34 @@ const Admin: React.FC = () => {
             <Text style={styles.label}>Password</Text>
             <TextInput
               style={styles.input}
-              placeholder="Password"
+              placeholder="************"
               value={editedUser.password}
               onChangeText={(text) => handleInputChange("password", text)}
-              secureTextEntry
+              secureTextEntry={!showPassword}
             />
+            <CustomButton
+              style={[styles.button, { marginTop: 18, position: "relative" }]}
+              onPress={() => handleGeneratePassword()}
+              shadowHeight={1}
+              shadowOpacity={0.52}
+              shadowRadius={2}
+            >
+              <CustomText value="Generate Password" color="#007AFF" bold />
+            </CustomButton>
+            <TouchableOpacity
+              onPress={() => setShowPassword(!showPassword)}
+              style={styles.showPasswordButton}
+            >
+              {!showPassword ? (
+                <CustomIcon iconName="eye" iconColor="#555" iconSize={32} />
+              ) : (
+                <CustomIcon
+                  iconName="eye-slash"
+                  iconColor="#555"
+                  iconSize={32}
+                />
+              )}
+            </TouchableOpacity>
           </View>
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Role</Text>
@@ -259,26 +347,25 @@ const Admin: React.FC = () => {
             />
           </View>
           <View style={styles.switchRow}>
-            <Text style={styles.switchLabel}>Baned</Text>
+            <CustomText value="Banned" color="#333" />
             <Switch
               value={!!editedUser.baned}
               onValueChange={(val) => handleInputChange("baned", val)}
             />
           </View>
-
           <View style={styles.buttonRow}>
-            <TouchableOpacity
+            <CustomButton
               style={styles.button}
               onPress={() => handleSetAllCheckboxes(true)}
             >
-              <Text style={styles.buttonText}>Set All True</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+              <CustomText value="Set All True" color="#007AFF" bold />
+            </CustomButton>
+            <CustomButton
               style={styles.button}
               onPress={() => handleSetAllCheckboxes(false)}
             >
-              <Text style={styles.buttonText}>Set All False</Text>
-            </TouchableOpacity>
+              <CustomText value="Set All False" color="#007AFF" bold />
+            </CustomButton>
           </View>
 
           {/* Render switches for each section */}
@@ -292,23 +379,31 @@ const Admin: React.FC = () => {
           {renderSwitchSection("fifth", "Fifth")}
 
           <View style={styles.buttonRow}>
-            <TouchableOpacity
-              style={styles.saveButton}
+            <CustomButton
+              style={styles.button}
               onPress={handleSaveOrEditUser}
+              shadowColor="#274818"
+              shadowWidth={0}
+              shadowHeight={1}
+              shadowOpacity={0.58}
+              shadowRadius={2}
             >
-              <Text style={styles.saveButtonText}>
-                {isUserEditing ? "Save" : "Add"}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.cancelButton}
+              <CustomText value={isUserEditing ? "Save" : "Add"} bold />
+            </CustomButton>
+            <CustomButton
+              style={styles.button}
               onPress={() => {
                 setIsUserEditing(false);
                 resetEditedUser();
               }}
+              shadowColor="#4f2222"
+              shadowWidth={0}
+              shadowHeight={1}
+              shadowOpacity={0.58}
+              shadowRadius={2}
             >
-              <Text style={styles.cancelButtonText}>Cancel</Text>
-            </TouchableOpacity>
+              <CustomText value="Cancel" bold />
+            </CustomButton>
           </View>
         </View>
       </ScrollView>
@@ -320,38 +415,65 @@ export default Admin;
 
 // --- Styles ---
 const styles = StyleSheet.create({
-  container: { backgroundColor: "#fff" },
+  container: { backgroundColor: globalColors.primary },
   loadingOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: "#fff8",
     alignItems: "center",
     justifyContent: "center",
     zIndex: 10,
   },
   errorMsg: { color: "#b00", textAlign: "center", margin: 8 },
-  scrollContent: { padding: 16 },
-  usersList: { marginBottom: 24 },
+  scrollContent: { paddingHorizontal: 10, paddingBottom: 10 },
+
+  usersList: { marginBottom: 24, marginTop: 12 },
   userContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    position: "relative",
+    maxWidth: 150,
     backgroundColor: "#f4f4f4",
-    padding: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 28,
     borderRadius: 8,
-    marginBottom: 8,
+    marginBottom: 12,
+    marginHorizontal: 8,
+    // Shadow for iOS
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    // Elevation for Android
+    elevation: 3,
   },
-  userBanned: { backgroundColor: "#ffe6e6" },
-  userAdmin: { borderWidth: 1, borderColor: "#007AFF" },
-  userName: { flex: 1, fontWeight: "bold", fontSize: 16 },
-  userEmail: { flex: 1, color: "#555" },
-  deleteIcon: { padding: 4 },
+  userBanned: {
+    backgroundColor: "#ffe6e6",
+    borderWidth: 1,
+    borderColor: "#b00",
+  },
+  userAdmin: {
+    backgroundColor: "#e6ffe6",
+    borderWidth: 1,
+    borderColor: "#123000",
+    shadowColor: "#123000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  deleteIcon: {
+    position: "absolute",
+    top: -10,
+    right: -12,
+    zIndex: 1,
+    backgroundColor: "#f4f4f4",
+    borderRadius: 30,
+    padding: 2,
+  },
   formContainer: {
     backgroundColor: "#f9f9f9",
     borderRadius: 10,
     padding: 16,
     elevation: 1,
   },
-  formTitle: { fontSize: 18, fontWeight: "bold", marginBottom: 12 },
-  inputGroup: { marginBottom: 12 },
+  inputGroup: { position: "relative", marginBottom: 12 },
   label: { marginBottom: 4, fontWeight: "bold" },
   input: {
     borderWidth: 1,
@@ -366,7 +488,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginVertical: 4,
   },
-  switchLabel: { fontSize: 15, color: "#333" },
   section: { marginTop: 12, marginBottom: 6 },
   sectionTitle: { fontWeight: "bold", color: "#007AFF", marginBottom: 4 },
   buttonRow: {
@@ -382,7 +503,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     alignItems: "center",
   },
-  buttonText: { color: "#007AFF", fontWeight: "bold" },
+  showPasswordButton: {
+    position: "absolute",
+    top: 20,
+    right: 14,
+    alignItems: "center",
+    backgroundColor: "transparent",
+  },
   saveButton: {
     flex: 1,
     backgroundColor: "#007AFF",
@@ -391,7 +518,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     alignItems: "center",
   },
-  saveButtonText: { color: "#fff", fontWeight: "bold" },
   cancelButton: {
     flex: 1,
     backgroundColor: "#bbb",
