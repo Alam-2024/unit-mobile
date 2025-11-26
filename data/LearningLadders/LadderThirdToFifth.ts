@@ -1,11 +1,12 @@
 import { LadderFSInterface } from "@/interfaces/standards/standard";
 
 export const LadderPEGrades3to5: LadderFSInterface = {
+  title: "Physical Education Grades 3-5",
   objectives: [
     {
       description:
         "Being physically active, trying different forms of exercise, and practicing while giving their best effort",
-      skills: [],
+      skills: ["Physical Activity", "Exercise", "Effort", "Trying Your Best"],
       standards: [
         {
           title: "Excelling",
@@ -155,8 +156,8 @@ export const LadderPEGrades3to5: LadderFSInterface = {
               "Masterfully controls and manipulates any equipment presented, often showcasing innovation and refined techniques.",
             ],
             phrases: [
-              "Wow, you're amazing with any sports equipment! Whether it's something you use all the time or something brand new, you make it look easy.\n" +
-                "You're even coming up with cool, new ways to use the equipment that others might not think of.",
+              "Wow, you're amazing with any sports equipment! Whether it's something you use all the time or something brand new, you make it look easy.",
+              "You're even coming up with cool, new ways to use the equipment that others might not think of.",
             ],
           },
         },
@@ -167,8 +168,8 @@ export const LadderPEGrades3to5: LadderFSInterface = {
               "Shows good technique and control when handling most equipment (the sport) with confidence and skill.",
             ],
             phrases: [
-              "You're great at using most of the equipment in your sport! You can catch, throw, hit, or kick with confidence.\n" +
-                "You know how to handle the gear well and look pretty cool doing it!",
+              "You're great at using most of the equipment in your sport! You can catch, throw, hit, or kick with confidence.",
+              "You know how to handle the gear well and look pretty cool doing it!",
             ],
           },
         },
@@ -234,9 +235,9 @@ export const LadderPEGrades3to5: LadderFSInterface = {
               "Consistently adheres to the principles of fair play; recognizes and self-corrects minor breaches and encourages peers to play fairly.",
             ],
             phrases: [
-              "You're really good at sticking to the rules and playing fair.\n" +
-                "If you make a small mistake, you notice it yourself and fix it.\n" +
-                "You even help your friends remember to play fair.",
+              "You're really good at sticking to the rules and playing fair.",
+              "If you make a small mistake, you notice it yourself and fix it.",
+              "You even help your friends remember to play fair.",
             ],
           },
         },
@@ -247,8 +248,8 @@ export const LadderPEGrades3to5: LadderFSInterface = {
               "Generally follows the rules and respects others during activities; shows understanding of fairness but might have occasional lapses.",
             ],
             phrases: [
-              "Most of the time, you play by the rules and are nice to others in games.\n" +
-                "Every now and then, you might slip up or forget to be fair, but you're learning.",
+              "Most of the time, you play by the rules and are nice to others in games.",
+              "Every now and then, you might slip up or forget to be fair, but you're learning.",
             ],
           },
         },
@@ -259,8 +260,8 @@ export const LadderPEGrades3to5: LadderFSInterface = {
               "Occasionally demonstrates an understanding of fair play but may still commit unintentional breaches or require reminders.",
             ],
             phrases: [
-              "You know a bit about playing fair and following the rules, but sometimes you might forget or make mistakes.\n" +
-                "You might need a teacher or friend to remind you about playing fair sometimes.",
+              "You know a bit about playing fair and following the rules, but sometimes you might forget or make mistakes.",
+              "You might need a teacher or friend to remind you about playing fair sometimes.",
             ],
           },
         },
@@ -280,7 +281,7 @@ export const LadderPEGrades3to5: LadderFSInterface = {
     {
       description:
         "Take responsibility for their actions and to support the student’s skills in working independently",
-      skills: [], // No skills explícitas
+      skills: [],
       standards: [
         {
           title: "Excelling",
@@ -289,8 +290,8 @@ export const LadderPEGrades3to5: LadderFSInterface = {
               "Excels in working independently, often going above and beyond task requirements, seeking additional resources or challenges, and consistently producing high-quality work.",
             ],
             phrases: [
-              "Wow, you're amazing at working on your own! You don't just do what's asked; you do even more.\n" +
-                "You look for new ways to learn and find extra things to do that make your work really great.",
+              "Wow, you're amazing at working on your own! You don't just do what's asked; you do even more.",
+              "You look for new ways to learn and find extra things to do that make your work really great.",
             ],
           },
         },
@@ -301,8 +302,8 @@ export const LadderPEGrades3to5: LadderFSInterface = {
               "Demonstrates a strong ability to work independently, staying focused, and completing tasks with minimal guidance.",
             ],
             phrases: [
-              "You're really good at working by yourself. You can focus on your task and get it done without much help.\n" +
-                "You know what you need to do and you stick with it until it's finished.",
+              "You're really good at working by yourself. You can focus on your task and get it done without much help.",
+              "You know what you need to do and you stick with it until it's finished.",
             ],
           },
         },
@@ -313,8 +314,8 @@ export const LadderPEGrades3to5: LadderFSInterface = {
               "Consistently starts and works on tasks independently but may occasionally need support or clarification to see tasks through to completion.",
             ],
             phrases: [
-              "You're pretty good at starting your work on your own and can do a lot of it by yourself.\n" +
-                "Sometimes you might need a little bit of help or someone to explain things again to help you finish your work.",
+              "You're pretty good at starting your work on your own and can do a lot of it by yourself.",
+              "Sometimes you might need a little bit of help or someone to explain things again to help you finish your work.",
             ],
           },
         },
@@ -325,8 +326,8 @@ export const LadderPEGrades3to5: LadderFSInterface = {
               "Begins tasks independently but often requires guidance or reminders to stay focused and complete work.",
             ],
             phrases: [
-              "You start doing your work by yourself, but sometimes you need a little help or a reminder to keep going and finish it.\n" +
-                "You might find it hard to stay on task without someone telling you what to do next.",
+              "You start doing your work by yourself, but sometimes you need a little help or a reminder to keep going and finish it.",
+              "You might find it hard to stay on task without someone telling you what to do next.",
             ],
           },
         },

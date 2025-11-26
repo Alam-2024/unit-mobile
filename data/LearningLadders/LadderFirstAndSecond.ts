@@ -1,6 +1,7 @@
 import { LadderFSInterface } from "@/interfaces/standards/standard";
 
 export const LadderFS: LadderFSInterface = {
+  title: "First and Second Grades",
   objectives: [
     {
       description:
