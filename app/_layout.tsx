@@ -57,16 +57,7 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
-  const iosModalOptions = {
-    title: "Rubric",
-    presentation: "formSheet",
-    gestureDirection: "vertical",
-    animation: "slide_from_bottom",
-    headerTitleAlign: "center",
-    sheetAllowedDetents: [0.5, 0.75, 1],
-  } as const;
-
-  const androidModalOptions = {
+  const ModalOptions = {
     title: "Rubric",
     presentation: "modal",
     headerBackButtonMenuEnabled: false,
@@ -76,9 +67,6 @@ function RootLayoutNav() {
     headerStyle: { backgroundColor: globalColors.primary },
     headerTitleAlign: "center",
   } as const;
-
-  const modalOptions =
-    Platform.OS === "ios" ? iosModalOptions : androidModalOptions;
 
   return (
     <AppProvider>
@@ -101,7 +89,7 @@ function RootLayoutNav() {
             name="data"
             options={{ presentation: "modal", headerShown: false }}
           />
-          <Stack.Screen name="SmallModal" options={modalOptions} />
+          <Stack.Screen name="SmallModal" options={ModalOptions} />
         </Stack>
       </ThemeProvider>
     </AppProvider>
