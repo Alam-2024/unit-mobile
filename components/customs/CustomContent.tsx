@@ -75,7 +75,7 @@ const CustomContent = ({
         <CustomText value={lengthOfUnit} bold />
       </View>
 
-      <CustomText value={overallExpectation} bold right />
+      <CustomText value={overallExpectation} bold center />
       <Separator width="100%" height={2} opacity={0.5} />
 
       {/* Essential Questions */}
