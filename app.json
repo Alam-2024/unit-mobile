@@ -30,7 +30,9 @@
     },
     "plugins": [
       "expo-router",
-      "expo-web-browser"
+      "expo-web-browser",
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth"
     ],
     "experiments": {
       "typedRoutes": true
