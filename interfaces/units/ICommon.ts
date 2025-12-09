@@ -84,6 +84,10 @@ export enum GradeLevel {
   Third = "3rd Grade ",
   Fourth = "4th Grade",
   Fifth = "5th Grade",
+  Sixth = "6th Grade",
+  Seventh = "7th Grade",
+  Eighth = "8th Grade",
+  Ninth = "9th Grade",
 }
 
 export interface Rubric {
