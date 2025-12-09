@@ -7,6 +7,7 @@ import pesaPalloFifth from "@/data/Pesapallo/PesaPalloFifth";
 import swimmingUnit from "@/data/Swimming/SwimmingFifth";
 import { IUnits } from "@/interfaces/units/IUnit";
 import CustomGradeContainer from "@/components/views/CustomGradeContainer";
+import flagFootballFourthFifth from "@/data/Flag/FlagFourthAndFifth";
 
 const FifthGrade = () => {
   const [unitTitle, setUnitTitle] = React.useState<string>("");
@@ -17,6 +18,7 @@ const FifthGrade = () => {
     FloorHockey: floorHockeyFifth,
     Swimming: swimmingUnit,
     FinnishBaseball: pesaPalloFifth,
+    FlagFootBall: flagFootballFourthFifth,
   };
   return (
     <CustomGradeContainer

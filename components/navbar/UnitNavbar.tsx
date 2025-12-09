@@ -88,6 +88,7 @@ function UnitNameButton({
       FitnessFun: "Fitness Fun: Know My Body",
       NetWallFundamentals: "Net/Wall: Fundamentals",
       OutdoorActivities: "Outdoor Adventure Activities",
+      FlagFootBall: "NFL Flag Football",
     };
 
     return unitNameMapping[name] || name;

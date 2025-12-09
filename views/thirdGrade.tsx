@@ -9,6 +9,7 @@ import trackAndFieldThirdSpeed from "@/data/TrackAndField/TrackAndFieldThirdSpee
 import { IUnits } from "@/interfaces/units/IUnit";
 import athleticsThird from "@/data/Athletics/Athletics";
 import CustomGradeContainer from "@/components/views/CustomGradeContainer";
+import flagFootballThird from "@/data/Flag/FlagThird";
 
 const ThirdGrade = () => {
   const [unitTitle, setUnitTitle] = React.useState<string>("");
@@ -21,6 +22,7 @@ const ThirdGrade = () => {
     StrikeAndField: trackAndFieldThirdSpeed,
     Swimming: SwimmingForThirdGrade,
     Badminton: badmintonThird,
+    FlagFootBall: flagFootballThird,
   };
   return (
     <CustomGradeContainer

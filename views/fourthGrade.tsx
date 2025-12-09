@@ -12,6 +12,7 @@ import circuitTrainingFourth from "@/data/Circuit/CircuitTrainingFourth";
 import badmintonFourth from "@/data/Badminton/BadmintonFourth";
 import rollerSkatingFourth from "@/data/RollerSkating/RollerSkatingFourth";
 import CustomGradeContainer from "@/components/views/CustomGradeContainer";
+import flagFootballFourthFifth from "@/data/Flag/FlagFourthAndFifth";
 
 const FourthGrade = () => {
   const [unitTitle, setUnitTitle] = React.useState<string>("");
@@ -27,6 +28,7 @@ const FourthGrade = () => {
     InvasionGames: invasionGamesFourth,
     Football: soccerFourth,
     Basketball: basketballFourth,
+    FlagFootBall: flagFootballFourthFifth,
   };
   return (
     <CustomGradeContainer
