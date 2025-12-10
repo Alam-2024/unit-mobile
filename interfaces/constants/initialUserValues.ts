@@ -2,9 +2,9 @@ import { StoredUsers } from "../user/IUser";
 
 export const initialUserState: StoredUsers = {
   id: "",
+  userUid: "",
   name: "",
   email: "",
-  password: "",
   role: "user",
   baned: false,
   pk3: {

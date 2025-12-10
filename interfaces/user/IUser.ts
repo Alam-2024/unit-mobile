@@ -8,9 +8,9 @@ enum AuthorizedUsers {
 
 export interface StoredUsers {
   id: string;
+  userUid: string;
   name: string;
   email: string;
-  password: string;
   role: string;
   baned: boolean;
   pk3: { [key: string]: boolean };
