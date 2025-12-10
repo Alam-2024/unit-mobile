@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TextInput,
-  StyleSheet,
   ScrollView,
   TouchableOpacity,
   Switch,
@@ -20,7 +19,7 @@ import {
   getDocs,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "@/firebase/fireConfig";
+import { authFirebase, db } from "@/firebase/fireConfig";
 import { StoredUsers } from "@/interfaces/user/IUser";
 import { initialUserState } from "@/interfaces/constants/initialUserValues";
 import CustomText from "@/components/customs/CustomText";
@@ -28,6 +27,8 @@ import Separator from "@/components/customs/Separator";
 import CustomButton from "@/components/customs/CustomButton";
 import { globalColors } from "@/constants/Colors";
 import CustomIcon from "@/components/customs/CustomIcon";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { adminStyles } from "./adminStyles";
 
 /**
  * Admin
@@ -50,10 +51,11 @@ const Admin: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const isFetched = useRef<boolean>(false);
   const [isUserEditing, setIsUserEditing] = useState<boolean>(false);
-  const [userId, setUserId] = useState<string>("");
+  const [userUidID, setUserUidID] = useState<string>("");
   const [editedUser, setEditedUser] = useState<StoredUsers | any>(
     initialUserState
   );
+  const [givenPassword, setGivenPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   // --- Helpers ---
@@ -63,17 +65,14 @@ const Admin: React.FC = () => {
     data.some((user: StoredUsers) => user.email === email);
 
   const isUserMissingData = (): boolean =>
-    !editedUser.name ||
-    !editedUser.email ||
-    !editedUser.password ||
-    !editedUser.role;
+    !editedUser.name || !editedUser.email || !editedUser.role;
 
   const unAuthorizedRole = (role: string): boolean =>
     role !== "admin" && role !== "user";
 
   // --- Handlers ---
   const handleUserToBeEdited = (user: StoredUsers): void => {
-    setUserId(user.id || "");
+    setUserUidID(user.id || "");
     setEditedUser(user);
     setIsUserEditing(true);
   };
@@ -96,6 +95,9 @@ const Admin: React.FC = () => {
     }
   };
 
+  const handleGivenPasswordChange = (password: string): void => {
+    setGivenPassword(password);
+  };
   const handleSetAllCheckboxes = (value: boolean): void => {
     setEditedUser((prev: StoredUsers) => {
       const updateSection = (
@@ -149,16 +151,15 @@ const Admin: React.FC = () => {
     setLoadingMsg(isUserEditing ? "Editing user..." : "Saving user...");
 
     try {
-      const isEdit = Boolean(userId);
+      const isEdit = Boolean(userUidID);
       const { email, role } = editedUser;
-
       if (!isEdit && isEmailTaken(email)) {
         Alert.alert("Error", "Email already exists");
         return;
       }
 
       if (isUserMissingData()) {
-        Alert.alert("Error", "Email, password, or name is missing");
+        Alert.alert("Error", "Email or name is missing");
         return;
       }
 
@@ -168,10 +169,10 @@ const Admin: React.FC = () => {
       }
 
       if (isEdit) {
-        const userDocRef = doc(db, "users-data", userId);
+        const userDocRef = doc(db, "users-data", userUidID);
         await updateDoc(userDocRef, editedUser);
       } else {
-        await addDoc(collection(db, "users-data"), editedUser);
+        createFirebaseUser(editedUser.email, editedUser.password);
       }
 
       resetEditedUser();
@@ -182,6 +183,26 @@ const Admin: React.FC = () => {
     } finally {
       setLoading(false);
       setLoadingMsg("");
+    }
+  };
+
+  const createFirebaseUser = async (email: string, password: string) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        authFirebase,
+        email,
+        password
+      );
+      if (userCredential.user) {
+        console.log("Firebase user created:", userCredential.user);
+        await addDoc(collection(db, "users-data"), {
+          ...editedUser,
+          userUid: userCredential.user.uid,
+        });
+      }
+    } catch (error) {
+      console.error("Error creating Firebase user:", error);
+      throw error;
     }
   };
 
@@ -204,16 +225,16 @@ const Admin: React.FC = () => {
   const renderUser = (user: StoredUsers) => (
     <TouchableOpacity
       style={[
-        styles.userContainer,
-        user.baned && styles.userBanned,
-        user.role === "admin" && styles.userAdmin,
+        adminStyles.userContainer,
+        user.baned && adminStyles.userBanned,
+        user.role === "admin" && adminStyles.userAdmin,
       ]}
       onPress={() => handleUserToBeEdited(user)}
     >
       <CustomText value={user.name} bold color={globalColors.secondary} />
       <CustomText value={user.email} color={globalColors.secondary} />
       <TouchableOpacity
-        style={styles.deleteIcon}
+        style={adminStyles.deleteIcon}
         onPress={() => handleDeleteUser(user.id)}
       >
         <MaterialIcons name="delete-forever" size={38} color="#b00" />
@@ -232,17 +253,17 @@ const Admin: React.FC = () => {
 
   const handleGeneratePassword = (): void => {
     const password = generatePassword();
-    handleInputChange("password", password);
+    setGivenPassword(password);
   };
 
   const renderSwitchSection = (
     sectionKey: keyof StoredUsers,
     label: string
   ) => (
-    <View style={styles.section} key={sectionKey}>
+    <View style={adminStyles.section} key={sectionKey}>
       <CustomText value={label} bold big color="#007AFF" />
       {Object.keys(editedUser[sectionKey] || {}).map((key) => (
-        <View key={`${sectionKey}-${key}`} style={styles.switchRow}>
+        <View key={`${sectionKey}-${key}`} style={adminStyles.switchRow}>
           <CustomText value={key} color="#333" />
           <Switch
             value={!!editedUser[sectionKey][key]}
@@ -256,16 +277,16 @@ const Admin: React.FC = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={adminStyles.container}>
       {loading && (
-        <View style={styles.loadingOverlay}>
+        <View style={adminStyles.loadingOverlay}>
           <ActivityIndicator size="large" color="#007AFF" />
           <CustomText value={loadingMsg || "Loading..."} medium />
         </View>
       )}
-      {error && <Text style={styles.errorMsg}>{error}</Text>}
+      {error && <Text style={adminStyles.errorMsg}>{error}</Text>}
       <ScrollView
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={adminStyles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
         <Separator opacity={0.36} height={6} />
@@ -273,30 +294,30 @@ const Admin: React.FC = () => {
           data={data}
           keyExtractor={(item) => item.id || item.email}
           renderItem={({ item }) => renderUser(item)}
-          contentContainerStyle={styles.usersList}
+          contentContainerStyle={adminStyles.usersList}
           horizontal
           showsHorizontalScrollIndicator={false}
         />
-        <View style={styles.formContainer}>
+        <View style={adminStyles.formContainer}>
           <CustomText
             value={isUserEditing ? "Edit User" : "Add User"}
             bold
             big
           />
           <Separator opacity={0.56} />
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Name</Text>
+          <View style={adminStyles.inputGroup}>
+            <Text style={adminStyles.label}>Name</Text>
             <TextInput
-              style={styles.input}
+              style={adminStyles.input}
               placeholder="Name"
               value={editedUser.name}
               onChangeText={(text) => handleInputChange("name", text)}
             />
           </View>
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Email</Text>
+          <View style={adminStyles.inputGroup}>
+            <Text style={adminStyles.label}>Email</Text>
             <TextInput
-              style={styles.input}
+              style={adminStyles.input}
               placeholder="email@das.ac.ma"
               value={editedUser.email}
               onChangeText={(text) => handleInputChange("email", text)}
@@ -304,17 +325,22 @@ const Admin: React.FC = () => {
               keyboardType="email-address"
             />
           </View>
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Password</Text>
+          <View style={adminStyles.inputGroup}>
+            <Text style={adminStyles.label}>Password</Text>
             <TextInput
-              style={styles.input}
+              style={adminStyles.input}
               placeholder="************"
-              value={editedUser.password}
-              onChangeText={(text) => handleInputChange("password", text)}
+              value={givenPassword}
+              onChangeText={(text) => {
+                handleGivenPasswordChange(text);
+              }}
               secureTextEntry={!showPassword}
             />
             <CustomButton
-              style={[styles.button, { marginTop: 18, position: "relative" }]}
+              style={[
+                adminStyles.button,
+                { marginTop: 18, position: "relative" },
+              ]}
               onPress={() => handleGeneratePassword()}
               shadowHeight={1}
               shadowOpacity={0.52}
@@ -324,7 +350,7 @@ const Admin: React.FC = () => {
             </CustomButton>
             <TouchableOpacity
               onPress={() => setShowPassword(!showPassword)}
-              style={styles.showPasswordButton}
+              style={adminStyles.showPasswordButton}
             >
               {!showPassword ? (
                 <CustomIcon iconName="eye" iconColor="#555" iconSize={32} />
@@ -337,31 +363,31 @@ const Admin: React.FC = () => {
               )}
             </TouchableOpacity>
           </View>
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Role</Text>
+          <View style={adminStyles.inputGroup}>
+            <Text style={adminStyles.label}>Role</Text>
             <TextInput
-              style={styles.input}
+              style={adminStyles.input}
               placeholder="Role"
               value={editedUser.role}
               onChangeText={(text) => handleInputChange("role", text)}
             />
           </View>
-          <View style={styles.switchRow}>
+          <View style={adminStyles.switchRow}>
             <CustomText value="Banned" color="#333" />
             <Switch
               value={!!editedUser.baned}
               onValueChange={(val) => handleInputChange("baned", val)}
             />
           </View>
-          <View style={styles.buttonRow}>
+          <View style={adminStyles.buttonRow}>
             <CustomButton
-              style={styles.button}
+              style={adminStyles.button}
               onPress={() => handleSetAllCheckboxes(true)}
             >
               <CustomText value="Set All True" color="#007AFF" bold />
             </CustomButton>
             <CustomButton
-              style={styles.button}
+              style={adminStyles.button}
               onPress={() => handleSetAllCheckboxes(false)}
             >
               <CustomText value="Set All False" color="#007AFF" bold />
@@ -378,9 +404,9 @@ const Admin: React.FC = () => {
           {renderSwitchSection("fourth", "Fourth")}
           {renderSwitchSection("fifth", "Fifth")}
 
-          <View style={styles.buttonRow}>
+          <View style={adminStyles.buttonRow}>
             <CustomButton
-              style={styles.button}
+              style={adminStyles.button}
               onPress={handleSaveOrEditUser}
               shadowColor="#274818"
               shadowWidth={0}
@@ -391,7 +417,7 @@ const Admin: React.FC = () => {
               <CustomText value={isUserEditing ? "Save" : "Add"} bold />
             </CustomButton>
             <CustomButton
-              style={styles.button}
+              style={adminStyles.button}
               onPress={() => {
                 setIsUserEditing(false);
                 resetEditedUser();
@@ -412,119 +438,3 @@ const Admin: React.FC = () => {
 };
 
 export default Admin;
-
-// --- Styles ---
-const styles = StyleSheet.create({
-  container: { backgroundColor: globalColors.primary },
-  loadingOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 10,
-  },
-  errorMsg: { color: "#b00", textAlign: "center", margin: 8 },
-  scrollContent: { paddingHorizontal: 10, paddingBottom: 10 },
-
-  usersList: { marginBottom: 24, marginTop: 12 },
-  userContainer: {
-    position: "relative",
-    maxWidth: 150,
-    backgroundColor: "#f4f4f4",
-    paddingHorizontal: 12,
-    paddingVertical: 28,
-    borderRadius: 8,
-    marginBottom: 12,
-    marginHorizontal: 8,
-    // Shadow for iOS
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    // Elevation for Android
-    elevation: 3,
-  },
-  userBanned: {
-    backgroundColor: "#ffe6e6",
-    borderWidth: 1,
-    borderColor: "#b00",
-  },
-  userAdmin: {
-    backgroundColor: "#e6ffe6",
-    borderWidth: 1,
-    borderColor: "#123000",
-    shadowColor: "#123000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  deleteIcon: {
-    position: "absolute",
-    top: -10,
-    right: -12,
-    zIndex: 1,
-    backgroundColor: "#f4f4f4",
-    borderRadius: 30,
-    padding: 2,
-  },
-  formContainer: {
-    backgroundColor: "#f9f9f9",
-    borderRadius: 10,
-    padding: 16,
-    elevation: 1,
-  },
-  inputGroup: { position: "relative", marginBottom: 12 },
-  label: { marginBottom: 4, fontWeight: "bold" },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 6,
-    padding: 8,
-    backgroundColor: "#fff",
-  },
-  switchRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginVertical: 4,
-  },
-  section: { marginTop: 12, marginBottom: 6 },
-  sectionTitle: { fontWeight: "bold", color: "#007AFF", marginBottom: 4 },
-  buttonRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginVertical: 8,
-  },
-  button: {
-    flex: 1,
-    backgroundColor: "#eee",
-    padding: 10,
-    borderRadius: 6,
-    marginHorizontal: 4,
-    alignItems: "center",
-  },
-  showPasswordButton: {
-    position: "absolute",
-    top: 20,
-    right: 14,
-    alignItems: "center",
-    backgroundColor: "transparent",
-  },
-  saveButton: {
-    flex: 1,
-    backgroundColor: "#007AFF",
-    padding: 12,
-    borderRadius: 6,
-    marginHorizontal: 4,
-    alignItems: "center",
-  },
-  cancelButton: {
-    flex: 1,
-    backgroundColor: "#bbb",
-    padding: 12,
-    borderRadius: 6,
-    marginHorizontal: 4,
-    alignItems: "center",
-  },
-  cancelButtonText: { color: "#fff", fontWeight: "bold" },
-});
