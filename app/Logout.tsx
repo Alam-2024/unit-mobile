@@ -2,9 +2,9 @@ import { View } from "react-native";
 import React from "react";
 import { useAppContext } from "@/hooks/useContextHook";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { initialUserValues } from "@/interfaces/user/IUser";
 import CustomButton from "@/components/customs/CustomButton";
 import CustomText from "@/components/customs/CustomText";
+import { initialUserState } from "@/interfaces/constants/initialUserValues";
 
 const Logout = ({ onCloseModal }: { onCloseModal?: () => void }) => {
   const {
@@ -24,7 +24,7 @@ const Logout = ({ onCloseModal }: { onCloseModal?: () => void }) => {
       await AsyncStorage.removeItem("user");
       await AsyncStorage.removeItem("loginTime");
 
-      setLoggedInUser(initialUserValues);
+      setLoggedInUser(initialUserState);
       setIsUserAuthenticated(false);
       setIsSessionExpired(true);
       setIsAuthenticatedAdminUser(false);
