@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, FlatList, StyleSheet, Dimensions } from "react-native";
+import { View } from "react-native";
 import { useAppContext } from "@/hooks/useContextHook";
 import DynamicModal from "../modal";
 import Login from "../Login";
@@ -7,6 +7,8 @@ import Logout from "../Logout";
 import CustomButton from "@/components/customs/CustomButton";
 import CustomText from "@/components/customs/CustomText";
 import CustomView from "@/components/customs/CustomView";
+import UserReadOnly from "../Profile";
+import { profileStyles } from "@/styles/profile";
 
 type SportStatus = {
   name: string;
@@ -20,8 +22,6 @@ type GradeSports = {
 type UserGrades = {
   [grade: string]: GradeSports;
 };
-
-const windowWidth = Dimensions.get("window").width;
 
 const ProfileView = () => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -56,80 +56,24 @@ const ProfileView = () => {
     });
   }
 
-  // Render each sport item
-  // item: { name: string; active: boolean }
-  // active: true if the sport is active, false otherwise
-  // name: name of the sport
-  const renderSportItem = ({ item }: { item: SportStatus }) => (
-    <View
-      style={[
-        styles.sportItem,
-        item.active ? styles.activeSport : styles.inactiveSport,
-      ]}
-    >
-      <Text
-        style={[
-          styles.sportText,
-          item.active ? styles.activeText : styles.inactiveText,
-        ]}
-      >
-        {item.name}
-      </Text>
-    </View>
-  );
-
-  // Render each grade item
-  // item: string (grade name)
-  // sportsObj: object with sports as keys and boolean as values
-  // Example: { "Soccer": true, "Basketball": false }
-  // Convert it to an array of objects with name and active properties
-  // Example: [{ name: "Soccer", active: true }, { name: "Basketball", active: false }]
-  const renderGradeItem = ({ item }: { item: string }) => {
-    const sportsObj = userGrades[item];
-    if (!sportsObj) return null;
-
-    const sportsArray: SportStatus[] = Object.entries(sportsObj).map(
-      ([name, active]) => ({
-        name,
-        active,
-      })
-    );
-
-    const unitCount = Object.keys(sportsObj).length;
-
-    return (
-      <View style={styles.gradeContainer}>
-        <Text style={styles.gradeTitle}>
-          {item[0].toUpperCase() + item.slice(1)} - ({unitCount}) units
-        </Text>
-        <FlatList
-          data={sportsArray}
-          horizontal
-          keyExtractor={(sport) => sport.name}
-          renderItem={renderSportItem}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddingHorizontal: 10 }}
-          ItemSeparatorComponent={() => <View style={{ width: 12 }} />}
-        />
-      </View>
-    );
-  };
-
   return (
-    <CustomView style={styles.container}>
+    <CustomView style={profileStyles.container} bgColor="#e5e5e5">
       <DynamicModal visible={isModalVisible} onClose={closeModal}>
         {modalType === "login" && <Login onCloseModal={closeModal} />}
         {modalType === "logout" && <Logout onCloseModal={closeModal} />}
       </DynamicModal>
-      <View style={styles.buttonContainer}>
+      <View style={profileStyles.buttonContainer}>
         {isUserAuthenticated ? (
           <>
             <View>
               <CustomText
-                value={`Welcome, ${loggedInUser?.name || "User"}.`}
+                value="Welcome"
                 medium
+                style={{
+                  paddingBottom: 3,
+                }}
               />
-              <CustomText value={`${loggedInUser?.email}`} />
+              <CustomText value={`${loggedInUser?.email}`} bold />
             </View>
             <CustomButton onPress={() => openModal("logout")}>
               <CustomText value="Logout" big center />
@@ -148,81 +92,19 @@ const ProfileView = () => {
           </>
         )}
       </View>
-
-      <FlatList
-        data={Object.keys(userGrades)}
-        keyExtractor={(item) => item}
-        renderItem={renderGradeItem}
-        contentContainerStyle={{ paddingVertical: 16 }}
-        showsVerticalScrollIndicator={false}
-        ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
-        ListEmptyComponent={
-          <View style={styles.emptyContainer}>
-            <Text>No grades or sports available</Text>
-          </View>
-        }
-      />
+      <View style={{ marginBottom: 20 }}>
+        {isUserAuthenticated && loggedInUser ? (
+          <UserReadOnly user={loggedInUser} />
+        ) : (
+          <CustomText
+            value="You need to be logged in to view profile details."
+            medium
+            center
+          />
+        )}
+      </View>
     </CustomView>
   );
 };
 
 export default ProfileView;
-
-const styles = StyleSheet.create({
-  container: {
-    paddingBottom: 70,
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: "700",
-    marginLeft: 16,
-    marginBottom: 16,
-    color: "#222",
-  },
-  buttonContainer: {
-    paddingHorizontal: 16,
-    marginBottom: 16,
-    marginTop: 2,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  gradeContainer: {
-    marginBottom: 20,
-  },
-  gradeTitle: {
-    fontSize: 20,
-    fontWeight: "700",
-    marginLeft: 16,
-    marginBottom: 12,
-    color: "#333",
-  },
-  sportItem: {
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    minWidth: windowWidth * 0.2,
-  },
-  activeSport: {
-    backgroundColor: "#002f02b5",
-  },
-  inactiveSport: {
-    backgroundColor: "#ddd",
-  },
-  sportText: {
-    fontWeight: "600",
-    fontSize: 14,
-  },
-  activeText: {
-    color: "#fff",
-  },
-  inactiveText: {
-    color: "#666",
-  },
-  emptyContainer: {
-    marginTop: 40,
-    alignItems: "center",
-  },
-});
