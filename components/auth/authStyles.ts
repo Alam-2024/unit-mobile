@@ -53,7 +53,25 @@ export const authStyles = StyleSheet.create({
     textAlign: "center",
   },
   inputGroup: {
-    marginBottom: 16,
+    marginBottom: 2,
+  },
+  inputGroupRow: {
+    maxWidth: "56%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginLeft: 144,
+    marginTop: 2,
+  },
+  inputGroupRowButtons: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 12,
+    borderColor: "#4b5563",
+    paddingHorizontal: 36,
+    paddingVertical: 7,
+    borderWidth: 2,
   },
   label: {
     fontSize: 14,
