@@ -1,6 +1,3 @@
-import { UserActivity } from "./../../node_modules/expo-router/build/head/ExpoHeadModule.d";
-import { string } from "yup";
-
 enum AuthorizedUsers {
   ADMIN,
   USER,
