@@ -13,7 +13,6 @@ import "react-native-reanimated";
 import { useColorScheme } from "@/components/useColorScheme";
 import { AppProvider } from "@/hooks/useContextHook";
 import Splash from "./splash/Splash";
-import { Platform } from "react-native";
 import { globalColors } from "@/constants/Colors";
 
 export {
