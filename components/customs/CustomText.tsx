@@ -10,6 +10,7 @@ type Props = {
   bold?: boolean;
   color?: string;
   bgColor?: string;
+  fSize?: number;
   style?: any;
 };
 
@@ -22,12 +23,17 @@ const CustomText = ({
   bold,
   color,
   bgColor,
+  fSize,
   style,
 }: Props) => {
   return (
     <Text
       style={[
-        big ? { fontSize: 20 } : medium ? { fontSize: 16 } : { fontSize: 14 },
+        big
+          ? { fontSize: 20 }
+          : medium
+          ? { fontSize: 16 }
+          : { fontSize: fSize || 14 },
         center
           ? { textAlign: "center" }
           : right
