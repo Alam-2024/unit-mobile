@@ -6,56 +6,104 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import { StoredUsers } from "@/interfaces/user/IUser";
+import { IBtn, StoredUsers } from "@/interfaces/user/IUser";
 import { userProfileStyles } from "@/styles/profile";
 import CustomIcon from "@/components/customs/CustomIcon";
-import { authStyles } from "@/components/auth/authStyles";
 import { gradeKeys, titleMap } from "@/interfaces/constants/profile";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "@/firebase/fireConfig";
+import {
+  CustomRenderButtons,
+  CustomRenderMsg,
+} from "@/components/customs/Profile/Profile";
+import CustomText from "@/components/customs/CustomText";
+import { authStyles } from "@/components/auth/authStyles";
 
-interface UserReadOnlyProps {
-  user: StoredUsers;
+interface UserDetailsProps {
+  userAccessData: StoredUsers;
+  updateUserName: React.Dispatch<React.SetStateAction<StoredUsers>>;
 }
-interface IBtn {
-  iconName: string;
-  action: () => void;
-}
 
-const UserReadOnly: React.FC<UserReadOnlyProps> = ({ user }) => {
-  if (!user) return <Text>No user data</Text>;
-
+const UserDetails: React.FC<UserDetailsProps> = ({
+  userAccessData,
+  updateUserName,
+}) => {
   const [showFields, setShowFields] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [updateName, setUpdateName] = useState({
     name: "",
     errorMsg: "",
     infoMsg: "",
-    loading: "",
+    loading: false,
   });
   const [newPassword, setNewPassword] = useState({
     password: "",
     errorMsg: "",
     infoMsg: "",
-    loading: "",
+    loading: false,
   });
-
-  const buttons: IBtn[] = [
-    { iconName: "pause", action: () => console.log("Cancel") },
-    { iconName: "check", action: () => console.log("Save") },
+  const btnName: IBtn[] = [
+    { iconName: "close", action: () => cancelUpdatingName() },
+    { iconName: "check", action: () => updatingName() },
   ];
+  const updatingName = async (): Promise<void> => {
+    if (!updateName.name.trim()) {
+      setUpdateName((prev) => ({
+        ...prev,
+        errorMsg: "Name cannot be empty if you want to update it",
+      }));
+      return;
+    }
+    setUpdateName((prev) => ({ ...prev, loading: true }));
+    try {
+      // Logic to update name
+      console.log("Updating name to:", updateName.name);
+      const userDocRef = doc(db, "users-data", userAccessData.id);
+      // Update logic goes here
+      await updateDoc(userDocRef, { name: updateName.name });
+      updateUserName((prev) => ({ ...prev, name: updateName.name }));
+    } catch (error) {
+      console.error("Error updating name:", error);
+      setUpdateName((prev) => ({
+        ...prev,
+        errorMsg: "Error updating name",
+      }));
+    } finally {
+      setUpdateName((prev) => ({
+        ...prev,
+        infoMsg: "Name updated successfully",
+      }));
+
+      setUpdateName((prev) => ({ ...prev, loading: false }));
+      setShowFields(false);
+    }
+  };
+
+  const cancelUpdatingName = async (): Promise<void> => {
+    setUpdateName((prev) => ({ ...prev, name: "", errorMsg: "", infoMsg: "" }));
+    setShowFields(false);
+  };
   const btnPassword: IBtn[] = [
-    { iconName: "pause", action: () => console.log("Cancel password") },
-    { iconName: "inbox", action: () => console.log("Save password") },
+    { iconName: "close", action: () => cancelUpdatingPassword() },
+    { iconName: "inbox", action: () => updatingPassword() },
   ];
-
-  const resetMessages = () =>
-    setUpdateName((prev) => ({
+  const updatingPassword = () => {
+    // Logic to update password
+    console.log("Updating password to:", newPassword.password);
+  };
+  const cancelUpdatingPassword = () => {
+    setNewPassword((prev) => ({
       ...prev,
+      password: "",
       errorMsg: "",
       infoMsg: "",
     }));
+    setShowFields(false);
+    setShowPassword(false);
+  };
 
   const renderGrade = (gradeKey: (typeof gradeKeys)[number]) => {
-    const section = (user as StoredUsers)[gradeKey];
+    const section = (userAccessData as StoredUsers)[gradeKey];
     if (!section || typeof section !== "object") return null;
 
     const units = Object.entries(section) as [string, boolean][];
@@ -65,12 +113,20 @@ const UserReadOnly: React.FC<UserReadOnlyProps> = ({ user }) => {
     return (
       <View key={gradeKey} style={userProfileStyles.gradeCard}>
         <View style={userProfileStyles.gradeHeader}>
-          <Text style={userProfileStyles.gradeTitle}>
-            {titleMap[gradeKey] || gradeKey}
-          </Text>
-          <Text style={userProfileStyles.gradeSubTitle}>
-            Units: {units.length} · Active: {units.filter(([, v]) => v).length}
-          </Text>
+          <CustomText
+            value={titleMap[gradeKey] || gradeKey}
+            color="#9ca3af"
+            bold
+          />
+          <CustomText
+            value={
+              `Units: ${units.length}` +
+              " · " +
+              `Active: ${units.filter(([, v]) => v).length}`
+            }
+            color="#9ca3af"
+            fSize={12}
+          />
         </View>
         <View style={userProfileStyles.unitsContainer}>
           {units.map(([unitName, active]) => (
@@ -89,16 +145,16 @@ const UserReadOnly: React.FC<UserReadOnlyProps> = ({ user }) => {
                   { backgroundColor: active ? "#22c55e" : "#6b7280" },
                 ]}
               />
-              <Text
+              <CustomText
+                value={unitName}
                 style={[
                   userProfileStyles.unitText,
                   active
                     ? userProfileStyles.unitTextActive
                     : userProfileStyles.unitTextInactive,
                 ]}
-              >
-                {unitName}
-              </Text>
+                color="#fff"
+              />
             </View>
           ))}
         </View>
@@ -108,6 +164,13 @@ const UserReadOnly: React.FC<UserReadOnlyProps> = ({ user }) => {
 
   const handleFieldsToggle = () => {
     setShowFields(!showFields);
+    setUpdateName((prev) => ({ ...prev, name: "", errorMsg: "", infoMsg: "" }));
+    setNewPassword((prev) => ({
+      ...prev,
+      password: "",
+      errorMsg: "",
+      infoMsg: "",
+    }));
   };
 
   const renderFields = () => {
@@ -115,21 +178,31 @@ const UserReadOnly: React.FC<UserReadOnlyProps> = ({ user }) => {
     return (
       <View style={userProfileStyles.renderFields}>
         <View style={authStyles.inputGroup}>
-          <Text style={authStyles.label}>Name</Text>
+          <CustomText
+            value="Name"
+            style={authStyles.label}
+            color="#e5e7eb"
+            bold
+          />
           <TextInput
             placeholder="Type you name..."
-            value={!updateName.name ? user.name : updateName.name}
+            value={updateName.name}
             autoCapitalize="none"
             onChangeText={(text) =>
-              setUpdateName((prev) => ({ ...prev, email: text }))
+              setUpdateName((prev) => ({ ...prev, name: text }))
             }
             style={authStyles.input}
             placeholderTextColor="#9ca3af"
           />
-          {renderButtons(buttons)}
+          {CustomRenderButtons(btnName)}
         </View>
         <View style={authStyles.inputGroup}>
-          <Text style={authStyles.label}>Your new password</Text>
+          <CustomText
+            value="Your new password"
+            style={authStyles.label}
+            color="#e5e7eb"
+            bold
+          />
           <View style={authStyles.passwordContainer}>
             <TextInput
               placeholder="••••••••"
@@ -147,35 +220,19 @@ const UserReadOnly: React.FC<UserReadOnlyProps> = ({ user }) => {
               onPress={() => setShowPassword(!showPassword)}
               activeOpacity={0.7}
             >
-              <Text style={authStyles.eyeIconText}>
-                {showPassword ? "🙈" : "👁️"}
-              </Text>
+              <CustomText
+                value={showPassword ? "🙈" : "👁️"}
+                style={authStyles.eyeIconText}
+                big
+              />
             </TouchableOpacity>
           </View>
-          {renderButtons(btnPassword)}
+          {CustomRenderButtons(btnPassword)}
         </View>
       </View>
     );
   };
-  const renderButtons = (btnArray: IBtn[]) => {
-    return (
-      <View style={authStyles.inputGroupRow}>
-        {btnArray?.map((button: IBtn) => (
-          <TouchableOpacity
-            key={button.iconName}
-            onPress={button.action}
-            style={authStyles.inputGroupRowButtons}
-          >
-            <CustomIcon
-              iconName={button.iconName as any}
-              iconSize={24}
-              iconColor={button.iconName !== "Pause" ? "#259200" : "#ff0000"}
-            />
-          </TouchableOpacity>
-        ))}
-      </View>
-    );
-  };
+
   return (
     <ScrollView
       style={userProfileStyles.container}
@@ -184,20 +241,36 @@ const UserReadOnly: React.FC<UserReadOnlyProps> = ({ user }) => {
     >
       {/* Header */}
       <View style={userProfileStyles.profileCard}>
+        {/* Loading indicator */}
+        {updateName.loading
+          ? CustomRenderMsg("Updating name...", updateName.loading, "#259200")
+          : null}
+        {/* Error */}
+        {updateName.errorMsg
+          ? CustomRenderMsg(updateName.errorMsg, false, "#ff0000")
+          : null}
+        {/* Info */}
+        {updateName.infoMsg
+          ? CustomRenderMsg(updateName.infoMsg, false, "#34d399")
+          : null}
         <TouchableOpacity
           onPress={handleFieldsToggle}
           style={userProfileStyles.editButton}
         >
-          <CustomIcon iconName="edit" iconSize={42} iconColor="#ffffff" />{" "}
+          <CustomIcon
+            iconName="edit"
+            iconSize={42}
+            iconColor={showFields ? "#ffdfdf" : "#ffffff"}
+          />{" "}
         </TouchableOpacity>
-        <Text style={userProfileStyles.name}>{user.name}</Text>
-        <Text style={userProfileStyles.email}>{user.email}</Text>
+        <Text style={userProfileStyles.name}>{userAccessData.name}</Text>
+        <Text style={userProfileStyles.email}>{userAccessData.email}</Text>
         <View style={userProfileStyles.row}>
-          <Text style={userProfileStyles.badgeRole}>{user.role}</Text>
+          <Text style={userProfileStyles.badgeRole}>{userAccessData.role}</Text>
           <View
             style={[
               userProfileStyles.badgeStatus,
-              user.baned
+              userAccessData.baned
                 ? userProfileStyles.badgeBanned
                 : userProfileStyles.badgeActive,
             ]}
@@ -205,11 +278,13 @@ const UserReadOnly: React.FC<UserReadOnlyProps> = ({ user }) => {
             <View
               style={[
                 userProfileStyles.statusDot,
-                { backgroundColor: user.baned ? "#f97373" : "#22c55e" },
+                {
+                  backgroundColor: userAccessData.baned ? "#f97373" : "#22c55e",
+                },
               ]}
             />
             <Text style={userProfileStyles.badgeStatusText}>
-              {user.baned ? "Banned" : "Active"}
+              {userAccessData.baned ? "Banned" : "Active"}
             </Text>
           </View>
         </View>
@@ -223,4 +298,4 @@ const UserReadOnly: React.FC<UserReadOnlyProps> = ({ user }) => {
   );
 };
 
-export default UserReadOnly;
+export default UserDetails;

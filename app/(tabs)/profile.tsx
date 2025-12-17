@@ -7,13 +7,8 @@ import Logout from "../Logout";
 import CustomButton from "@/components/customs/CustomButton";
 import CustomText from "@/components/customs/CustomText";
 import CustomView from "@/components/customs/CustomView";
-import UserReadOnly from "../Profile";
+import UserDetails from "../Profile";
 import { profileStyles } from "@/styles/profile";
-
-type SportStatus = {
-  name: string;
-  active: boolean;
-};
 
 type GradeSports = {
   [sportName: string]: boolean;
@@ -27,7 +22,8 @@ const ProfileView = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [modalType, setModalType] = useState<"login" | "logout" | null>(null);
 
-  const { isUserAuthenticated, loggedInUser } = useAppContext();
+  const { isUserAuthenticated, loggedInUser, setLoggedInUser } =
+    useAppContext();
 
   // Close modal
   const closeModal = () => {
@@ -94,7 +90,10 @@ const ProfileView = () => {
       </View>
       <View style={{ marginBottom: 20 }}>
         {isUserAuthenticated && loggedInUser ? (
-          <UserReadOnly user={loggedInUser} />
+          <UserDetails
+            userAccessData={loggedInUser}
+            updateUserName={setLoggedInUser}
+          />
         ) : (
           <CustomText
             value="You need to be logged in to view profile details."

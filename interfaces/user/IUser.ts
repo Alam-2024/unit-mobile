@@ -37,3 +37,8 @@ export interface StoredUsers {
 //   fourth: Record<string, boolean>;
 //   fifth: Record<string, boolean>;
 // }
+
+export interface IBtn {
+  iconName: string;
+  action: () => void;
+}
