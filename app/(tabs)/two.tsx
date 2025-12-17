@@ -1,8 +1,6 @@
-import { StyleSheet, Text } from "react-native";
-
-import EditScreenInfo from "@/components/EditScreenInfo";
 import Navbar from "@/components/navbar/Navbar";
 import CustomView from "@/components/customs/CustomView";
+import CustomText from "@/components/customs/CustomText";
 
 export default function TabTwoScreen() {
   const links = [
@@ -16,20 +14,7 @@ export default function TabTwoScreen() {
   return (
     <CustomView>
       <Navbar links={links} />
-      <Text style={styles.title}>Tab Two</Text>
-      <EditScreenInfo path="app/(tabs)/two.tsx" />
+      <CustomText value="Tab Two" big bold />
     </CustomView>
   );
 }
-
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});

@@ -18,6 +18,13 @@ export interface StoredUsers {
   third: { [key: string]: boolean };
   fourth: { [key: string]: boolean };
   fifth: { [key: string]: boolean };
+  sixth: { [key: string]: boolean };
+  seventh: { [key: string]: boolean };
+  eighth: { [key: string]: boolean };
+  ninth: { [key: string]: boolean };
+  tenth: { [key: string]: boolean };
+  eleventh: { [key: string]: boolean };
+  twelfth: { [key: string]: boolean };
 }
 
 //TODO: Check what Record means...

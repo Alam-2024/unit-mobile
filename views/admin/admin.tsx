@@ -65,7 +65,7 @@ const Admin: React.FC = () => {
     data.some((user: StoredUsers) => user.email === email);
 
   const isUserMissingData = (): boolean =>
-    !editedUser.name || !editedUser.email || !editedUser.role;
+    !editedUser.email || !editedUser.password;
 
   const unAuthorizedRole = (role: string): boolean =>
     role !== "admin" && role !== "user";
@@ -117,6 +117,13 @@ const Admin: React.FC = () => {
         third: updateSection(prev.third),
         fourth: updateSection(prev.fourth),
         fifth: updateSection(prev.fifth),
+        sixth: updateSection(prev.sixth),
+        seventh: updateSection(prev.seventh),
+        eighth: updateSection(prev.eighth),
+        ninth: updateSection(prev.ninth),
+        tenth: updateSection(prev.tenth),
+        eleventh: updateSection(prev.eleventh),
+        twelfth: updateSection(prev.twelfth),
       };
     });
   };
@@ -198,6 +205,7 @@ const Admin: React.FC = () => {
         await addDoc(collection(db, "users-data"), {
           ...editedUser,
           userUid: userCredential.user.uid,
+          password: "", // Do not store password in Firestore
         });
       }
     } catch (error) {
@@ -242,6 +250,7 @@ const Admin: React.FC = () => {
     </TouchableOpacity>
   );
 
+  // TODO: Implement this method to generate a strong password
   const generatePassword = (): string => {
     const characters =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=<>?";
@@ -330,10 +339,8 @@ const Admin: React.FC = () => {
             <TextInput
               style={adminStyles.input}
               placeholder="************"
-              value={givenPassword}
-              onChangeText={(text) => {
-                handleGivenPasswordChange(text);
-              }}
+              value={editedUser.password}
+              onChangeText={(text) => handleInputChange("password", text)}
               secureTextEntry={!showPassword}
             />
             <CustomButton
@@ -403,6 +410,13 @@ const Admin: React.FC = () => {
           {renderSwitchSection("third", "Third")}
           {renderSwitchSection("fourth", "Fourth")}
           {renderSwitchSection("fifth", "Fifth")}
+          {renderSwitchSection("sixth", "Sixth")}
+          {renderSwitchSection("seventh", "Seventh")}
+          {renderSwitchSection("eighth", "Eighth")}
+          {renderSwitchSection("ninth", "Ninth")}
+          {renderSwitchSection("tenth", "Tenth")}
+          {renderSwitchSection("eleventh", "Eleventh")}
+          {renderSwitchSection("twelfth", "Twelfth")}
 
           <View style={adminStyles.buttonRow}>
             <CustomButton

@@ -1,9 +1,11 @@
+import { View, Text } from "react-native";
 import React from "react";
+import CustomGradeContainer from "@/components/views/CustomGradeContainer";
 import SwimmingUnit1stGrade from "@/data/Swimming/SwimmingFirst";
 import { IUnits } from "@/interfaces/units/IUnit";
-import CustomGradeContainer from "@/components/views/CustomGradeContainer";
+import flagFootballEighthNinth from "@/data/Flag/FlagEightAndNine";
 
-const FirstGrade = () => {
+export default function Twelfth() {
   const [unitTitle, setUnitTitle] = React.useState<string>("");
   //TODO: Create the unit data for the first grade
   const units: { [key: string]: IUnits } = {
@@ -16,6 +18,7 @@ const FirstGrade = () => {
     BasicTrackAndField: SwimmingUnit1stGrade,
     DancePlants: SwimmingUnit1stGrade,
     Swimming: SwimmingUnit1stGrade,
+    FlagFootBall: flagFootballEighthNinth,
   };
   return (
     <CustomGradeContainer
@@ -24,6 +27,4 @@ const FirstGrade = () => {
       setUnitTitle={setUnitTitle}
     />
   );
-};
-
-export default FirstGrade;
+}

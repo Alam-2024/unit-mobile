@@ -9,6 +9,13 @@ import KgGrade from "@/views/kgGrade";
 import ThirdGrade from "@/views/thirdGrade";
 import FourthGrade from "@/views/fourthGrade";
 import FifthGrade from "@/views/fifthGrade";
+import SixthGrade from "@/views/sixthGrade";
+import SeventhGrade from "@/views/seventhGrade";
+import EighthGrade from "@/views/eighthGrade";
+import NinthGrade from "@/views/ninethGrade";
+import TenthGrade from "@/views/tenthGrade";
+import EleventhGrade from "@/views/eleventhGrade";
+import Twelfth from "@/views/Twelfth";
 
 const Data = () => {
   const params = useLocalSearchParams();
@@ -30,6 +37,22 @@ const Data = () => {
         return <FourthGrade />;
       case "5°":
         return <FifthGrade />;
+      case "6°":
+        return <SixthGrade />;
+      case "7°":
+        return <SeventhGrade />;
+      case "8°":
+        return <EighthGrade />;
+      case "9°":
+        return <NinthGrade />;
+      case "10°":
+        return <TenthGrade />;
+      case "11°":
+        return <EleventhGrade />;
+      case "12°":
+        return <Twelfth />;
+      default:
+        return <View />;
     }
   };
 

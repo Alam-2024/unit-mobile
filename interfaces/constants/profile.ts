@@ -7,6 +7,13 @@ export const gradeKeys = [
   "third",
   "fourth",
   "fifth",
+  "sixth",
+  "seventh",
+  "eighth",
+  "ninth",
+  "tenth",
+  "eleventh",
+  "twelfth",
 ] as const;
 
 export const titleMap: Record<string, string> = {
@@ -18,4 +25,11 @@ export const titleMap: Record<string, string> = {
   third: "3rd Grade",
   fourth: "4th Grade",
   fifth: "5th Grade",
+  sixth: "6th Grade",
+  seventh: "7th Grade",
+  eighth: "8th Grade",
+  ninth: "9th Grade",
+  tenth: "10th Grade",
+  eleventh: "11th Grade",
+  twelfth: "12th Grade",
 };

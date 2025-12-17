@@ -1,8 +1,8 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 
-import EditScreenInfo from "@/components/EditScreenInfo";
 import Navbar from "@/components/navbar/Navbar";
 import CustomView from "@/components/customs/CustomView";
+import CustomText from "@/components/customs/CustomText";
 
 export default function TabOneScreen() {
   const links = [
@@ -14,10 +14,7 @@ export default function TabOneScreen() {
   return (
     <CustomView>
       <Navbar links={links} />
-      <Text style={styles.title} onPress={() => {}}>
-        Tab One
-      </Text>
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+      <CustomText style={styles.title} value="Tab One" big />
     </CustomView>
   );
 }

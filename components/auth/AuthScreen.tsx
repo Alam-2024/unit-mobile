@@ -187,6 +187,13 @@ const AuthScreen = ({ onCloseModal }: AuthScreenProps) => {
         third: userData.third || {},
         fourth: userData.fourth || {},
         fifth: userData.fifth || {},
+        sixth: userData.sixth || {},
+        seventh: userData.seventh || {},
+        eighth: userData.eighth || {},
+        ninth: userData.ninth || {},
+        tenth: userData.tenth || {},
+        eleventh: userData.eleventh || {},
+        twelfth: userData.twelfth || {},
       };
 
       if (userToStore.role === "admin") {

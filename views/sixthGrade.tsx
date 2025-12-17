@@ -1,9 +1,13 @@
-import React from "react";
+import CustomMiddleContent from "@/components/customs/CustomMiddleContent";
+import CustomGradeContainer from "@/components/views/CustomGradeContainer";
+import CustomMiddleContainer from "@/components/views/CustomMiddleContainer";
+import flagFootballSixthSeventh from "@/data/Flag/FlagSixthAndSeventh";
 import SwimmingUnit1stGrade from "@/data/Swimming/SwimmingFirst";
 import { IUnits } from "@/interfaces/units/IUnit";
-import CustomGradeContainer from "@/components/views/CustomGradeContainer";
+import React from "react";
+import { View, Text } from "react-native";
 
-const FirstGrade = () => {
+const SixthGrade = () => {
   const [unitTitle, setUnitTitle] = React.useState<string>("");
   //TODO: Create the unit data for the first grade
   const units: { [key: string]: IUnits } = {
@@ -16,9 +20,10 @@ const FirstGrade = () => {
     BasicTrackAndField: SwimmingUnit1stGrade,
     DancePlants: SwimmingUnit1stGrade,
     Swimming: SwimmingUnit1stGrade,
+    FlagFootBall: flagFootballSixthSeventh,
   };
   return (
-    <CustomGradeContainer
+    <CustomMiddleContainer
       units={units}
       unitTitle={unitTitle}
       setUnitTitle={setUnitTitle}
@@ -26,4 +31,4 @@ const FirstGrade = () => {
   );
 };
 
-export default FirstGrade;
+export default SixthGrade;
