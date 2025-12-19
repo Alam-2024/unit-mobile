@@ -29,7 +29,6 @@ export default function CustomMiddleContainer({
   unitTitle,
   setUnitTitle,
 }: Props) {
-  console.log("🚀 ~ CustomMiddleContainer ~ units:", units);
   const { loggedInUser, isUserAuthenticated } = useAppContext();
 
   const getAccessToUnits = (loggedUser: IUser) => {
@@ -46,14 +45,14 @@ export default function CustomMiddleContainer({
     };
 
     for (const unit in allActivities) {
-      access[unit] = allActivities[unit]; // true o false
+      access[unit] = allActivities[unit]; // true or false.
     }
 
     return access;
   };
 
   // Get access to units
-  const accessToUnits = getAccessToUnits(loggedInUser);
+  const accessToUnits = loggedInUser ? getAccessToUnits(loggedInUser) : {};
 
   // Verify if the user has access to the unit
   const hasAccess =
