@@ -18,6 +18,7 @@ import {
 } from "@/components/customs/Profile/Profile";
 import CustomText from "@/components/customs/CustomText";
 import { authStyles } from "@/components/auth/authStyles";
+import { getFriendlyUnitName } from "@/components/navbar/Navbar";
 
 interface UserDetailsProps {
   userAccessData: StoredUsers;
@@ -42,6 +43,16 @@ const UserDetails: React.FC<UserDetailsProps> = ({
     infoMsg: "",
     loading: false,
   });
+
+  React.useEffect(() => {
+    if (!updateName.loading && !newPassword.loading) {
+      const timeoutId = setTimeout(() => {
+        setUpdateName((prev) => ({ ...prev, errorMsg: "", infoMsg: "" }));
+        setNewPassword((prev) => ({ ...prev, errorMsg: "", infoMsg: "" }));
+      }, 3000);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [updateName.loading, newPassword.loading]);
   const btnName: IBtn[] = [
     { iconName: "close", action: () => cancelUpdatingName() },
     { iconName: "check", action: () => updatingName() },
@@ -146,7 +157,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({
                 ]}
               />
               <CustomText
-                value={unitName}
+                value={getFriendlyUnitName(unitName)}
                 style={[
                   userProfileStyles.unitText,
                   active
