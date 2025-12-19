@@ -1,5 +1,4 @@
 import { View, StyleSheet } from "react-native";
-import React from "react";
 import { router } from "expo-router";
 import CustomButton from "../customs/CustomButton";
 import CustomText from "../customs/CustomText";
@@ -45,7 +44,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     minWidth: 350,
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     marginVertical: 10,
     marginHorizontal: 20,
     flexWrap: "wrap",
