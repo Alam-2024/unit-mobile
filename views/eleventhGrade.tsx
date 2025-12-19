@@ -8,7 +8,7 @@ import flagFootballEighthNinth from "@/data/Flag/FlagEightAndNine";
 
 export default function EleventhGrade() {
   const [unitTitle, setUnitTitle] = React.useState<string>("");
-  //TODO: Create the unit data for the first grade
+  //TODO: Create the unit data for the eleventh grade
   const units: { [key: string]: IUnits } = {
     InvasionGames: SwimmingUnit1stGrade,
     BatAndBall: SwimmingUnit1stGrade,
