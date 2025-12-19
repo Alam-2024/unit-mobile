@@ -3,6 +3,7 @@ import React from "react";
 import { useAppContext } from "@/hooks/useContextHook";
 import CustomText from "../customs/CustomText";
 import CustomButton from "../customs/CustomButton";
+import { getFriendlyUnitName } from "./Navbar";
 
 type UnitNavbarProps = {
   list: string[];
@@ -20,6 +21,7 @@ const UnitNavbar = ({
   const { isAuthenticatedAdminUser, isSessionExpired } = useAppContext();
   const [showExpiration, setShowExpiration] = React.useState<boolean>(false);
 
+  //TODO: Check this logic for expiration
   const handleClick = ({ unit }: { unit: string }) => {
     if (!isAuthenticatedAdminUser && isSessionExpired) {
       setShowExpiration(true);
@@ -56,44 +58,6 @@ function UnitNameButton({
   unitNameActive: string;
   access: boolean;
 }) {
-  const getFriendlyUnitName = (name: string): string => {
-    const unitNameMapping: { [key: string]: string } = {
-      FloorHockey: "Floor Hockey",
-      FinnishBaseball: "Finnish Baseball",
-      TrackAndField: "Track & Field",
-      StrikeAndField: "Strike & Field",
-      InvasionGames: "Invasion Games",
-      RollerSkating: "Roller Skating",
-      CircuitTraining: "Circuit Training",
-      OutdoorAdventureActivity: "Outdoor Adventure Activities",
-      WaterSkills: "Water Skills",
-      BatAndBall: "Bat & Ball",
-      CompetitiveGames: "Competitive Games",
-      BallGames: "Ball Games",
-      ObjectControlSkills: "Object Control Skills",
-      LocomotorSkills: "Locomotor Skills",
-      MusicRhythmsAndMovementActivities: "Music, Rhythms & Movement",
-      PhysicalExercises: "Physical Exercises",
-      MovingAndGrooving: "Moving & Grooving",
-      RhythmAndPlay: "Rhythm & Play",
-      SensoryAdventures: "Sensory Adventures",
-      TeamworkInAction: "Teamwork In Action",
-      MightyMovers: "Mighty Movers",
-      HandsOnFun: "Hands On Fun",
-      BalancingAct: "Balancing Act",
-      TargetGames: "Target Games",
-      BasicTrackAndField: "Basic Track & Field",
-      AttackingAndDefending: "Attacking & Defending",
-      DancePlants: "Dance Plants",
-      FitnessFun: "Fitness Fun: Know My Body",
-      NetWallFundamentals: "Net/Wall: Fundamentals",
-      OutdoorActivities: "Outdoor Adventure Activities",
-      FlagFootBall: "NFL Flag Football",
-    };
-
-    return unitNameMapping[name] || name;
-  };
-
   return (
     <View style={styles(unitNameActive, unitName).container}>
       <CustomText
