@@ -12,7 +12,7 @@ import FifthGrade from "@/views/fifthGrade";
 import SixthGrade from "@/views/sixthGrade";
 import SeventhGrade from "@/views/seventhGrade";
 import EighthGrade from "@/views/eighthGrade";
-import NinthGrade from "@/views/ninethGrade";
+import NinthGrade from "@/views/ninthGrade";
 import TenthGrade from "@/views/tenthGrade";
 import EleventhGrade from "@/views/eleventhGrade";
 import Twelfth from "@/views/Twelfth";
