@@ -34,6 +34,11 @@ export interface IInvasionAssessment {
   criteria: AssessmentCriteria[];
 }
 
+export interface AssessmentCooGames {
+  type: string;
+  description: string;
+}
+
 interface AssessmentCriteria {
   criteria: string;
   excellent: string;

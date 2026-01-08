@@ -1,6 +1,7 @@
 import {
   Assessment,
   AssessmentCircuit,
+  AssessmentCooGames,
   AssessmentDodgeball,
   AssessmentSwimming,
   AssessmentTrackAndField,
@@ -28,7 +29,8 @@ export interface IUnits {
     | AssessmentCircuit
     | AssessmentTrackAndField
     | AssessmentDodgeball
-    | AssessmentSwimming;
+    | AssessmentSwimming
+    | AssessmentCooGames[];
   //TODO: check these props for all units
   learningExperiences?: string[];
   equipmentNeeded?: string[];
