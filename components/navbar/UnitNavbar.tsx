@@ -2,8 +2,7 @@ import { View, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 import { useAppContext } from "@/hooks/useContextHook";
 import CustomText from "../customs/CustomText";
-import CustomButton from "../customs/CustomButton";
-import { getFriendlyUnitName } from "./Navbar";
+import { getFriendlyUnitName } from "@/utils/Navbar";
 
 type UnitNavbarProps = {
   list: string[];

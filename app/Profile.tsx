@@ -18,7 +18,7 @@ import {
 } from "@/components/customs/Profile/Profile";
 import CustomText from "@/components/customs/CustomText";
 import { authStyles } from "@/components/auth/authStyles";
-import { getFriendlyUnitName } from "@/components/navbar/Navbar";
+import { getFriendlyUnitName } from "@/utils/Navbar";
 
 interface UserDetailsProps {
   userAccessData: StoredUsers;
@@ -246,6 +246,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({
 
   return (
     <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
       style={userProfileStyles.container}
       contentContainerStyle={userProfileStyles.content}
       showsVerticalScrollIndicator={false}
