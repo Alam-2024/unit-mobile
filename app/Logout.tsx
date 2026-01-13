@@ -11,7 +11,6 @@ const Logout = ({ onCloseModal }: { onCloseModal?: () => void }) => {
     setLoggedInUser,
     setIsUserAuthenticated,
     setIsAuthenticatedAdminUser,
-    setIsSessionExpired,
   } = useAppContext();
   const handlingModalClose = () => {
     if (onCloseModal) {
@@ -26,7 +25,6 @@ const Logout = ({ onCloseModal }: { onCloseModal?: () => void }) => {
 
       setLoggedInUser(initialUserState);
       setIsUserAuthenticated(false);
-      setIsSessionExpired(true);
       setIsAuthenticatedAdminUser(false);
       handlingModalClose();
     } catch (error) {
