@@ -1,6 +1,5 @@
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
-import { useAppContext } from "@/hooks/useContextHook";
 import CustomText from "../customs/CustomText";
 import { getFriendlyUnitName } from "@/utils/Navbar";
 
@@ -17,23 +16,22 @@ const UnitNavbar = ({
   setUnitTitle,
   accessToUnits,
 }: UnitNavbarProps) => {
-  const { isAuthenticatedAdminUser, isSessionExpired } = useAppContext();
-  const [showExpiration, setShowExpiration] = React.useState<boolean>(false);
+  const [grantedAccess, setGrantedAccess] = React.useState<boolean>(false);
 
   //TODO: Check this logic for expiration
   const handleClick = ({ unit }: { unit: string }) => {
-    if (!isAuthenticatedAdminUser && isSessionExpired) {
-      setShowExpiration(true);
+    if (!accessToUnits[unit]) {
+      setGrantedAccess(true);
       setTimeout(() => {
-        setShowExpiration(false);
+        setGrantedAccess(false);
       }, 2000);
     }
     setUnitTitle(unit);
   };
   return (
     <View style={styles(unitTitle, "").mainContainer}>
-      {showExpiration && <Expiration />}
-      {list.map((unit, index) => (
+      {grantedAccess && <Expiration />}
+      {list.map((unit) => (
         <TouchableOpacity key={unit} onPress={() => handleClick({ unit })}>
           <UnitNameButton
             unitName={unit}
@@ -79,12 +77,7 @@ function UnitNameButton({
 function Expiration() {
   return (
     <View style={styles("", "").textContainer}>
-      <CustomText
-        value="Seems like your session has expired or you are not logged in yet"
-        big
-        center
-      />
-      <CustomText value="Please log in again" center />
+      <CustomText value="Please contact admin to renew access." big center />
     </View>
   );
 }
