@@ -1,4 +1,3 @@
-import { View, Text } from "react-native";
 import React from "react";
 import CustomGradeContainer from "@/components/views/CustomGradeContainer";
 import SwimmingUnit1stGrade from "@/data/Swimming/SwimmingFirst";
@@ -11,7 +10,6 @@ export default function TenthGrade() {
   const units: { [key: string]: IUnits } = {
     CooperativeGames: SwimmingUnit1stGrade,
     TerritoryGames: SwimmingUnit1stGrade,
-    NetGames: SwimmingUnit1stGrade,
     HealthAndFitness: SwimmingUnit1stGrade,
     Aquatics: SwimmingUnit1stGrade,
     StrikeAndField: SwimmingUnit1stGrade,

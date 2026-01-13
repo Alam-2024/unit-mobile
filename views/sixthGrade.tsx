@@ -1,8 +1,8 @@
+import React from "react";
 import CustomMiddleContainer from "@/components/views/CustomMiddleContainer";
 import flagFootballSixthSeventh from "@/data/Flag/FlagSixthAndSeventh";
 import SwimmingUnit1stGrade from "@/data/Swimming/SwimmingFirst";
 import { IUnits } from "@/interfaces/units/IUnit";
-import React from "react";
 
 const SixthGrade = () => {
   const [unitTitle, setUnitTitle] = React.useState<string>("");
@@ -10,7 +10,7 @@ const SixthGrade = () => {
   const units: { [key: string]: IUnits } = {
     CooperativeGames: SwimmingUnit1stGrade,
     TerritoryGames: SwimmingUnit1stGrade,
-    NetGames: SwimmingUnit1stGrade,
+    Badminton: SwimmingUnit1stGrade,
     HealthAndFitness: SwimmingUnit1stGrade,
     Aquatics: SwimmingUnit1stGrade,
     StrikeAndField: SwimmingUnit1stGrade,

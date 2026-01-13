@@ -10,14 +10,13 @@ export default function EighthGrade() {
   const units: { [key: string]: IUnits } = {
     CooperativeGames: SwimmingUnit1stGrade,
     TerritoryGames: SwimmingUnit1stGrade,
-    NetGames: SwimmingUnit1stGrade,
+    Badminton: SwimmingUnit1stGrade,
     HealthAndFitness: SwimmingUnit1stGrade,
     Aquatics: SwimmingUnit1stGrade,
     StrikeAndField: SwimmingUnit1stGrade,
     Soccer: SwimmingUnit1stGrade,
     Volleyball: SwimmingUnit1stGrade,
     Basketball: SwimmingUnit1stGrade,
-    Badminton: SwimmingUnit1stGrade,
     Swimming: SwimmingUnit1stGrade,
     FlagFootBall: flagFootballEighthNinth,
   };
