@@ -45,7 +45,7 @@ export default function CustomMiddleContainer({
     };
 
     for (const unit in allActivities) {
-      access[unit] = allActivities[unit]; // true or false.
+      access[unit] = allActivities[unit]; // true o false.
     }
 
     return access;
