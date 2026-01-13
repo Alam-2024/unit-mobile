@@ -16,13 +16,14 @@ type Props = {
   shadowOpacity?: number;
   shadowRadius?: number;
   shadowColor?: string;
+  borderColor?: string;
   disabled?: boolean;
 };
 
 /**
  * A custom button component with an optional shadow effect.
  *
- * @param {{ id?: number; children: React.ReactNode; onPress: () => void; style?: StyleProp<ViewStyle>; shadowWidth?: number; shadowHeight?: number; shadowOpacity?: number; shadowRadius?: number; shadowColor?: string; disabled?: boolean }} props
+ * @param {{ id?: number; children: React.ReactNode; onPress: () => void; style?: StyleProp<ViewStyle>; shadowWidth?: number; shadowHeight?: number; shadowOpacity?: number; shadowRadius?: number; shadowColor?: string; borderColor?: string; disabled?: boolean }} props
  *
  * @return {JSX.Element}
  */
@@ -36,6 +37,7 @@ const CustomButton = ({
   shadowOpacity: shadowOpacity = 0,
   shadowRadius: shadowRadius = 0,
   shadowColor: shadowColor = "#000",
+  borderColor: borderColor = "#e3e3e3",
   disabled: disabled = false,
 }: Props) => {
   const buttonStyles = customStyles(
@@ -43,7 +45,8 @@ const CustomButton = ({
     shadowHeight,
     shadowOpacity,
     shadowRadius,
-    shadowColor
+    shadowColor,
+    borderColor
   );
   return (
     <TouchableOpacity
@@ -64,17 +67,18 @@ const customStyles = (
   shadowHeight: number,
   shadowOpacity: number,
   shadowRadius: number,
-  shadowColor: string
+  shadowColor: string,
+  borderColor: string
 ) =>
   StyleSheet.create({
     itemsText: {
       paddingVertical: 10,
       paddingHorizontal: 25,
-      borderColor: "#e3e3e3",
       borderWidth: 1,
       backgroundColor: "#ffffff",
       borderStyle: "solid",
       shadowColor: shadowColor,
+      borderColor: borderColor,
       shadowOffset: {
         width: shadowWidth,
         height: shadowHeight,
