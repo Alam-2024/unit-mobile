@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   Alert,
   FlatList,
+  Dimensions,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import {
@@ -53,19 +54,19 @@ const Admin: React.FC = () => {
   const [isUserEditing, setIsUserEditing] = useState<boolean>(false);
   const [userUidID, setUserUidID] = useState<string>("");
   const [editedUser, setEditedUser] = useState<StoredUsers | any>(
-    initialUserState
+    initialUserState,
   );
   const [givenPassword, setGivenPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  // --- Helpers ---
-  const resetEditedUser = (): void => setEditedUser(initialUserState);
+  const { width: screenWidth } = Dimensions.get("window");
+  const ITEM_WIDTH = (screenWidth - 40) / 2; // Margin: 20px
 
   const isEmailTaken = (email: string): boolean =>
     data.some((user: StoredUsers) => user.email === email);
 
-  const isUserMissingData = (): boolean =>
-    !editedUser.email || !editedUser.password;
+  // const isUserMissingData = (): boolean =>
+  //   !editedUser.email || !editedUser.password;
 
   const unAuthorizedRole = (role: string): boolean =>
     role !== "admin" && role !== "user";
@@ -101,11 +102,11 @@ const Admin: React.FC = () => {
   const handleSetAllCheckboxes = (value: boolean): void => {
     setEditedUser((prev: StoredUsers) => {
       const updateSection = (
-        section: Record<string, boolean>
+        section: Record<string, boolean>,
       ): Record<string, boolean> =>
         Object.keys(section).reduce(
           (acc, key) => ({ ...acc, [key]: value }),
-          {}
+          {},
         );
       return {
         ...prev,
@@ -165,10 +166,10 @@ const Admin: React.FC = () => {
         return;
       }
 
-      if (isUserMissingData()) {
-        Alert.alert("Error", "Email or name is missing");
-        return;
-      }
+      // if (isUserMissingData()) {
+      //   Alert.alert("Error", "Email or name is missing");
+      //   return;
+      // }
 
       if (unAuthorizedRole(role)) {
         Alert.alert("Error", "Invalid role");
@@ -198,7 +199,7 @@ const Admin: React.FC = () => {
       const userCredential = await createUserWithEmailAndPassword(
         authFirebase,
         email,
-        password
+        password,
       );
       if (userCredential.user) {
         console.log("Firebase user created:", userCredential.user);
@@ -239,13 +240,22 @@ const Admin: React.FC = () => {
       ]}
       onPress={() => handleUserToBeEdited(user)}
     >
-      <CustomText value={user.name} bold color={globalColors.secondary} />
-      <CustomText value={user.email} color={globalColors.secondary} />
+      <CustomText
+        value={user.name || "No name set"}
+        bold
+        color={globalColors.secondary}
+      />
+      <CustomText
+        value={
+          user.email.substring(0, user.email.indexOf("@")) || "No email set"
+        }
+        color={globalColors.secondary}
+      />
       <TouchableOpacity
         style={adminStyles.deleteIcon}
         onPress={() => handleDeleteUser(user.id)}
       >
-        <MaterialIcons name="delete-forever" size={38} color="#b00" />
+        <MaterialIcons name="delete-forever" size={34} color="#b00" />
       </TouchableOpacity>
     </TouchableOpacity>
   );
@@ -256,7 +266,7 @@ const Admin: React.FC = () => {
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=<>?";
     const passwordLength = 12;
     return Array.from({ length: passwordLength }, () =>
-      characters.charAt(Math.floor(Math.random() * characters.length))
+      characters.charAt(Math.floor(Math.random() * characters.length)),
     ).join("");
   };
 
@@ -267,7 +277,7 @@ const Admin: React.FC = () => {
 
   const renderSwitchSection = (
     sectionKey: keyof StoredUsers,
-    label: string
+    label: string,
   ) => (
     <View style={adminStyles.section} key={sectionKey}>
       <CustomText value={label} bold big color="#007AFF" />

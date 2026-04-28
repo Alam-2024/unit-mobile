@@ -113,8 +113,11 @@ export const userProfileStyles = StyleSheet.create({
   content: {
     padding: 6,
     paddingBottom: 100,
+    backgroundColor: "#0206170", // slate-950
+    alignItems: "center",
   },
   profileCard: {
+    width: "90%",
     position: "relative",
     backgroundColor: "rgba(15,23,42,0.98)",
     borderRadius: 16,
@@ -207,10 +210,20 @@ export const userProfileStyles = StyleSheet.create({
     marginRight: 6,
   },
   sectionTitle: {
-    fontSize: 16,
-    fontWeight: "700",
-    color: "#e5e7eb",
     marginBottom: 14,
+    marginTop: 24,
+    borderTopColor: "rgba(51,65,85,0.7)",
+    borderTopWidth: 1,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    padding: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 3,
   },
   gradeCard: {
     backgroundColor: "rgba(15,23,42,0.95)",

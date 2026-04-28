@@ -100,6 +100,7 @@ const styles = (unitNameActive: string, unitName: string) =>
       borderWidth: 1,
       borderRadius: 8,
       marginBottom: 10,
+      marginRight: 18,
       position: "relative",
       backgroundColor: "#ffffff",
     },

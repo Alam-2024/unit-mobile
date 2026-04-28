@@ -16,6 +16,10 @@ import { TAB_ITEMS } from "@/constants/TabBar";
 
 export default function TabLayout() {
   const { isUserAuthenticated, isAuthenticatedAdminUser } = useAppContext();
+  console.log(
+    "🚀 ~ TabLayout ~ isAuthenticatedAdminUser:",
+    isAuthenticatedAdminUser,
+  );
   const router = useRouter();
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? "light"];

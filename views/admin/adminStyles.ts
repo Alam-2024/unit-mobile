@@ -18,7 +18,7 @@ export const adminStyles = StyleSheet.create({
     maxWidth: 150,
     backgroundColor: "#f4f4f4",
     paddingHorizontal: 12,
-    paddingVertical: 28,
+    paddingVertical: 20,
     borderRadius: 8,
     marginBottom: 12,
     marginHorizontal: 8,
@@ -33,7 +33,7 @@ export const adminStyles = StyleSheet.create({
   userBanned: {
     backgroundColor: "#ffe6e6",
     borderWidth: 1,
-    borderColor: "#b00",
+    borderColor: "#b002e2",
   },
   userAdmin: {
     backgroundColor: "#e6ffe6",
@@ -47,7 +47,7 @@ export const adminStyles = StyleSheet.create({
   },
   deleteIcon: {
     position: "absolute",
-    top: -10,
+    top: -16,
     right: -12,
     zIndex: 1,
     backgroundColor: "#f4f4f4",
@@ -55,7 +55,7 @@ export const adminStyles = StyleSheet.create({
     padding: 2,
   },
   formContainer: {
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "transparent",
     borderRadius: 10,
     padding: 16,
     elevation: 1,

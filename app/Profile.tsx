@@ -99,7 +99,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({
     { iconName: "inbox", action: () => updatingPassword() },
   ];
   const updatingPassword = () => {
-    // Logic to update password
+    //TODO: Logic to update password
     console.log("Updating password to:", newPassword.password);
   };
   const cancelUpdatingPassword = () => {
@@ -273,9 +273,16 @@ const UserDetails: React.FC<UserDetailsProps> = ({
             iconName="edit"
             iconSize={42}
             iconColor={showFields ? "#ffdfdf" : "#ffffff"}
-          />{" "}
+          />
         </TouchableOpacity>
-        <Text style={userProfileStyles.name}>{userAccessData.name}</Text>
+        {/* <Text style={userProfileStyles.name}>{userAccessData.name}</Text> */}
+        <CustomText
+          value={userAccessData.name}
+          style={userProfileStyles.name}
+          big
+          bold
+          color="#fff"
+        />
         <Text style={userProfileStyles.email}>{userAccessData.email}</Text>
         <View style={userProfileStyles.row}>
           <Text style={userProfileStyles.badgeRole}>{userAccessData.role}</Text>
@@ -304,7 +311,13 @@ const UserDetails: React.FC<UserDetailsProps> = ({
       </View>
 
       {/* Units(just for read) */}
-      <Text style={userProfileStyles.sectionTitle}>Units access overview</Text>
+      <CustomText
+        value="Units you have access"
+        style={userProfileStyles.sectionTitle}
+        center
+        bold
+        big
+      />
       {gradeKeys.map(renderGrade)}
     </ScrollView>
   );
