@@ -13,12 +13,12 @@ import { IRoute, TAB_ITEMS } from "@/constants/TabBar";
 export function CustomTabBar({
   state,
   navigation,
-  isAuthenticated,
+  isUserAuthenticated,
   onCenterPress,
 }: {
   state: { routes: IRoute[]; index: number };
   navigation: any;
-  isAuthenticated: boolean;
+  isUserAuthenticated: boolean;
   onCenterPress: () => void;
 }) {
   const colorScheme = useColorScheme();
@@ -83,14 +83,16 @@ export function CustomTabBar({
             ) : isFocused ? ( // No icon for center button
               <CustomIcon
                 iconName={icon as keyof (typeof FontAwesome)["glyphMap"]}
-                iconSize={isAuthenticated ? 22 : 18}
+                iconSize={isUserAuthenticated ? 22 : 18}
                 iconColor="#fff"
               />
             ) : (
               <CustomIcon
                 iconName={icon as keyof (typeof FontAwesome)["glyphMap"]}
-                iconSize={isAuthenticated ? 24 : 20}
-                iconColor={isAuthenticated ? colors.text : colors.text + "cc"}
+                iconSize={isUserAuthenticated ? 24 : 20}
+                iconColor={
+                  isUserAuthenticated ? colors.text : colors.text + "cc"
+                }
               />
             )}
           </TouchableOpacity>

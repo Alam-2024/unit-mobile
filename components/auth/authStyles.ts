@@ -1,224 +1,174 @@
 import { StyleSheet } from "react-native";
-import {
-  palette,
-  radius,
-  spacing,
-  typography,
-  shadow,
-  minHitTarget,
-} from "@/constants/designTokens";
 
 export const authStyles = StyleSheet.create({
   screen: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: palette.bgCanvas,
     width: "100%",
-    padding: spacing.lg,
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "stretch",
+    paddingHorizontal: 0,
+    backgroundColor: "#020617",
   },
   card: {
-    width: "100%",
-    maxWidth: 420,
-    alignSelf: "center",
-    paddingVertical: spacing["2xl"],
-  },
-  header: {
-    marginBottom: spacing.xl,
+    flex: 1,
+    backgroundColor: "rgba(15,23,42,0.98)",
+    borderRadius: 0,
+    padding: 24,
+    paddingTop: 60,
+    paddingBottom: 60,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 18 },
+    shadowOpacity: 0.4,
+    shadowRadius: 28,
+    elevation: 10,
   },
   title: {
-    ...typography.h1,
-    color: palette.textPrimary,
-    marginBottom: spacing.sm,
+    fontSize: 28,
+    fontWeight: "800",
+    color: "#f9fafb",
+    marginBottom: 8,
+    textAlign: "center",
   },
   subtitle: {
-    ...typography.body,
-    color: palette.textSecondary,
+    fontSize: 16,
+    color: "#9ca3af",
+    marginBottom: 24,
+    textAlign: "center",
   },
-
-  // Inline alerts
-  alert: {
-    borderRadius: radius.md,
-    padding: spacing.md,
-    marginBottom: spacing.lg,
+  errorText: {
+    color: "#f97373",
+    backgroundColor: "rgba(249,115,115,0.1)",
+    padding: 12,
+    borderRadius: 10,
+    marginBottom: 16,
+    textAlign: "center",
   },
-  alertError: {
-    backgroundColor: palette.dangerSubtle,
+  infoText: {
+    color: "#4ade80",
+    backgroundColor: "rgba(74,222,128,0.1)",
+    padding: 12,
+    borderRadius: 10,
+    marginBottom: 16,
+    textAlign: "center",
   },
-  alertSuccess: {
-    backgroundColor: palette.successSubtle,
-  },
-  alertText: {
-    ...typography.label,
-  },
-  alertTextError: {
-    color: palette.danger,
-  },
-  alertTextSuccess: {
-    color: palette.success,
-  },
-
-  // Inputs
   inputGroup: {
-    marginBottom: spacing.lg,
+    marginBottom: 2,
+  },
+  inputGroupRow: {
+    maxWidth: "56%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginLeft: 144,
+    marginTop: 2,
+  },
+  inputGroupRowButtons: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 12,
+    borderColor: "#4b5563",
+    paddingHorizontal: 36,
+    paddingVertical: 7,
+    borderWidth: 2,
   },
   label: {
-    ...typography.label,
-    color: palette.textSecondary,
-    marginBottom: spacing.xs,
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#e5e7eb",
+    marginBottom: 6,
   },
   input: {
-    height: minHitTarget,
-    borderRadius: radius.md,
-    borderWidth: 1,
-    borderColor: palette.borderDefault,
-    backgroundColor: palette.bgCanvas,
-    color: palette.textPrimary,
-    paddingHorizontal: spacing.lg,
-    ...typography.body,
+    width: "96%",
+    height: 48,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    borderColor: "#4b5563",
+    paddingHorizontal: 16,
+    backgroundColor: "rgba(15,23,42,0.9)",
+    color: "#f9fafb",
+    fontSize: 16,
   },
-  inputFocused: {
-    borderColor: palette.borderFocus,
-  },
-  inputError: {
-    borderColor: palette.danger,
-  },
-  inputHelper: {
-    ...typography.caption,
-    color: palette.textMuted,
-    marginTop: spacing.xs,
-  },
-  inputErrorText: {
-    ...typography.caption,
-    color: palette.danger,
-    marginTop: spacing.xs,
-  },
-
-  passwordWrap: {
-    position: "relative",
-    justifyContent: "center",
-  },
-  passwordToggle: {
-    position: "absolute",
-    right: spacing.md,
-    top: 0,
-    bottom: 0,
-    justifyContent: "center",
-    paddingHorizontal: spacing.sm,
-    minWidth: minHitTarget,
-    alignItems: "flex-end",
-  },
-
-  // Strength meter
-  strengthBar: {
-    height: 4,
-    borderRadius: radius.pill,
-    backgroundColor: palette.bgMuted,
-    overflow: "hidden",
-    marginTop: spacing.sm,
-  },
-  strengthFill: {
-    height: "100%",
-    borderRadius: radius.pill,
-  },
-  strengthLabel: {
-    ...typography.caption,
-    color: palette.textMuted,
-    marginTop: spacing.xs,
-  },
-
-  // Primary CTA
-  primaryBtn: {
-    height: minHitTarget,
-    borderRadius: radius.md,
-    backgroundColor: palette.accent,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: spacing.sm,
-    ...shadow.card,
-  },
-  primaryBtnPressed: {
-    backgroundColor: palette.accentHover,
-  },
-  primaryBtnDisabled: {
-    opacity: 0.6,
-  },
-  primaryBtnText: {
-    ...typography.bodyStrong,
-    color: palette.textInverse,
-  },
-
-  // Secondary, ghost link styles
-  ghostLink: {
-    alignSelf: "flex-end",
-    marginTop: spacing.sm,
-    paddingVertical: spacing.xs,
-  },
-  ghostLinkText: {
-    ...typography.label,
-    color: palette.accent,
-  },
-  generateLink: {
-    alignSelf: "flex-start",
-    marginTop: spacing.xs,
-    paddingVertical: spacing.xs,
-  },
-  generateLinkText: {
-    ...typography.caption,
-    color: palette.accent,
-  },
-
-  // Switch row
-  switchRow: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: spacing.xl,
-  },
-  switchText: {
-    ...typography.label,
-    color: palette.textSecondary,
-  },
-  switchLink: {
-    ...typography.label,
-    color: palette.accent,
-    marginLeft: spacing.xs,
-    fontWeight: "600",
-  },
-
-  // ---------------------------------------------------------------------
-  // Legacy aliases used by app/Profile.tsx and components/customs/Profile.
-  // Kept here so those screens keep compiling until they're migrated to
-  // the new design tokens.
-  // ---------------------------------------------------------------------
   passwordContainer: {
     flexDirection: "row",
     alignItems: "center",
     position: "relative",
   },
   inputPassword: {
-    paddingRight: 56,
+    paddingRight: 60,
   },
   eyeIcon: {
     position: "absolute",
-    right: spacing.md,
-    padding: spacing.sm,
+    right: 30,
+    padding: 8,
   },
   eyeIconText: {
     fontSize: 22,
   },
-  inputGroupRow: {
+  generateBtn: {
+    marginTop: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    marginRight: 16,
+    backgroundColor: "rgba(34, 197, 94, 0.15)",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "rgba(34, 197, 94, 0.4)",
+    alignSelf: "flex-end",
+  },
+  generateBtnText: {
+    color: "#22c55e",
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  btn: {
+    marginTop: 20,
+    borderRadius: 999,
+    alignItems: "center",
+    backgroundColor: "#2563eb",
+    paddingVertical: 16,
+  },
+  btnDisabled: {
+    opacity: 0.7,
+  },
+  linkRight: {
+    marginTop: 12,
+    alignSelf: "flex-end",
+  },
+  linkTextSmall: {
+    fontSize: 13,
+    color: "#60a5fa",
+  },
+  dividerRow: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
-    marginTop: spacing.xs,
+    marginVertical: 24,
   },
-  inputGroupRowButtons: {
-    alignItems: "center",
+  divider: {
+    flex: 1,
+    height: 1,
+    backgroundColor: "rgba(55,65,81,0.8)",
+  },
+  dividerText: {
+    marginHorizontal: 12,
+    color: "#6b7280",
+    fontSize: 14,
+    fontWeight: "500",
+  },
+  switchRow: {
+    flexDirection: "row",
     justifyContent: "center",
-    borderRadius: radius.md,
-    borderColor: palette.borderDefault,
-    borderWidth: 1,
-    paddingHorizontal: spacing["2xl"],
-    paddingVertical: spacing.sm,
+    alignItems: "center",
+  },
+  switchText: {
+    color: "#9ca3af",
+    fontSize: 15,
+  },
+  switchLink: {
+    marginLeft: 8,
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#60a5fa",
   },
 });
