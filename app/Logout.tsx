@@ -1,34 +1,19 @@
 import { View } from "react-native";
 import React from "react";
 import { useAppContext } from "@/hooks/useContextHook";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import CustomButton from "@/components/customs/CustomButton";
 import CustomText from "@/components/customs/CustomText";
-import { initialUserState } from "@/interfaces/constants/initialUserValues";
 
 const Logout = ({ onCloseModal }: { onCloseModal?: () => void }) => {
-  const {
-    setLoggedInUser,
-    setIsUserAuthenticated,
-    setIsAuthenticatedAdminUser,
-  } = useAppContext();
-  const handlingModalClose = () => {
-    if (onCloseModal) {
-      onCloseModal();
-    }
-  };
+  const { signOut } = useAppContext();
 
   const handleLogout = async () => {
     try {
-      await AsyncStorage.removeItem("user");
-      await AsyncStorage.removeItem("loginTime");
-
-      setLoggedInUser(initialUserState);
-      setIsUserAuthenticated(false);
-      setIsAuthenticatedAdminUser(false);
-      handlingModalClose();
+      await signOut();
     } catch (error) {
       console.error("Error logging out:", error);
+    } finally {
+      onCloseModal?.();
     }
   };
 

@@ -1,0 +1,28 @@
+# Dependencias (ahorra 70% tokens)
+
+node_modules/
+vendor/
+
+# Builds y outputs
+
+dist/
+build/
+.next/
+.out/
+
+# Secrets
+
+.env\*
+_.key
+_.pem
+
+# Logs y tests pesados
+
+\*.log
+coverage/
+.nyc_output/
+
+# IDE
+
+.vscode/settings.json
+.idea/
