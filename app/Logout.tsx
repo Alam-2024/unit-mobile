@@ -1,58 +1,103 @@
-import { View } from "react-native";
-import React from "react";
-import { useAppContext } from "@/hooks/useContextHook";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import CustomButton from "@/components/customs/CustomButton";
-import CustomText from "@/components/customs/CustomText";
-import { initialUserState } from "@/interfaces/constants/initialUserValues";
+import React, { useState } from "react";
+import { View, StyleSheet, Pressable, Text, ActivityIndicator } from "react-native";
+import { signOut } from "firebase/auth";
+import { authFirebase } from "@/firebase/fireConfig";
+import { palette, radius, spacing, typography } from "@/constants/designTokens";
+import { Feather } from "@expo/vector-icons";
 
 const Logout = ({ onCloseModal }: { onCloseModal?: () => void }) => {
-  const {
-    setLoggedInUser,
-    setIsUserAuthenticated,
-    setIsAuthenticatedAdminUser,
-  } = useAppContext();
-  const handlingModalClose = () => {
-    if (onCloseModal) {
-      onCloseModal();
-    }
-  };
+  const [loading, setLoading] = useState(false);
 
   const handleLogout = async () => {
+    setLoading(true);
     try {
-      await AsyncStorage.removeItem("user");
-      await AsyncStorage.removeItem("loginTime");
-
-      setLoggedInUser(initialUserState);
-      setIsUserAuthenticated(false);
-      setIsAuthenticatedAdminUser(false);
-      handlingModalClose();
+      await signOut(authFirebase);
+      onCloseModal?.();
     } catch (error) {
       console.error("Error logging out:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <View>
-      <CustomText value="Are you sure you want to logout?" center bold medium />
-      <CustomButton
+    <View style={styles.container}>
+      <View style={styles.iconWrap}>
+        <Feather name="log-out" size={28} color={palette.danger} />
+      </View>
+      <Text style={styles.title}>Sign out?</Text>
+      <Text style={styles.subtitle}>You can always sign back in anytime.</Text>
+
+      <Pressable
         onPress={handleLogout}
-        style={{
-          backgroundColor: "#ff0000",
-          padding: 10,
-          borderRadius: 12,
-          marginTop: 10,
-        }}
-        shadowColor="#3d3d3d"
-        shadowWidth={1}
-        shadowHeight={2}
-        shadowOpacity={0.25}
-        shadowRadius={3.84}
+        disabled={loading}
+        style={({ pressed }) => [styles.btn, pressed && styles.btnPressed, loading && styles.btnDisabled]}
       >
-        <CustomText value="Logout" center bold color="white" big />
-      </CustomButton>
+        {loading ? (
+          <ActivityIndicator color="#fff" />
+        ) : (
+          <Text style={styles.btnText}>Sign out</Text>
+        )}
+      </Pressable>
+
+      <Pressable onPress={onCloseModal} style={styles.cancelBtn}>
+        <Text style={styles.cancelText}>Cancel</Text>
+      </Pressable>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    padding: spacing.xl,
+    alignItems: "center",
+    gap: spacing.sm,
+  },
+  iconWrap: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: palette.dangerSubtle,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: spacing.sm,
+  },
+  title: {
+    ...typography.h2,
+    color: palette.textPrimary,
+  },
+  subtitle: {
+    ...typography.body,
+    color: palette.textSecondary,
+    textAlign: "center",
+    marginBottom: spacing.md,
+  },
+  btn: {
+    width: "100%",
+    height: 48,
+    borderRadius: radius.pill,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: palette.danger,
+  },
+  btnPressed: {
+    opacity: 0.85,
+  },
+  btnDisabled: {
+    opacity: 0.6,
+  },
+  btnText: {
+    ...typography.bodyStrong,
+    color: "#fff",
+  },
+  cancelBtn: {
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.xl,
+  },
+  cancelText: {
+    ...typography.label,
+    color: palette.textMuted,
+  },
+});
 
 export default Logout;

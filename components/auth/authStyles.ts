@@ -8,49 +8,51 @@ export const authStyles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "stretch",
     paddingHorizontal: 0,
-    backgroundColor: "#020617",
+    backgroundColor: "#F8FAFC",
   },
   card: {
     flex: 1,
-    backgroundColor: "rgba(15,23,42,0.98)",
+    backgroundColor: "#FFFFFF",
     borderRadius: 0,
     padding: 24,
     paddingTop: 60,
     paddingBottom: 60,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 18 },
-    shadowOpacity: 0.4,
-    shadowRadius: 28,
-    elevation: 10,
+    shadowColor: "#0F172A",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 12,
+    elevation: 4,
   },
   title: {
     fontSize: 28,
     fontWeight: "800",
-    color: "#f9fafb",
+    color: "#0F172A",
     marginBottom: 8,
     textAlign: "center",
   },
   subtitle: {
     fontSize: 16,
-    color: "#9ca3af",
+    color: "#64748B",
     marginBottom: 24,
     textAlign: "center",
   },
   errorText: {
-    color: "#f97373",
-    backgroundColor: "rgba(249,115,115,0.1)",
+    color: "#DC2626",
+    backgroundColor: "#FEF2F2",
     padding: 12,
     borderRadius: 10,
     marginBottom: 16,
     textAlign: "center",
+    fontSize: 14,
   },
   infoText: {
-    color: "#4ade80",
-    backgroundColor: "rgba(74,222,128,0.1)",
+    color: "#059669",
+    backgroundColor: "#ECFDF5",
     padding: 12,
     borderRadius: 10,
     marginBottom: 16,
     textAlign: "center",
+    fontSize: 14,
   },
   inputGroup: {
     marginBottom: 2,
@@ -68,15 +70,15 @@ export const authStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 12,
-    borderColor: "#4b5563",
+    borderColor: "#E2E8F0",
     paddingHorizontal: 36,
     paddingVertical: 7,
-    borderWidth: 2,
+    borderWidth: 1.5,
   },
   label: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#e5e7eb",
+    color: "#374151",
     marginBottom: 6,
   },
   input: {
@@ -84,16 +86,26 @@ export const authStyles = StyleSheet.create({
     height: 48,
     borderRadius: 12,
     borderWidth: 1.5,
-    borderColor: "#4b5563",
+    borderColor: "#E2E8F0",
     paddingHorizontal: 16,
-    backgroundColor: "rgba(15,23,42,0.9)",
-    color: "#f9fafb",
+    backgroundColor: "#F8FAFC",
+    color: "#0F172A",
     fontSize: 16,
+  },
+  passwordWrap: {
+    position: "relative",
+    flexDirection: "row",
+    alignItems: "center",
   },
   passwordContainer: {
     flexDirection: "row",
     alignItems: "center",
     position: "relative",
+  },
+  passwordToggle: {
+    position: "absolute",
+    right: 16,
+    padding: 8,
   },
   inputPassword: {
     paddingRight: 60,
@@ -111,14 +123,14 @@ export const authStyles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 14,
     marginRight: 16,
-    backgroundColor: "rgba(34, 197, 94, 0.15)",
+    backgroundColor: "#F0FDFA",
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "rgba(34, 197, 94, 0.4)",
+    borderColor: "#99F6E4",
     alignSelf: "flex-end",
   },
   generateBtnText: {
-    color: "#22c55e",
+    color: "#0D9488",
     fontSize: 14,
     fontWeight: "600",
   },
@@ -126,11 +138,11 @@ export const authStyles = StyleSheet.create({
     marginTop: 20,
     borderRadius: 999,
     alignItems: "center",
-    backgroundColor: "#2563eb",
+    backgroundColor: "#14B8A6",
     paddingVertical: 16,
   },
   btnDisabled: {
-    opacity: 0.7,
+    opacity: 0.6,
   },
   linkRight: {
     marginTop: 12,
@@ -138,7 +150,7 @@ export const authStyles = StyleSheet.create({
   },
   linkTextSmall: {
     fontSize: 13,
-    color: "#60a5fa",
+    color: "#14B8A6",
   },
   dividerRow: {
     flexDirection: "row",
@@ -148,11 +160,11 @@ export const authStyles = StyleSheet.create({
   divider: {
     flex: 1,
     height: 1,
-    backgroundColor: "rgba(55,65,81,0.8)",
+    backgroundColor: "#E2E8F0",
   },
   dividerText: {
     marginHorizontal: 12,
-    color: "#6b7280",
+    color: "#94A3B8",
     fontSize: 14,
     fontWeight: "500",
   },
@@ -162,13 +174,123 @@ export const authStyles = StyleSheet.create({
     alignItems: "center",
   },
   switchText: {
-    color: "#9ca3af",
+    color: "#64748B",
     fontSize: 15,
   },
   switchLink: {
     marginLeft: 8,
     fontSize: 15,
     fontWeight: "700",
-    color: "#60a5fa",
+    color: "#14B8A6",
+  },
+
+  // ── Layout ────────────────────────────────────────────────────────────────
+  header: {
+    marginBottom: 24,
+    alignItems: "center",
+  },
+
+  // ── Alert banners ─────────────────────────────────────────────────────────
+  alert: {
+    padding: 12,
+    borderRadius: 10,
+    marginBottom: 16,
+  },
+  alertError: {
+    backgroundColor: "#FEF2F2",
+    borderWidth: 1,
+    borderColor: "#FECACA",
+  },
+  alertSuccess: {
+    backgroundColor: "#ECFDF5",
+    borderWidth: 1,
+    borderColor: "#A7F3D0",
+  },
+  alertText: {
+    fontSize: 14,
+    textAlign: "center",
+  },
+  alertTextError: {
+    color: "#DC2626",
+  },
+  alertTextSuccess: {
+    color: "#059669",
+  },
+
+  // ── Input validation ──────────────────────────────────────────────────────
+  inputError: {
+    borderColor: "#DC2626",
+    backgroundColor: "#FEF2F2",
+  },
+  inputErrorText: {
+    fontSize: 12,
+    color: "#DC2626",
+    marginTop: 4,
+    marginLeft: 2,
+  },
+
+  // ── Password strength ─────────────────────────────────────────────────────
+  strengthBar: {
+    height: 4,
+    backgroundColor: "#E2E8F0",
+    borderRadius: 2,
+    marginTop: 8,
+    overflow: "hidden",
+  },
+  strengthFill: {
+    height: 4,
+    borderRadius: 2,
+  },
+  strengthLabel: {
+    fontSize: 12,
+    color: "#64748B",
+    marginTop: 4,
+  },
+
+  // ── Generate link ─────────────────────────────────────────────────────────
+  generateLink: {
+    marginTop: 8,
+    alignSelf: "flex-end",
+    paddingVertical: 4,
+    paddingHorizontal: 2,
+  },
+  generateLinkText: {
+    fontSize: 13,
+    color: "#14B8A6",
+    fontWeight: "600",
+  },
+
+  // ── Primary CTA button ────────────────────────────────────────────────────
+  primaryBtn: {
+    height: 52,
+    borderRadius: 999,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#14B8A6",
+    marginTop: 20,
+  },
+  primaryBtnPressed: {
+    backgroundColor: "#0D9488",
+  },
+  primaryBtnDisabled: {
+    opacity: 0.6,
+  },
+  primaryBtnText: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#FFFFFF",
+  },
+
+  // ── Ghost / text link ─────────────────────────────────────────────────────
+  ghostLink: {
+    alignSelf: "center",
+    marginTop: 12,
+    paddingVertical: 6,
+    paddingHorizontal: 4,
+  },
+  ghostLinkText: {
+    fontSize: 14,
+    color: "#64748B",
+    textDecorationLine: "underline",
   },
 });

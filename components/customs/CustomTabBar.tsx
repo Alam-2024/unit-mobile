@@ -68,10 +68,10 @@ export function CustomTabBar({
             style={[
               styles.tabItem,
               isFocused && {
-                backgroundColor: "#000000",
-                shadowColor: colors.tint,
-                shadowOpacity: 0.24,
-                shadowRadius: 4,
+                backgroundColor: "#0D9488",
+                shadowColor: "#14B8A6",
+                shadowOpacity: 0.3,
+                shadowRadius: 6,
                 elevation: 4,
                 transform: [{ scale: 1.061 }],
               },
@@ -136,11 +136,11 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   centerButton: {
-    backgroundColor: "#ff6347", // special color for center button
+    backgroundColor: "#14B8A6",
     borderRadius: 35,
     marginHorizontal: 8,
-    shadowColor: "#ff6347",
-    shadowOpacity: 0.6,
+    shadowColor: "#14B8A6",
+    shadowOpacity: 0.5,
     shadowRadius: 10,
     elevation: 8,
   },

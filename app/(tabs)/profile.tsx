@@ -6,8 +6,6 @@ import { useAppContext } from "@/hooks/useContextHook";
 import DynamicModal from "../modal";
 import Login from "../Login";
 import Logout from "../Logout";
-import CustomButton from "@/components/customs/CustomButton";
-import CustomText from "@/components/customs/CustomText";
 import CustomView from "@/components/customs/CustomView";
 import UserDetails from "../Profile";
 import { profileStyles } from "@/styles/profile";
@@ -34,13 +32,25 @@ const PLAN_COLORS: Record<string, string> = {
   institution: palette.success,
 };
 
+function getInitials(email?: string | null, displayName?: string | null) {
+  if (displayName) {
+    const parts = displayName.trim().split(" ");
+    return parts.length >= 2
+      ? (parts[0][0] + parts[1][0]).toUpperCase()
+      : parts[0].slice(0, 2).toUpperCase();
+  }
+  if (email) return email.slice(0, 2).toUpperCase();
+  return "U";
+}
+
 const ProfileView = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [modalType, setModalType] = useState<"login" | "logout" | null>(null);
   const [showPaywall, setShowPaywall] = useState(false);
 
-  const { isAuthenticated, user, userDoc, effectivePlan, effectiveEntitlements } = useAppContext();
+  const { isAuthenticated, user, userDoc, effectivePlan, effectiveEntitlements, effectiveRole } = useAppContext();
   const router = useRouter();
+  const initials = getInitials(user?.email, user?.displayName);
 
   const closeModal = () => {
     setModalVisible(false);
@@ -56,7 +66,7 @@ const ProfileView = () => {
   const isPaidPlan = currentPlan !== "free";
 
   return (
-    <CustomView style={profileStyles.container} bgColor="#e5e5e5">
+    <CustomView style={profileStyles.container} bgColor="#F8FAFC">
       {/* Auth modal (login/logout) */}
       <DynamicModal visible={isModalVisible} onClose={closeModal}>
         {modalType === "login" && <Login onCloseModal={closeModal} />}
@@ -72,170 +82,192 @@ const ProfileView = () => {
         <PlanSelector onClose={() => setShowPaywall(false)} />
       </Modal>
 
-      <Pressable
-        onPress={() => router.push("/devtools")}
-        style={({ pressed }) => [styles.devBtn, pressed && { opacity: 0.7 }]}
-      >
-        <Feather name="zap" size={14} color="#fbbf24" />
-        <Text style={styles.devBtnText}>Open Dev Simulator</Text>
-      </Pressable>
-
-      <View style={profileStyles.buttonContainer}>
-        {isAuthenticated ? (
-          <>
-            <View>
-              <CustomText value="Welcome" medium style={{ paddingBottom: 3 }} />
-              <CustomText value={`${user?.email}`} bold />
+      {isAuthenticated ? (
+        <>
+          {/* Hero card with avatar */}
+          <View style={styles.heroCard}>
+            <View style={styles.avatarCircle}>
+              <Text style={styles.avatarText}>{initials}</Text>
             </View>
-            <CustomButton onPress={() => openModal("logout")}>
-              <CustomText value="Logout" big center />
-            </CustomButton>
-          </>
-        ) : (
-          <>
-            <CustomText
-              value="Please login to view your profile."
-              medium
-              bold
-            />
-            <CustomButton onPress={() => openModal("login")}>
-              <CustomText value="Login" big center />
-            </CustomButton>
-          </>
-        )}
-      </View>
+            <Text style={styles.heroName}>
+              {userDoc?.name ?? user?.displayName ?? user?.email ?? "User"}
+            </Text>
+            <Text style={styles.heroEmail}>{user?.email}</Text>
 
-      {/* Plan card — visible only when authenticated */}
-      {isAuthenticated && (
-        <View style={styles.planCard}>
-          <View style={styles.planRow}>
-            <View style={styles.planInfo}>
-              <Text style={styles.planLabel}>Current plan</Text>
-              <View style={styles.planBadgeRow}>
-                <View
-                  style={[
-                    styles.planDot,
-                    {
-                      backgroundColor:
-                        PLAN_COLORS[currentPlan] ?? palette.textMuted,
-                    },
-                  ]}
-                />
-                <Text
-                  style={[
-                    styles.planName,
-                    { color: PLAN_COLORS[currentPlan] ?? palette.textMuted },
-                  ]}
-                >
+            {/* Stats row */}
+            <View style={styles.statsRow}>
+              <View style={styles.statItem}>
+                <Text style={[styles.statValue, { color: PLAN_COLORS[currentPlan] ?? palette.textMuted }]}>
                   {PLAN_LABELS[currentPlan] ?? currentPlan}
                 </Text>
+                <Text style={styles.statLabel}>Plan</Text>
               </View>
-              {effectiveEntitlements.length > 0 && (
-                <Text style={styles.entitlementsText}>
-                  {effectiveEntitlements.length} grade
-                  {effectiveEntitlements.length !== 1 ? "s" : ""} unlocked
+              <View style={styles.statDivider} />
+              <View style={styles.statItem}>
+                <Text style={styles.statValue}>{effectiveEntitlements.length}</Text>
+                <Text style={styles.statLabel}>Grades</Text>
+              </View>
+              <View style={styles.statDivider} />
+              <View style={styles.statItem}>
+                <Text style={[styles.statValue, { color: palette.accent }]}>
+                  {effectiveRole}
                 </Text>
-              )}
+                <Text style={styles.statLabel}>Role</Text>
+              </View>
             </View>
 
-            {!isPaidPlan && (
+            {/* Action buttons */}
+            <View style={styles.heroActions}>
+              {!isPaidPlan ? (
+                <Pressable
+                  onPress={() => setShowPaywall(true)}
+                  style={({ pressed }) => [styles.upgradeBtn, pressed && styles.upgradeBtnPressed]}
+                >
+                  <Feather name="zap" size={14} color={palette.textInverse} />
+                  <Text style={styles.upgradeBtnText}>Upgrade Plan</Text>
+                </Pressable>
+              ) : (
+                <Pressable onPress={() => setShowPaywall(true)} style={styles.manageBtn}>
+                  <Text style={styles.manageBtnText}>Manage Plan</Text>
+                </Pressable>
+              )}
               <Pressable
-                onPress={() => setShowPaywall(true)}
-                style={({ pressed }) => [
-                  styles.upgradeBtn,
-                  pressed && styles.upgradeBtnPressed,
-                ]}
+                onPress={() => openModal("logout")}
+                style={styles.logoutBtn}
               >
-                <Feather name="zap" size={14} color={palette.textInverse} />
-                <Text style={styles.upgradeBtnText}>Upgrade</Text>
+                <Feather name="log-out" size={14} color={palette.danger} />
+                <Text style={styles.logoutBtnText}>Sign out</Text>
               </Pressable>
-            )}
-
-            {isPaidPlan && (
-              <Pressable
-                onPress={() => setShowPaywall(true)}
-                style={styles.manageBtn}
-              >
-                <Text style={styles.manageBtnText}>Manage</Text>
-              </Pressable>
-            )}
+            </View>
           </View>
+
+          {/* Profile details */}
+          <View style={{ marginBottom: 20 }}>
+            {userDoc ? (
+              <UserDetails userAccessData={userDoc} updateUserName={() => {}} />
+            ) : null}
+          </View>
+
+          {/* Dev Simulator shortcut */}
+          {__DEV__ && (
+            <Pressable
+              onPress={() => router.push("/devtools")}
+              style={({ pressed }) => [styles.devBtn, pressed && { opacity: 0.7 }]}
+            >
+              <Feather name="zap" size={14} color="#fbbf24" />
+              <Text style={styles.devBtnText}>Open Dev Simulator</Text>
+            </Pressable>
+          )}
+        </>
+      ) : (
+        /* Not authenticated — login prompt */
+        <View style={styles.guestCard}>
+          <View style={styles.guestIconWrap}>
+            <Feather name="user" size={32} color={palette.textMuted} />
+          </View>
+          <Text style={styles.guestTitle}>Welcome to Units</Text>
+          <Text style={styles.guestSubtitle}>
+            Sign in to track your progress, manage your plan, and unlock grade content.
+          </Text>
+          <Pressable
+            onPress={() => openModal("login")}
+            style={({ pressed }) => [styles.upgradeBtn, pressed && styles.upgradeBtnPressed, { marginTop: 0 }]}
+          >
+            <Feather name="log-in" size={14} color={palette.textInverse} />
+            <Text style={styles.upgradeBtnText}>Sign in</Text>
+          </Pressable>
         </View>
-      )}
-
-      <View style={{ marginBottom: 20 }}>
-        {isAuthenticated && userDoc ? (
-          <UserDetails userAccessData={userDoc} updateUserName={() => {}} />
-        ) : (
-          <CustomText
-            value="You need to be logged in to view profile details."
-            medium
-            center
-          />
-        )}
-      </View>
-
-      {/* Dev Simulator shortcut — only visible in development builds */}
-      {isAuthenticated && (
-        <Pressable
-          onPress={() => router.push("/devtools")}
-          style={({ pressed }) => [styles.devBtn, pressed && { opacity: 0.7 }]}
-        >
-          <Feather name="zap" size={14} color="#fbbf24" />
-          <Text style={styles.devBtnText}>Open Dev Simulator</Text>
-        </Pressable>
       )}
     </CustomView>
   );
 };
 
 const styles = StyleSheet.create({
-  planCard: {
+  heroCard: {
     marginHorizontal: spacing.lg,
+    marginTop: spacing.lg,
     marginBottom: spacing.lg,
     borderRadius: radius.lg,
     backgroundColor: palette.bgCanvas,
-    padding: spacing.lg,
-    ...shadow.card,
-  },
-  planRow: {
-    flexDirection: "row",
+    padding: spacing.xl,
     alignItems: "center",
-    justifyContent: "space-between",
+    ...shadow.card,
+    borderWidth: 1,
+    borderColor: palette.borderDefault,
   },
-  planInfo: {
-    flex: 1,
+  avatarCircle: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: palette.accentSubtle,
+    borderWidth: 3,
+    borderColor: palette.accent,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: spacing.md,
   },
-  planLabel: {
+  avatarText: {
+    fontSize: 28,
+    fontWeight: "700",
+    color: palette.accent,
+  },
+  heroName: {
+    ...typography.h2,
+    color: palette.textPrimary,
+    marginBottom: 2,
+    textAlign: "center",
+  },
+  heroEmail: {
     ...typography.caption,
     color: palette.textMuted,
-    marginBottom: 4,
+    marginBottom: spacing.lg,
+    textAlign: "center",
   },
-  planBadgeRow: {
+  statsRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: spacing.xs,
+    width: "100%",
+    backgroundColor: palette.bgSubtle,
+    borderRadius: radius.md,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.sm,
+    marginBottom: spacing.lg,
+    borderWidth: 1,
+    borderColor: palette.borderDefault,
   },
-  planDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+  statItem: {
+    flex: 1,
+    alignItems: "center",
   },
-  planName: {
+  statValue: {
     ...typography.bodyStrong,
+    color: palette.textPrimary,
+    textTransform: "capitalize",
   },
-  entitlementsText: {
+  statLabel: {
     ...typography.caption,
-    color: palette.textSecondary,
-    marginTop: 4,
+    color: palette.textMuted,
+    marginTop: 2,
+  },
+  statDivider: {
+    width: 1,
+    height: 32,
+    backgroundColor: palette.borderDefault,
+  },
+  heroActions: {
+    flexDirection: "row",
+    gap: spacing.sm,
+    width: "100%",
   },
   upgradeBtn: {
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     gap: spacing.xs,
     backgroundColor: palette.accent,
     paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.sm,
+    paddingVertical: spacing.sm + 2,
     borderRadius: radius.pill,
   },
   upgradeBtnPressed: {
@@ -246,8 +278,12 @@ const styles = StyleSheet.create({
     color: palette.textInverse,
   },
   manageBtn: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.sm,
+    paddingVertical: spacing.sm + 2,
     borderRadius: radius.pill,
     borderWidth: 1,
     borderColor: palette.borderDefault,
@@ -255,6 +291,54 @@ const styles = StyleSheet.create({
   manageBtnText: {
     ...typography.label,
     color: palette.textSecondary,
+  },
+  logoutBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: spacing.xs,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm + 2,
+    borderRadius: radius.pill,
+    borderWidth: 1,
+    borderColor: palette.dangerSubtle,
+    backgroundColor: palette.dangerSubtle,
+  },
+  logoutBtnText: {
+    ...typography.label,
+    color: palette.danger,
+  },
+  guestCard: {
+    marginHorizontal: spacing.lg,
+    marginTop: spacing.xl * 2,
+    borderRadius: radius.lg,
+    backgroundColor: palette.bgCanvas,
+    padding: spacing.xl,
+    alignItems: "center",
+    gap: spacing.md,
+    ...shadow.card,
+    borderWidth: 1,
+    borderColor: palette.borderDefault,
+  },
+  guestIconWrap: {
+    width: 72,
+    height: 72,
+    borderRadius: 36,
+    backgroundColor: palette.bgMuted,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: spacing.sm,
+  },
+  guestTitle: {
+    ...typography.h2,
+    color: palette.textPrimary,
+    textAlign: "center",
+  },
+  guestSubtitle: {
+    ...typography.body,
+    color: palette.textSecondary,
+    textAlign: "center",
+    marginBottom: spacing.sm,
   },
   devBtn: {
     flexDirection: "row",

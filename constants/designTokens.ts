@@ -13,7 +13,7 @@ export const palette = {
   // Borders
   borderDefault: "#E2E8F0",
   borderStrong: "#CBD5E1",
-  borderFocus: "#4F46E5",
+  borderFocus: "#14B8A6",
 
   // Text
   textPrimary: "#0F172A",
@@ -22,9 +22,9 @@ export const palette = {
   textInverse: "#FFFFFF",
 
   // Brand accent (single accent across the app)
-  accent: "#4F46E5",
-  accentHover: "#4338CA",
-  accentSubtle: "#EEF2FF",
+  accent: "#14B8A6",
+  accentHover: "#0D9488",
+  accentSubtle: "#F0FDFA",
 
   // Feedback
   success: "#059669",
@@ -66,10 +66,17 @@ export const typography = {
 export const shadow = {
   card: {
     shadowColor: "#0F172A",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.08,
-    shadowRadius: 3,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.07,
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  elevated: {
+    shadowColor: "#0F172A",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 16,
+    elevation: 6,
   },
 } as const;
 

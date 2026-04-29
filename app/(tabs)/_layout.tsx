@@ -76,7 +76,7 @@ export default function TabLayout() {
         tabBar={(props) => (
           <CustomTabBar
             {...props}
-            isAuthenticated={isAuthenticated}
+            isUserAuthenticated={isAuthenticated}
             onCenterPress={handleCenterButtonPress}
           />
         )}

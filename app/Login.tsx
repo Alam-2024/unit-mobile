@@ -6,5 +6,5 @@ interface LoginProps {
 }
 
 export default function LoginPage({ onCloseModal }: LoginProps) {
-  return <AuthScreen onCloseModal={onCloseModal} />;
+  return <AuthScreen onAuthenticated={onCloseModal} />;
 }

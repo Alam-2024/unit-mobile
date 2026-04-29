@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc *)",
+      "Bash(git -C /Users/developer/Dar/units-mobile status)",
+      "Bash(grep -v \"^$\")"
+    ]
+  }
+}
