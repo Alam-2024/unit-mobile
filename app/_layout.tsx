@@ -89,6 +89,16 @@ function RootLayoutNav() {
             options={{ presentation: "modal", headerShown: false }}
           />
           <Stack.Screen name="SmallModal" options={ModalOptions} />
+          {__DEV__ && (
+            <Stack.Screen
+              name="devtools"
+              options={{
+                title: "🧪 Dev Simulator",
+                headerStyle: { backgroundColor: "#1e1b4b" },
+                headerTintColor: "#fff",
+              }}
+            />
+          )}
         </Stack>
       </ThemeProvider>
     </AppProvider>

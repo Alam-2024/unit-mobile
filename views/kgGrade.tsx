@@ -28,6 +28,7 @@ const KgGrade = () => {
       units={unitNames}
       unitTitle={unitTitle}
       setUnitTitle={setUnitTitle}
+      gradeSlug="kg"
     />
   );
 };

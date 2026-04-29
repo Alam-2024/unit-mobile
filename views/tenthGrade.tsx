@@ -25,6 +25,7 @@ export default function TenthGrade() {
       units={units}
       unitTitle={unitTitle}
       setUnitTitle={setUnitTitle}
+      gradeSlug="tenth"
     />
   );
 }

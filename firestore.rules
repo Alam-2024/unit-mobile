@@ -1,0 +1,112 @@
+rules_version = '2';
+
+// Strict, deny-by-default rules for the education app.
+// Notes:
+//   - All admin-only writes (role, plan, entitlements, baned) are blocked from
+//     the client. They must go through Cloud Functions which use the Admin SDK
+//     and bypass these rules.
+//   - Custom claims (request.auth.token.role) are the source of truth for
+//     authorization, NOT the role field on the user document.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------- helpers ----------
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function role() {
+      return isSignedIn() ? request.auth.token.get('role', 'student') : '';
+    }
+    function isAdmin() {
+      return role() == 'admin' || role() == 'superadmin';
+    }
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+    function emailVerified() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    // Fields on the user doc that ONLY admins / cloud functions may change.
+    function adminOnlyFieldsUntouched() {
+      return !request.resource.data.diff(resource.data)
+              .affectedKeys()
+              .hasAny(['role', 'plan', 'entitlements', 'baned',
+                       'manualEntitlementsOverride', 'createdAt', 'userUid']);
+    }
+
+    // ---------- /users-data ----------
+    match /users-data/{docId} {
+      allow read: if isAdmin()
+                   || (resource != null && isOwner(resource.data.userUid));
+
+      // Creation only via Cloud Function (Admin SDK bypasses rules).
+      allow create: if false;
+
+      // The user can update non-privileged fields on their own doc.
+      allow update: if isAdmin()
+                     || (isOwner(resource.data.userUid)
+                         && adminOnlyFieldsUntouched());
+
+      allow delete: if isAdmin();
+    }
+
+    // ---------- Stripe extension subcollections ----------
+    // The firestore-stripe-payments extension writes here as the service account.
+    // Clients only need to READ their own subscriptions, prices and checkout sessions.
+
+    match /products/{id} {
+      allow read: if isSignedIn();
+      allow write: if false;
+    }
+    match /products/{id}/prices/{priceId} {
+      allow read: if isSignedIn();
+      allow write: if false;
+    }
+    match /products/{id}/tax_rates/{taxId} {
+      allow read: if isSignedIn();
+      allow write: if false;
+    }
+
+    match /customers/{uid} {
+      allow read: if isOwner(uid) || isAdmin();
+      allow write: if false; // extension only
+
+      match /checkout_sessions/{sessionId} {
+        // Client creates the doc; the extension fills it back with the URL.
+        allow read, write: if isOwner(uid);
+      }
+      match /subscriptions/{subId} {
+        allow read: if isOwner(uid) || isAdmin();
+        allow write: if false;
+      }
+      match /payments/{payId} {
+        allow read: if isOwner(uid) || isAdmin();
+        allow write: if false;
+      }
+    }
+
+    // ---------- /subjects, /units (content) ----------
+    match /subjects/{subjectId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+
+      match /units/{unitId} {
+        allow read: if isSignedIn();
+        allow write: if isAdmin();
+      }
+    }
+
+    // ---------- /progress ----------
+    // Per-user progress on units. Owner can read/write own progress only.
+    match /progress/{uid}/units/{unitId} {
+      allow read, write: if isOwner(uid) && emailVerified();
+    }
+
+    // Default deny.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -26,6 +26,7 @@ const PkThreeGrade = () => {
       units={unitNames}
       unitTitle={unitTitle}
       setUnitTitle={setUnitTitle}
+      gradeSlug="pk3"
     />
   );
 };

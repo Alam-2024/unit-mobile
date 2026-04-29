@@ -22,6 +22,7 @@ const FirstGrade = () => {
       units={units}
       unitTitle={unitTitle}
       setUnitTitle={setUnitTitle}
+      gradeSlug="first"
     />
   );
 };

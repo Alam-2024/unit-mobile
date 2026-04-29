@@ -35,6 +35,7 @@ const FourthGrade = () => {
       units={units}
       unitTitle={unitTitle}
       setUnitTitle={setUnitTitle}
+      gradeSlug="fourth"
     />
   );
 };

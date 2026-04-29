@@ -5,11 +5,12 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  StyleSheet,
 } from "react-native";
+import { Feather } from "@expo/vector-icons";
 import { IBtn, StoredUsers } from "@/interfaces/user/IUser";
 import { userProfileStyles } from "@/styles/profile";
 import CustomIcon from "@/components/customs/CustomIcon";
-import { gradeKeys, titleMap } from "@/interfaces/constants/profile";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@/firebase/fireConfig";
 import {
@@ -18,7 +19,26 @@ import {
 } from "@/components/customs/Profile/Profile";
 import CustomText from "@/components/customs/CustomText";
 import { authStyles } from "@/components/auth/authStyles";
-import { getFriendlyUnitName } from "@/utils/Navbar";
+import { useAppContext } from "@/hooks/useContextHook";
+import { palette, radius, spacing, typography } from "@/constants/designTokens";
+
+const SLUG_LABELS: Record<string, string> = {
+  pk3: "PK-3",
+  pk4: "PK-4",
+  kg: "Kindergarten",
+  first: "1st Grade",
+  second: "2nd Grade",
+  third: "3rd Grade",
+  fourth: "4th Grade",
+  fifth: "5th Grade",
+  sixth: "6th Grade",
+  seventh: "7th Grade",
+  eighth: "8th Grade",
+  ninth: "9th Grade",
+  tenth: "10th Grade",
+  eleventh: "11th Grade",
+  twelfth: "12th Grade",
+};
 
 interface UserDetailsProps {
   userAccessData: StoredUsers;
@@ -29,6 +49,8 @@ const UserDetails: React.FC<UserDetailsProps> = ({
   userAccessData,
   updateUserName,
 }) => {
+  console.log("🚀 ~ UserDetails ~ userAccessData:", userAccessData);
+  const { effectiveRole, effectiveEntitlements, isAdmin: ctxIsAdmin } = useAppContext();
   const [showFields, setShowFields] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [updateName, setUpdateName] = useState({
@@ -53,10 +75,12 @@ const UserDetails: React.FC<UserDetailsProps> = ({
       return () => clearTimeout(timeoutId);
     }
   }, [updateName.loading, newPassword.loading]);
+
   const btnName: IBtn[] = [
     { iconName: "close", action: () => cancelUpdatingName() },
     { iconName: "check", action: () => updatingName() },
   ];
+
   const updatingName = async (): Promise<void> => {
     if (!updateName.name.trim()) {
       setUpdateName((prev) => ({
@@ -67,10 +91,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({
     }
     setUpdateName((prev) => ({ ...prev, loading: true }));
     try {
-      // Logic to update name
-      console.log("Updating name to:", updateName.name);
       const userDocRef = doc(db, "users-data", userAccessData.id);
-      // Update logic goes here
       await updateDoc(userDocRef, { name: updateName.name });
       updateUserName((prev) => ({ ...prev, name: updateName.name }));
     } catch (error) {
@@ -83,9 +104,8 @@ const UserDetails: React.FC<UserDetailsProps> = ({
       setUpdateName((prev) => ({
         ...prev,
         infoMsg: "Name updated successfully",
+        loading: false,
       }));
-
-      setUpdateName((prev) => ({ ...prev, loading: false }));
       setShowFields(false);
     }
   };
@@ -94,14 +114,16 @@ const UserDetails: React.FC<UserDetailsProps> = ({
     setUpdateName((prev) => ({ ...prev, name: "", errorMsg: "", infoMsg: "" }));
     setShowFields(false);
   };
+
   const btnPassword: IBtn[] = [
     { iconName: "close", action: () => cancelUpdatingPassword() },
     { iconName: "inbox", action: () => updatingPassword() },
   ];
+
   const updatingPassword = () => {
-    //TODO: Logic to update password
     console.log("Updating password to:", newPassword.password);
   };
+
   const cancelUpdatingPassword = () => {
     setNewPassword((prev) => ({
       ...prev,
@@ -111,66 +133,6 @@ const UserDetails: React.FC<UserDetailsProps> = ({
     }));
     setShowFields(false);
     setShowPassword(false);
-  };
-
-  const renderGrade = (gradeKey: (typeof gradeKeys)[number]) => {
-    const section = (userAccessData as StoredUsers)[gradeKey];
-    if (!section || typeof section !== "object") return null;
-
-    const units = Object.entries(section) as [string, boolean][];
-
-    if (units.length === 0) return null;
-
-    return (
-      <View key={gradeKey} style={userProfileStyles.gradeCard}>
-        <View style={userProfileStyles.gradeHeader}>
-          <CustomText
-            value={titleMap[gradeKey] || gradeKey}
-            color="#9ca3af"
-            bold
-          />
-          <CustomText
-            value={
-              `Units: ${units.length}` +
-              " · " +
-              `Active: ${units.filter(([, v]) => v).length}`
-            }
-            color="#9ca3af"
-            fSize={12}
-          />
-        </View>
-        <View style={userProfileStyles.unitsContainer}>
-          {units.map(([unitName, active]) => (
-            <View
-              key={unitName}
-              style={[
-                userProfileStyles.unitChip,
-                active
-                  ? userProfileStyles.unitChipActive
-                  : userProfileStyles.unitChipInactive,
-              ]}
-            >
-              <View
-                style={[
-                  userProfileStyles.statusDot,
-                  { backgroundColor: active ? "#22c55e" : "#6b7280" },
-                ]}
-              />
-              <CustomText
-                value={getFriendlyUnitName(unitName)}
-                style={[
-                  userProfileStyles.unitText,
-                  active
-                    ? userProfileStyles.unitTextActive
-                    : userProfileStyles.unitTextInactive,
-                ]}
-                color="#fff"
-              />
-            </View>
-          ))}
-        </View>
-      </View>
-    );
   };
 
   const handleFieldsToggle = () => {
@@ -196,7 +158,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({
             bold
           />
           <TextInput
-            placeholder="Type you name..."
+            placeholder="Type your name..."
             value={updateName.name}
             autoCapitalize="none"
             onChangeText={(text) =>
@@ -214,7 +176,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({
             color="#e5e7eb"
             bold
           />
-          <View style={authStyles.passwordContainer}>
+          <View style={authStyles.passwordWrap}>
             <TextInput
               placeholder="••••••••"
               secureTextEntry={!showPassword}
@@ -222,19 +184,19 @@ const UserDetails: React.FC<UserDetailsProps> = ({
               onChangeText={(text) =>
                 setNewPassword((prev) => ({ ...prev, password: text }))
               }
-              style={[authStyles.input, authStyles.inputPassword]}
+              style={authStyles.input}
               placeholderTextColor="#9ca3af"
               autoCapitalize="none"
             />
             <TouchableOpacity
-              style={authStyles.eyeIcon}
+              style={authStyles.passwordToggle}
               onPress={() => setShowPassword(!showPassword)}
               activeOpacity={0.7}
             >
-              <CustomText
-                value={showPassword ? "🙈" : "👁️"}
-                style={authStyles.eyeIconText}
-                big
+              <Feather
+                name={showPassword ? "eye-off" : "eye"}
+                size={20}
+                color={palette.textSecondary}
               />
             </TouchableOpacity>
           </View>
@@ -244,6 +206,9 @@ const UserDetails: React.FC<UserDetailsProps> = ({
     );
   };
 
+  const entitlements: string[] = effectiveEntitlements;
+  const isAdmin = ctxIsAdmin;
+
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
@@ -251,20 +216,18 @@ const UserDetails: React.FC<UserDetailsProps> = ({
       contentContainerStyle={userProfileStyles.content}
       showsVerticalScrollIndicator={false}
     >
-      {/* Header */}
+      {/* Header card */}
       <View style={userProfileStyles.profileCard}>
-        {/* Loading indicator */}
         {updateName.loading
           ? CustomRenderMsg("Updating name...", updateName.loading, "#259200")
           : null}
-        {/* Error */}
         {updateName.errorMsg
           ? CustomRenderMsg(updateName.errorMsg, false, "#ff0000")
           : null}
-        {/* Info */}
         {updateName.infoMsg
           ? CustomRenderMsg(updateName.infoMsg, false, "#34d399")
           : null}
+
         <TouchableOpacity
           onPress={handleFieldsToggle}
           style={userProfileStyles.editButton}
@@ -275,7 +238,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({
             iconColor={showFields ? "#ffdfdf" : "#ffffff"}
           />
         </TouchableOpacity>
-        {/* <Text style={userProfileStyles.name}>{userAccessData.name}</Text> */}
+
         <CustomText
           value={userAccessData.name}
           style={userProfileStyles.name}
@@ -284,8 +247,11 @@ const UserDetails: React.FC<UserDetailsProps> = ({
           color="#fff"
         />
         <Text style={userProfileStyles.email}>{userAccessData.email}</Text>
+
         <View style={userProfileStyles.row}>
-          <Text style={userProfileStyles.badgeRole}>{userAccessData.role}</Text>
+          <Text style={userProfileStyles.badgeRole}>
+            {effectiveRole}
+          </Text>
           <View
             style={[
               userProfileStyles.badgeStatus,
@@ -307,20 +273,96 @@ const UserDetails: React.FC<UserDetailsProps> = ({
             </Text>
           </View>
         </View>
+
         {showFields && renderFields()}
       </View>
 
-      {/* Units(just for read) */}
+      {/* Entitlements section */}
       <CustomText
-        value="Units you have access"
+        value="Grades you have access to"
         style={userProfileStyles.sectionTitle}
         center
         bold
         big
       />
-      {gradeKeys.map(renderGrade)}
+
+      {isAdmin ? (
+        <View style={styles.adminBadge}>
+          <Feather name="shield" size={16} color={palette.accent} />
+          <Text style={styles.adminBadgeText}>
+            Admin — access to all grades
+          </Text>
+        </View>
+      ) : entitlements.length === 0 ? (
+        <View style={styles.emptyEntitlements}>
+          <Text style={styles.emptyText}>
+            No grades unlocked yet. Upgrade your plan to get access.
+          </Text>
+        </View>
+      ) : (
+        <View style={styles.entitlementsGrid}>
+          {entitlements.map((slug) => (
+            <View key={slug} style={styles.entitlementChip}>
+              <View style={styles.chipDot} />
+              <Text style={styles.chipText}>{SLUG_LABELS[slug] ?? slug}</Text>
+            </View>
+          ))}
+        </View>
+      )}
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  adminBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.sm,
+    backgroundColor: palette.accentSubtle,
+    borderRadius: radius.md,
+    padding: spacing.md,
+    marginHorizontal: spacing.lg,
+    marginBottom: spacing.lg,
+  },
+  adminBadgeText: {
+    ...typography.bodyStrong,
+    color: palette.accent,
+  },
+  emptyEntitlements: {
+    padding: spacing.xl,
+    alignItems: "center",
+  },
+  emptyText: {
+    ...typography.body,
+    color: palette.textSecondary,
+    textAlign: "center",
+  },
+  entitlementsGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    paddingHorizontal: spacing.lg,
+    gap: spacing.sm,
+    marginBottom: spacing.xl,
+  },
+  entitlementChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
+    backgroundColor: palette.accentSubtle,
+    borderRadius: radius.pill,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs,
+  },
+  chipDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: palette.accent,
+  },
+  chipText: {
+    ...typography.label,
+    color: palette.accent,
+  },
+});
 
 export default UserDetails;

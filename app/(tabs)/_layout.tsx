@@ -15,11 +15,8 @@ import { CustomTabBar } from "@/components/customs/CustomTabBar";
 import { TAB_ITEMS } from "@/constants/TabBar";
 
 export default function TabLayout() {
-  const { isUserAuthenticated, isAuthenticatedAdminUser } = useAppContext();
-  console.log(
-    "🚀 ~ TabLayout ~ isAuthenticatedAdminUser:",
-    isAuthenticatedAdminUser,
-  );
+  const { isAdmin, isAuthenticated } = useAppContext();
+  console.log("🚀 ~ TabLayout ~ isAdmin:", isAdmin);
   const router = useRouter();
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? "light"];
@@ -42,7 +39,7 @@ export default function TabLayout() {
   };
 
   const adminView = () => {
-    if (isAuthenticatedAdminUser) {
+    if (isAdmin) {
       return (
         <TouchableOpacity
           onPress={() => router.push("/adminModal")}
@@ -79,7 +76,7 @@ export default function TabLayout() {
         tabBar={(props) => (
           <CustomTabBar
             {...props}
-            isUserAuthenticated={isUserAuthenticated}
+            isAuthenticated={isAuthenticated}
             onCenterPress={handleCenterButtonPress}
           />
         )}
@@ -93,7 +90,7 @@ export default function TabLayout() {
               headerRight: () => (
                 <Pressable
                   onPress={() => {
-                    if (!isUserAuthenticated) openModal("login");
+                    if (!isAuthenticated) openModal("login");
                     else openModal("logout");
                   }}
                   style={({ pressed }) => ({
@@ -102,9 +99,7 @@ export default function TabLayout() {
                   })}
                 >
                   <CustomIcon
-                    iconName={
-                      !isUserAuthenticated ? "user-circle-o" : "sign-out"
-                    }
+                    iconName={!isAuthenticated ? "user-circle-o" : "sign-out"}
                     iconSize={30}
                     iconColor={colors.text}
                   />

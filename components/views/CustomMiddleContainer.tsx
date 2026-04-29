@@ -1,62 +1,33 @@
-import { View, Text } from "react-native";
-import React, { JSX } from "react";
 import { useAppContext } from "@/hooks/useContextHook";
+import React, { JSX, useState } from "react";
+import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import { Feather } from "@expo/vector-icons";
 import CustomText from "../customs/CustomText";
 import CustomMiddleContent from "../customs/CustomMiddleContent";
 import UnitNavbar from "../navbar/UnitNavbar";
+import { PlanSelector } from "@/payments/PlanSelector";
+import { palette, radius, spacing, typography } from "@/constants/designTokens";
 
 type Props = {
   units: { [key: string]: any };
   unitTitle: string;
   setUnitTitle: (title: string) => void;
+  gradeSlug: string;
 };
-interface IUser {
-  name: string;
-  email: string;
-  role: string;
-  baned: boolean;
-  sixth: { [key: string]: boolean };
-  seventh: { [key: string]: boolean };
-  eighth: { [key: string]: boolean };
-  ninth: { [key: string]: boolean };
-  tenth: { [key: string]: boolean };
-  eleventh: { [key: string]: boolean };
-  twelfth: { [key: string]: boolean };
-}
 
 export default function CustomMiddleContainer({
   units,
   unitTitle,
   setUnitTitle,
+  gradeSlug,
 }: Props) {
-  const { loggedInUser, isUserAuthenticated } = useAppContext();
+  const { isAuthenticated, canAccessUnit } = useAppContext();
+  const [showPaywall, setShowPaywall] = useState(false);
 
-  const getAccessToUnits = (loggedUser: IUser) => {
-    const access: { [key: string]: boolean } = {};
-
-    const allActivities = {
-      ...loggedUser.sixth,
-      ...loggedUser.seventh,
-      ...loggedUser.eighth,
-      ...loggedUser.ninth,
-      ...loggedUser.tenth,
-      ...loggedUser.eleventh,
-      ...loggedUser.twelfth,
-    };
-
-    for (const unit in allActivities) {
-      access[unit] = allActivities[unit]; // true o false.
-    }
-
-    return access;
-  };
-
-  // Get access to units
-  const accessToUnits = loggedInUser ? getAccessToUnits(loggedInUser) : {};
-
-  // Verify if the user has access to the unit
-  const hasAccess =
-    accessToUnits[unitTitle] !== undefined ? accessToUnits[unitTitle] : false;
+  const hasGradeAccess = canAccessUnit(gradeSlug);
+  const accessToUnits = Object.fromEntries(
+    Object.keys(units).map((k) => [k, hasGradeAccess])
+  );
 
   const renderContent = (): JSX.Element | null => {
     if (!unitTitle) {
@@ -64,17 +35,23 @@ export default function CustomMiddleContainer({
         <CustomText value="Please select a unit" center big color="#ff0000" />
       );
     }
-    if (!hasAccess) {
+    if (!hasGradeAccess) {
       return (
-        <View>
-          <CustomText
-            value="If you see this message, you don't have access to this unit"
-            center
-            big
-            color="#ff0000"
-            bold
-          />
-          <CustomText value="Please contact your teacher" center bold />
+        <View style={styles.lockedContainer}>
+          <Feather name="lock" size={40} color={palette.accent} />
+          <Text style={styles.lockedTitle}>This grade is locked</Text>
+          <Text style={styles.lockedSubtitle}>
+            Upgrade your plan to access all units in this grade level.
+          </Text>
+          <Pressable
+            onPress={() => setShowPaywall(true)}
+            style={({ pressed }) => [
+              styles.upgradeBtn,
+              pressed && styles.upgradeBtnPressed,
+            ]}
+          >
+            <Text style={styles.upgradeBtnText}>Upgrade plan</Text>
+          </Pressable>
         </View>
       );
     }
@@ -86,6 +63,14 @@ export default function CustomMiddleContainer({
 
   return (
     <>
+      <Modal
+        visible={showPaywall}
+        animationType="slide"
+        onRequestClose={() => setShowPaywall(false)}
+      >
+        <PlanSelector onClose={() => setShowPaywall(false)} />
+      </Modal>
+
       <UnitNavbar
         list={Object.keys(units)}
         setUnitTitle={setUnitTitle}
@@ -93,12 +78,48 @@ export default function CustomMiddleContainer({
         accessToUnits={accessToUnits}
       />
       <View>
-        {isUserAuthenticated && loggedInUser ? (
+        {isAuthenticated ? (
           renderContent()
         ) : (
-          <CustomText value="You are not logged in" center big bold />
+          <View style={styles.lockedContainer}>
+            <Feather name="user" size={40} color={palette.textMuted} />
+            <Text style={styles.lockedTitle}>Sign in to view content</Text>
+          </View>
         )}
       </View>
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  lockedContainer: {
+    padding: spacing.xl,
+    alignItems: "center",
+    gap: spacing.md,
+  },
+  lockedTitle: {
+    ...typography.h2,
+    color: palette.textPrimary,
+    textAlign: "center",
+    marginTop: spacing.sm,
+  },
+  lockedSubtitle: {
+    ...typography.body,
+    color: palette.textSecondary,
+    textAlign: "center",
+  },
+  upgradeBtn: {
+    marginTop: spacing.sm,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing["2xl"],
+    backgroundColor: palette.accent,
+    borderRadius: radius.md,
+  },
+  upgradeBtnPressed: {
+    backgroundColor: palette.accentHover,
+  },
+  upgradeBtnText: {
+    ...typography.bodyStrong,
+    color: palette.textInverse,
+  },
+});

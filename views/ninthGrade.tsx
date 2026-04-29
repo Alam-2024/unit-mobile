@@ -24,6 +24,7 @@ export default function NinthGrade() {
       units={units}
       unitTitle={unitTitle}
       setUnitTitle={setUnitTitle}
+      gradeSlug="ninth"
     />
   );
 }

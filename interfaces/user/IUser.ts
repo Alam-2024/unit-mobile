@@ -10,6 +10,11 @@ export interface StoredUsers {
   email: string;
   role: string;
   baned: boolean;
+  /** New system: grade-level entitlements array (set by Cloud Functions / dev tools). */
+  entitlements?: string[];
+  /** New system: plan tier (set by Stripe webhook / dev tools). */
+  plan?: string;
+  /** Legacy per-unit access maps — kept for backwards compatibility during migration. */
   pk3: { [key: string]: boolean };
   pk4: { [key: string]: boolean };
   kg: { [key: string]: boolean };
@@ -27,23 +32,13 @@ export interface StoredUsers {
   twelfth: { [key: string]: boolean };
 }
 
-//TODO: Check what Record means...
-// export interface StoredUsers {
-//   id?: string;
-//   name: string;
-//   email: string;
-//   password: string;
-//   role: string;
-//   baned: boolean;
-//   pk3: Record<string, boolean>;
-//   pk4: Record<string, boolean>;
-//   kg: Record<string, boolean>;
-//   first: Record<string, boolean>;
-//   second: Record<string, boolean>;
-//   third: Record<string, boolean>;
-//   fourth: Record<string, boolean>;
-//   fifth: Record<string, boolean>;
-// }
+export interface PublicProfile {
+  uid: string;
+  email: string | null;
+  emailVerified: boolean;
+  displayName: string | null;
+  photoUrl: string | null;
+}
 
 export interface IBtn {
   iconName: string;

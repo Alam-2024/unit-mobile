@@ -1,56 +1,34 @@
 import { useAppContext } from "@/hooks/useContextHook";
 import { Pk3ShortTitlesTypes } from "@/interfaces/pk3/pkTypes";
-import React, { JSX } from "react";
+import React, { JSX, useState } from "react";
+import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import { Feather } from "@expo/vector-icons";
 import CustomText from "../customs/CustomText";
 import UnitNavbar from "../navbar/UnitNavbar";
 import PkCustomContent from "./PkCustomContent";
-import { View } from "react-native";
+import { PlanSelector } from "@/payments/PlanSelector";
+import { palette, radius, spacing, typography } from "@/constants/designTokens";
 
 type Props = {
   units: { [key: string]: Pk3ShortTitlesTypes };
   unitTitle: string;
   setUnitTitle: (title: string) => void;
+  gradeSlug: string;
 };
-
-interface IUser {
-  name: string;
-  email: string;
-  role: string;
-  baned: boolean;
-  pk3: { [key: string]: boolean };
-  pk4: { [key: string]: boolean };
-  kg: { [key: string]: boolean };
-}
 
 export default function CustomContainer({
   units,
   unitTitle,
   setUnitTitle,
+  gradeSlug,
 }: Props) {
-  const { isUserAuthenticated, loggedInUser } = useAppContext();
+  const { isAuthenticated, canAccessUnit } = useAppContext();
+  const [showPaywall, setShowPaywall] = useState(false);
 
-  const getAccessToUnits = (loggedUser: IUser) => {
-    const access: { [key: string]: boolean } = {};
-
-    const allActivities = {
-      ...loggedUser.pk3,
-      ...loggedUser.pk4,
-      ...loggedUser.kg,
-    };
-
-    for (const unit in allActivities) {
-      access[unit] = allActivities[unit]; // true o false
-    }
-
-    return access;
-  };
-
-  // Get access to units
-  const accessToUnits = getAccessToUnits(loggedInUser);
-
-  // Verify if the user has access to the unit
-  const hasAccess =
-    accessToUnits[unitTitle] !== undefined ? accessToUnits[unitTitle] : false;
+  const hasGradeAccess = canAccessUnit(gradeSlug);
+  const accessToUnits = Object.fromEntries(
+    Object.keys(units).map((k) => [k, hasGradeAccess])
+  );
 
   const renderContent = (): JSX.Element | null => {
     if (!unitTitle) {
@@ -58,25 +36,40 @@ export default function CustomContainer({
         <CustomText value="Please select a unit" center big color="#ff0000" />
       );
     }
-    if (!hasAccess) {
+    if (!hasGradeAccess) {
       return (
-        <>
-          <CustomText
-            value="If you see this message, you don't have access to this unit"
-            center
-            big
-            color="#ff0000"
-            bold
-          />
-          <CustomText value="Please contact your teacher" center />
-        </>
+        <View style={styles.lockedContainer}>
+          <Feather name="lock" size={40} color={palette.accent} />
+          <Text style={styles.lockedTitle}>This grade is locked</Text>
+          <Text style={styles.lockedSubtitle}>
+            Upgrade your plan to access all units in this grade level.
+          </Text>
+          <Pressable
+            onPress={() => setShowPaywall(true)}
+            style={({ pressed }) => [
+              styles.upgradeBtn,
+              pressed && styles.upgradeBtnPressed,
+            ]}
+          >
+            <Text style={styles.upgradeBtnText}>Upgrade plan</Text>
+          </Pressable>
+        </View>
       );
     }
 
     return units[unitTitle] ? <PkCustomContent {...units[unitTitle]} /> : null;
   };
+
   return (
     <>
+      <Modal
+        visible={showPaywall}
+        animationType="slide"
+        onRequestClose={() => setShowPaywall(false)}
+      >
+        <PlanSelector onClose={() => setShowPaywall(false)} />
+      </Modal>
+
       <UnitNavbar
         list={Object.keys(units)}
         setUnitTitle={setUnitTitle}
@@ -84,12 +77,48 @@ export default function CustomContainer({
         accessToUnits={accessToUnits}
       />
       <View>
-        {isUserAuthenticated && loggedInUser ? (
+        {isAuthenticated ? (
           renderContent()
         ) : (
-          <CustomText value="You are not logged in" center big />
+          <View style={styles.lockedContainer}>
+            <Feather name="user" size={40} color={palette.textMuted} />
+            <Text style={styles.lockedTitle}>Sign in to view content</Text>
+          </View>
         )}
       </View>
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  lockedContainer: {
+    padding: spacing.xl,
+    alignItems: "center",
+    gap: spacing.md,
+  },
+  lockedTitle: {
+    ...typography.h2,
+    color: palette.textPrimary,
+    textAlign: "center",
+    marginTop: spacing.sm,
+  },
+  lockedSubtitle: {
+    ...typography.body,
+    color: palette.textSecondary,
+    textAlign: "center",
+  },
+  upgradeBtn: {
+    marginTop: spacing.sm,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing["2xl"],
+    backgroundColor: palette.accent,
+    borderRadius: radius.md,
+  },
+  upgradeBtnPressed: {
+    backgroundColor: palette.accentHover,
+  },
+  upgradeBtnText: {
+    ...typography.bodyStrong,
+    color: palette.textInverse,
+  },
+});

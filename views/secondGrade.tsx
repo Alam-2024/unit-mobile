@@ -21,6 +21,7 @@ const SecondGrade = () => {
       units={units}
       unitTitle={unitTitle}
       setUnitTitle={setUnitTitle}
+      gradeSlug="second"
     />
   );
 };

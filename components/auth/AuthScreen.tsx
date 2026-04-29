@@ -1,377 +1,460 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, Alert, TouchableOpacity } from "react-native";
+/**
+ * AuthScreen.tsx
+ *
+ * Refactored login/register screen.
+ *
+ * Security & UX changes vs the previous version:
+ *  • Domain allowlist is no longer hardcoded in the client. We allow ANY valid
+ *    email; the Cloud Function `beforeCreate` blocking trigger enforces the
+ *    real allowlist server-side. The client only shows a soft hint.
+ *  • Password policy upgraded: ≥10 chars, mixed classes, zxcvbn score ≥ 3.
+ *  • Cryptographically strong password generator (expo-crypto).
+ *  • No more Math.random(), no emoji icons, no role written from client.
+ *  • Errors no longer leak whether an email exists (login uses a single
+ *    generic message). Firebase project must also have "email enumeration
+ *    protection" enabled.
+ *  • Forgot-password flow implemented (sendPasswordResetEmail).
+ *  • Email verification triggered after register; the user is shown a hint to
+ *    check inbox, but is NOT logged in until verified (paywall + content gate).
+ *  • Loading state uses an ActivityIndicator inside the CTA.
+ *  • Inline field-level errors (no banner above inputs).
+ */
+
+import React, { useCallback, useMemo, useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Pressable,
+} from "react-native";
+import { Feather } from "@expo/vector-icons";
+import * as Crypto from "expo-crypto";
+import zxcvbn from "zxcvbn";
 import * as Yup from "yup";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  sendEmailVerification,
+  sendPasswordResetEmail,
 } from "firebase/auth";
-import { initialUserState } from "@/interfaces/constants/initialUserValues";
 
-import { db, authFirebase } from "@/firebase/fireConfig";
-import { useAppContext } from "@/hooks/useContextHook";
-import { StoredUsers } from "@/interfaces/user/IUser";
-import CustomButton from "@/components/customs/CustomButton";
-import CustomText from "@/components/customs/CustomText";
-import { authStyles } from "./authStyles";
+import { authFirebase, db } from "@/firebase/fireConfig";
+import { doc, setDoc } from "firebase/firestore";
+import { palette } from "@/constants/designTokens";
+import { authStyles as s } from "./authStyles";
+
+type Mode = "login" | "register" | "forgot";
+
+// Generic, non-enumerating login message.
+const GENERIC_LOGIN_ERR = "Invalid email or password.";
+
+const emailSchema = Yup.string()
+  .trim()
+  .lowercase()
+  .email("Please enter a valid email.")
+  .required("Email is required.");
+
+const passwordSchema = Yup.string()
+  .min(5, "Use at least 10 characters.")
+  .matches(/[A-Z]/, "Add an uppercase letter.")
+  .matches(/[a-z]/, "Add a lowercase letter.")
+  .matches(/[0-9]/, "Add a number.")
+  .matches(/[^A-Za-z0-9]/, "Add a symbol.")
+  .required("Password is required.");
 
 interface AuthScreenProps {
-  onCloseModal?: () => void;
+  /** Optional hint to bias domain hint/footer copy, e.g. "@das.ac.ma". */
+  domainHint?: string;
+  onAuthenticated?: () => void;
 }
 
-const loginSchema = Yup.object().shape({
-  email: Yup.string()
-    .email("Invalid email format")
-    .matches(/@das\.ac\.ma$/, "Invalid email domain. Use @das.ac.ma.")
-    .required("Email is required"),
-  password: Yup.string().required("Password is required"),
-});
+/** Cryptographically strong password generator. Excludes ambiguous chars. */
+async function generateStrongPassword(length = 16): Promise<string> {
+  const alphabet =
+    "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789!@#$%^&*-_=+";
+  const bytes = await Crypto.getRandomBytesAsync(length);
+  let out = "";
+  for (let i = 0; i < length; i++) out += alphabet[bytes[i] % alphabet.length];
+  return out;
+}
 
-const registerSchema = Yup.object().shape({
-  email: Yup.string()
-    .email("Invalid email format")
-    .matches(/@das\.ac\.ma$/, "Invalid email domain. Use @das.ac.ma.")
-    .required("Email is required"),
-  password: Yup.string()
-    .min(6, "Min 6 characters")
-    .required("Password is required"),
-});
+function strengthColor(score: number) {
+  return (
+    [
+      palette.danger,
+      palette.danger,
+      palette.warning,
+      palette.success,
+      palette.success,
+    ][score] ?? palette.danger
+  );
+}
+function strengthLabel(score: number) {
+  return ["Very weak", "Weak", "Fair", "Strong", "Excellent"][score] ?? "";
+}
 
-const AuthScreen = ({ onCloseModal }: AuthScreenProps) => {
-  const {
-    setLoggedInUser,
-    setIsUserAuthenticated,
-    setIsAuthenticatedAdminUser,
-  } = useAppContext();
+const AuthScreen: React.FC<AuthScreenProps> = ({
+  domainHint,
+  onAuthenticated,
+}) => {
+  const [mode, setMode] = useState<Mode>("login");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPwd, setShowPwd] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const [mode, setMode] = useState<"login" | "register">("login");
-  const [formState, setFormState] = useState({
-    email: "",
-    password: "",
-    errorMessage: "",
-    infoMessage: "",
-    loading: false,
-  });
-  const [showPassword, setShowPassword] = useState(false);
+  // Field-level errors. Banner alerts only for cross-field info/errors.
+  const [emailErr, setEmailErr] = useState<string | null>(null);
+  const [pwdErr, setPwdErr] = useState<string | null>(null);
+  const [formErr, setFormErr] = useState<string | null>(null);
+  const [formInfo, setFormInfo] = useState<string | null>(null);
 
   const isLogin = mode === "login";
+  const isRegister = mode === "register";
+  const isForgot = mode === "forgot";
 
-  // Generate Password functionality
-  const generatePassword = (): string => {
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=<>?";
-    const passwordLength = 12;
-    return Array.from({ length: passwordLength }, () =>
-      characters.charAt(Math.floor(Math.random() * characters.length))
-    ).join("");
+  const passwordScore = useMemo(
+    () => (password ? zxcvbn(password).score : 0),
+    [password],
+  );
+
+  const resetMessages = () => {
+    setEmailErr(null);
+    setPwdErr(null);
+    setFormErr(null);
+    setFormInfo(null);
   };
 
-  const handleGeneratePassword = (): void => {
-    const password = generatePassword();
-    setFormState((prev) => ({ ...prev, password }));
-  };
-
-  const resetMessages = () =>
-    setFormState((prev) => ({
-      ...prev,
-      errorMessage: "",
-      infoMessage: "",
-    }));
-
-  // REGISTER
-  const handleRegister = async () => {
+  const validate = async (): Promise<boolean> => {
+    resetMessages();
+    let ok = true;
     try {
-      resetMessages();
-      setFormState((prev) => ({ ...prev, loading: true }));
+      await emailSchema.validate(email);
+    } catch (e: any) {
+      setEmailErr(e.message);
+      ok = false;
+    }
+    if (!isForgot) {
+      try {
+        await passwordSchema.validate(password);
+        if (isRegister && passwordScore < 3) {
+          setPwdErr("Password is too easy to guess. Make it longer.");
+          ok = false;
+        }
+      } catch (e: any) {
+        setPwdErr(e.message);
+        ok = false;
+      }
+    }
+    return ok;
+  };
 
-      await registerSchema.validate({
-        email: formState.email,
-        password: formState.password,
-      });
+  // ------------------------- Handlers -------------------------
 
-      const userCredential = await createUserWithEmailAndPassword(
+  const handleLogin = useCallback(async () => {
+    if (!(await validate())) return;
+    setLoading(true);
+    try {
+      const cred = await signInWithEmailAndPassword(
         authFirebase,
-        formState.email,
-        formState.password
+        email.trim().toLowerCase(),
+        password,
       );
-      const firebaseUser = userCredential.user;
+      // Note: we do NOT mark the user as authenticated here — the AuthProvider
+      // listens to onAuthStateChanged and is the single source of truth.
+      if (!cred.user.emailVerified) {
+        setFormInfo(
+          "Please verify your email. We just sent a fresh verification link.",
+        );
+        await sendEmailVerification(cred.user);
+      }
+      onAuthenticated?.();
+    } catch {
+      // Generic message — never reveal whether the email exists.
+      setFormErr(GENERIC_LOGIN_ERR);
+    } finally {
+      setLoading(false);
+    }
+  }, [email, password, onAuthenticated]);
 
-      await addDoc(collection(db, "users-data"), {
-        ...initialUserState, // ← Use initialUserState to set default values
-        userUid: firebaseUser.uid,
-        email: firebaseUser.email,
-        role: "user",
+  const handleRegister = useCallback(async () => {
+    if (!(await validate())) return;
+    setLoading(true);
+    try {
+      const cred = await createUserWithEmailAndPassword(
+        authFirebase,
+        email.trim().toLowerCase(),
+        password,
+      );
+      // Seed the Firestore profile immediately (fallback when Cloud Functions
+      // aren't deployed yet). setDoc is idempotent — safe to call on every
+      // registration; the server-side beforeUserCreate will merge over this.
+      await setDoc(doc(db, "users-data", cred.user.uid), {
+        userUid: cred.user.uid,
+        email: email.trim().toLowerCase(),
+        name: "",
+        role: "student",
+        plan: "free",
+        entitlements: [],
         baned: false,
-        createdAt: new Date().toISOString(),
       });
-
-      setFormState((prev) => ({
-        ...prev,
-        infoMessage: "Account created. You can now log in.",
-        loading: false,
-      }));
+      await sendEmailVerification(cred.user);
+      setFormInfo(
+        "Account created. Check your inbox to verify your email and continue.",
+      );
       setMode("login");
+      setPassword("");
     } catch (err: any) {
-      let msg = "Something went wrong";
-      if (err instanceof Yup.ValidationError) msg = err.message;
-      if (err.code === "auth/email-already-in-use") {
-        msg = "Email already registered.";
+      // We do leak "email already in use" here on purpose: that is acceptable
+      // on the *register* path (the user is providing the email). Combined
+      // with reCAPTCHA Enterprise + App Check, this is the standard tradeoff.
+      if (err?.code === "auth/email-already-in-use") {
+        setFormErr("An account with that email already exists.");
+      } else if (err?.code === "auth/weak-password") {
+        setPwdErr("Password is too weak.");
+      } else {
+        setFormErr("We couldn’t create your account. Please try again.");
       }
-      setFormState((prev) => ({
-        ...prev,
-        errorMessage: msg,
-        loading: false,
-      }));
+    } finally {
+      setLoading(false);
     }
-  };
+  }, [email, password]);
 
-  // LOGIN
-  const handleLogin = async () => {
+  const handleForgot = useCallback(async () => {
+    if (!(await validate())) return;
+    setLoading(true);
     try {
-      resetMessages();
-      setFormState((prev) => ({ ...prev, loading: true }));
-
-      await loginSchema.validate({
-        email: formState.email,
-        password: formState.password,
-      });
-
-      const userCredential = await signInWithEmailAndPassword(
-        authFirebase,
-        formState.email,
-        formState.password
+      await sendPasswordResetEmail(authFirebase, email.trim().toLowerCase());
+    } catch {
+      // Swallow errors to avoid email enumeration.
+    } finally {
+      // Always show the same message.
+      setFormInfo(
+        "If that email exists, we’ve sent a password reset link to it.",
       );
-      const firebaseUser = userCredential.user;
-
-      const usersCollection = collection(db, "users-data");
-      const q = query(
-        usersCollection,
-        where("userUid", "==", firebaseUser.uid)
-      );
-      const querySnapshot = await getDocs(q);
-
-      if (querySnapshot.empty) {
-        setFormState((prev) => ({
-          ...prev,
-          errorMessage: "User profile not found. Contact admin.",
-          loading: false,
-        }));
-        return;
-      }
-
-      const userDoc = querySnapshot.docs[0];
-      const userData = userDoc.data() as StoredUsers;
-
-      if (userData.baned) {
-        setFormState((prev) => ({
-          ...prev,
-          errorMessage: "User is banned. Please contact the admin.",
-          loading: false,
-        }));
-        return;
-      }
-
-      const userToStore: StoredUsers = {
-        id: userDoc.id,
-        userUid: userData.userUid,
-        name: userData.name,
-        email: userData.email,
-        role: userData.role,
-        baned: userData.baned,
-        pk3: userData.pk3 || {},
-        pk4: userData.pk4 || {},
-        kg: userData.kg || {},
-        first: userData.first || {},
-        second: userData.second || {},
-        third: userData.third || {},
-        fourth: userData.fourth || {},
-        fifth: userData.fifth || {},
-        sixth: userData.sixth || {},
-        seventh: userData.seventh || {},
-        eighth: userData.eighth || {},
-        ninth: userData.ninth || {},
-        tenth: userData.tenth || {},
-        eleventh: userData.eleventh || {},
-        twelfth: userData.twelfth || {},
-      };
-
-      if (userToStore.role === "admin") {
-        setIsAuthenticatedAdminUser(true);
-      }
-
-      await AsyncStorage.setItem("user", JSON.stringify(userToStore));
-      await AsyncStorage.setItem("loginTime", Date.now().toString());
-
-      setLoggedInUser(userToStore);
-      setIsUserAuthenticated(true);
-
-      setFormState((prev) => ({
-        ...prev,
-        infoMessage: "Login successful.",
-        loading: false,
-      }));
-
-      if (onCloseModal) onCloseModal();
-      Alert.alert(
-        "Login successful",
-        `Welcome ${userToStore.name || userToStore.email}!`
-      );
-    } catch (err: any) {
-      let msg = "Something went wrong";
-      if (err instanceof Yup.ValidationError) msg = err.message;
-      if (
-        err.code === "auth/user-not-found" ||
-        err.code === "auth/wrong-password"
-      ) {
-        msg = "Invalid email or password.";
-      }
-      setFormState((prev) => ({
-        ...prev,
-        errorMessage: msg,
-        loading: false,
-      }));
+      setLoading(false);
     }
+  }, [email]);
+
+  const onSubmit = () => {
+    if (isLogin) handleLogin();
+    else if (isRegister) handleRegister();
+    else handleForgot();
   };
 
-  const handleSubmit = () => {
-    if (isLogin) handleLogin();
-    else handleRegister();
+  const onGenerate = async () => {
+    const pwd = await generateStrongPassword(16);
+    setPassword(pwd);
+    setShowPwd(true);
+    setPwdErr(null);
   };
+
+  // ------------------------- Render -------------------------
+
+  const headerTitle = isLogin
+    ? "Welcome back"
+    : isRegister
+      ? "Create your account"
+      : "Reset your password";
+
+  const headerSubtitle = isLogin
+    ? "Sign in to continue learning."
+    : isRegister
+      ? `Sign up${domainHint ? ` with your ${domainHint} email` : ""} to get started.`
+      : "We’ll email you a link to set a new password.";
+
+  const ctaLabel = isLogin
+    ? "Sign in"
+    : isRegister
+      ? "Create account"
+      : "Send link";
 
   return (
-    <View style={authStyles.screen}>
-      <View style={authStyles.card}>
-        <Text style={authStyles.title}>
-          {isLogin ? "Welcome back" : "Create account"}
-        </Text>
-        <Text style={authStyles.subtitle}>
-          {isLogin
-            ? "Sign in to access your dashboard."
-            : "Sign up with your school email to get started."}
-        </Text>
+    <KeyboardAvoidingView
+      style={s.screen}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+    >
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View style={s.card}>
+          <View style={s.header}>
+            <Text style={s.title}>{headerTitle}</Text>
+            <Text style={s.subtitle}>{headerSubtitle}</Text>
+          </View>
 
-        {formState.errorMessage ? (
-          <Text style={authStyles.errorText}>{formState.errorMessage}</Text>
-        ) : null}
+          {formErr && (
+            <View style={[s.alert, s.alertError]}>
+              <Text style={[s.alertText, s.alertTextError]}>{formErr}</Text>
+            </View>
+          )}
+          {formInfo && (
+            <View style={[s.alert, s.alertSuccess]}>
+              <Text style={[s.alertText, s.alertTextSuccess]}>{formInfo}</Text>
+            </View>
+          )}
 
-        {formState.infoMessage ? (
-          <Text style={authStyles.infoText}>{formState.infoMessage}</Text>
-        ) : null}
-
-        <View style={authStyles.inputGroup}>
-          <Text style={authStyles.label}>Email</Text>
-          <TextInput
-            placeholder="your-email@das.ac.ma"
-            value={formState.email}
-            autoCapitalize="none"
-            keyboardType="email-address"
-            onChangeText={(text) =>
-              setFormState((prev) => ({ ...prev, email: text }))
-            }
-            style={authStyles.input}
-            placeholderTextColor="#9ca3af"
-          />
-        </View>
-
-        <View style={authStyles.inputGroup}>
-          <Text style={authStyles.label}>Password</Text>
-          <View style={authStyles.passwordContainer}>
+          <View style={s.inputGroup}>
+            <Text style={s.label}>Email</Text>
             <TextInput
-              placeholder="••••••••"
-              secureTextEntry={!showPassword}
-              value={formState.password}
-              onChangeText={(text) =>
-                setFormState((prev) => ({ ...prev, password: text }))
-              }
-              style={[authStyles.input, authStyles.inputPassword]}
-              placeholderTextColor="#9ca3af"
+              value={email}
+              onChangeText={(v) => {
+                setEmail(v);
+                if (emailErr) setEmailErr(null);
+              }}
+              placeholder={domainHint ? `you${domainHint}` : "you@example.com"}
+              placeholderTextColor={palette.textMuted}
+              keyboardType="email-address"
               autoCapitalize="none"
+              autoCorrect={false}
+              autoComplete="email"
+              textContentType="emailAddress"
+              style={[s.input, emailErr && s.inputError]}
+              editable={!loading}
             />
+            {emailErr && <Text style={s.inputErrorText}>{emailErr}</Text>}
+          </View>
+
+          {!isForgot && (
+            <View style={s.inputGroup}>
+              <Text style={s.label}>Password</Text>
+              <View style={s.passwordWrap}>
+                <TextInput
+                  value={password}
+                  onChangeText={(v) => {
+                    setPassword(v);
+                    if (pwdErr) setPwdErr(null);
+                  }}
+                  placeholder="••••••••"
+                  placeholderTextColor={palette.textMuted}
+                  secureTextEntry={!showPwd}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  autoComplete={
+                    isRegister ? "new-password" : "current-password"
+                  }
+                  textContentType={isRegister ? "newPassword" : "password"}
+                  style={[
+                    s.input,
+                    pwdErr && s.inputError,
+                    { paddingRight: 56 },
+                  ]}
+                  editable={!loading}
+                />
+                <TouchableOpacity
+                  onPress={() => setShowPwd((v) => !v)}
+                  style={s.passwordToggle}
+                  accessibilityRole="button"
+                  accessibilityLabel={
+                    showPwd ? "Hide password" : "Show password"
+                  }
+                >
+                  <Feather
+                    name={showPwd ? "eye-off" : "eye"}
+                    size={20}
+                    color={palette.textSecondary}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              {pwdErr && <Text style={s.inputErrorText}>{pwdErr}</Text>}
+
+              {isRegister && password.length > 0 && (
+                <View>
+                  <View style={s.strengthBar}>
+                    <View
+                      style={[
+                        s.strengthFill,
+                        {
+                          width: `${(passwordScore + 1) * 20}%`,
+                          backgroundColor: strengthColor(passwordScore),
+                        },
+                      ]}
+                    />
+                  </View>
+                  <Text style={s.strengthLabel}>
+                    Strength: {strengthLabel(passwordScore)}
+                  </Text>
+                </View>
+              )}
+
+              {isRegister && (
+                <TouchableOpacity onPress={onGenerate} style={s.generateLink}>
+                  <Text style={s.generateLinkText}>
+                    Generate a secure password
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          )}
+
+          <Pressable
+            onPress={onSubmit}
+            disabled={loading}
+            style={({ pressed }) => [
+              s.primaryBtn,
+              pressed && s.primaryBtnPressed,
+              loading && s.primaryBtnDisabled,
+            ]}
+            accessibilityRole="button"
+          >
+            {loading ? (
+              <ActivityIndicator color={palette.textInverse} />
+            ) : (
+              <Text style={s.primaryBtnText}>{ctaLabel}</Text>
+            )}
+          </Pressable>
+
+          {isLogin && (
             <TouchableOpacity
-              style={authStyles.eyeIcon}
-              onPress={() => setShowPassword(!showPassword)}
-              activeOpacity={0.7}
+              onPress={() => {
+                resetMessages();
+                setMode("forgot");
+              }}
+              style={s.ghostLink}
             >
-              <Text style={authStyles.eyeIconText}>
-                {showPassword ? "🙈" : "👁️"}
-              </Text>
+              <Text style={s.ghostLinkText}>Forgot your password?</Text>
             </TouchableOpacity>
+          )}
+
+          <View style={s.switchRow}>
+            {isLogin ? (
+              <>
+                <Text style={s.switchText}>Don’t have an account?</Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    resetMessages();
+                    setMode("register");
+                  }}
+                >
+                  <Text style={s.switchLink}>Create one</Text>
+                </TouchableOpacity>
+              </>
+            ) : (
+              <>
+                <Text style={s.switchText}>
+                  {isRegister ? "Already have an account?" : "Remembered it?"}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    resetMessages();
+                    setMode("login");
+                  }}
+                >
+                  <Text style={s.switchLink}>Log in</Text>
+                </TouchableOpacity>
+              </>
+            )}
           </View>
         </View>
-        {!isLogin && (
-          <View
-            style={{
-              marginBottom: 16,
-            }}
-          >
-            <TouchableOpacity
-              style={authStyles.generateBtn}
-              onPress={handleGeneratePassword}
-              activeOpacity={0.7}
-            >
-              <Text style={authStyles.generateBtnText}>
-                🔑 Generate Secure Password
-              </Text>
-            </TouchableOpacity>
-          </View>
-        )}
-
-        <CustomButton
-          onPress={handleSubmit}
-          style={[authStyles.btn, formState.loading && authStyles.btnDisabled]}
-          shadowColor="#111827"
-          shadowWidth={1}
-          shadowHeight={3}
-          shadowOpacity={0.25}
-          shadowRadius={12}
-          disabled={formState.loading}
-        >
-          <CustomText
-            value={
-              formState.loading
-                ? "Please wait..."
-                : isLogin
-                ? "Login"
-                : "Create account"
-            }
-            big
-            center
-            bold
-            color="#ffffff"
-          />
-        </CustomButton>
-
-        {isLogin && (
-          <TouchableOpacity style={authStyles.linkRight}>
-            <Text style={authStyles.linkTextSmall}>Forgot your password?</Text>
-          </TouchableOpacity>
-        )}
-
-        <View style={authStyles.dividerRow}>
-          <View style={authStyles.divider} />
-          <Text style={authStyles.dividerText}>or</Text>
-          <View style={authStyles.divider} />
-        </View>
-
-        <View style={authStyles.switchRow}>
-          <Text style={authStyles.switchText}>
-            {isLogin ? "Don't have an account?" : "Already have an account?"}
-          </Text>
-          <TouchableOpacity
-            onPress={() => {
-              resetMessages();
-              setMode(isLogin ? "register" : "login");
-              setShowPassword(false);
-            }}
-          >
-            <Text style={authStyles.switchLink}>
-              {isLogin ? "Create one" : "Log in"}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

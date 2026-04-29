@@ -25,6 +25,7 @@ const FifthGrade = () => {
       units={units}
       unitTitle={unitTitle}
       setUnitTitle={setUnitTitle}
+      gradeSlug="fifth"
     />
   );
 };
