@@ -32,6 +32,7 @@ export interface IUnits {
     | AssessmentSwimming
     | AssessmentCooGames[];
   //TODO: check these props for all units
+  materials?: string[];
   learningExperiences?: string[];
   equipmentNeeded?: string[];
   differentiation?:

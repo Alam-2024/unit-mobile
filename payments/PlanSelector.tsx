@@ -156,6 +156,7 @@ const styles = StyleSheet.create({
   center: { flex: 1, alignItems: "center", justifyContent: "center" },
   screen: {
     padding: spacing.xl,
+    marginTop: spacing["2xl"],
     backgroundColor: palette.bgCanvas,
     flexGrow: 1,
   },

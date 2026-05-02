@@ -136,10 +136,10 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   centerButton: {
-    backgroundColor: "#14B8A6",
+    backgroundColor: "#FF6347",
     borderRadius: 35,
     marginHorizontal: 8,
-    shadowColor: "#14B8A6",
+    shadowColor: "#FF6347",
     shadowOpacity: 0.5,
     shadowRadius: 10,
     elevation: 8,

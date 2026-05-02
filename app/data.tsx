@@ -1,11 +1,15 @@
-import { View, StyleSheet } from "react-native";
-import React from "react";
+import React, { useMemo } from "react";
+import { StyleSheet, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
-import FirstGrade from "@/views/firstGrade";
-import SecondGrade from "@/views/secondGrade";
+
+import GradeScreen from "@/components/grade/GradeScreen";
+
+// Grade content (PE) — existing views
 import PkThreeGrade from "@/views/pkThreeGrade";
 import PkFourthGrade from "@/views/pkFourthGrade";
 import KgGrade from "@/views/kgGrade";
+import FirstGrade from "@/views/firstGrade";
+import SecondGrade from "@/views/secondGrade";
 import ThirdGrade from "@/views/thirdGrade";
 import FourthGrade from "@/views/fourthGrade";
 import FifthGrade from "@/views/fifthGrade";
@@ -17,54 +21,62 @@ import TenthGrade from "@/views/tenthGrade";
 import EleventhGrade from "@/views/eleventhGrade";
 import Twelfth from "@/views/Twelfth";
 
-const Data = () => {
-  const params = useLocalSearchParams();
-  const renderingGrade = () => {
-    switch (params.grade) {
-      case "PK-3":
-        return <PkThreeGrade />;
-      case "PK-4":
-        return <PkFourthGrade />;
-      case "KG":
-        return <KgGrade />;
-      case "1°":
-        return <FirstGrade />;
-      case "2°":
-        return <SecondGrade />;
-      case "3°":
-        return <ThirdGrade />;
-      case "4°":
-        return <FourthGrade />;
-      case "5°":
-        return <FifthGrade />;
-      case "6°":
-        return <SixthGrade />;
-      case "7°":
-        return <SeventhGrade />;
-      case "8°":
-        return <EighthGrade />;
-      case "9°":
-        return <NinthGrade />;
-      case "10°":
-        return <TenthGrade />;
-      case "11°":
-        return <EleventhGrade />;
-      case "12°":
-        return <Twelfth />;
-      default:
-        return <View />;
-    }
-  };
+interface GradeConfig {
+  slug: string;
+  label: string;
+  fullName: string;
+  makePE: () => React.ReactNode;
+}
 
-  return <View style={styles.container}>{renderingGrade()}</View>;
+const GRADE_MAP: Record<string, GradeConfig> = {
+  "PK-3": { slug: "pk3",      label: "PK-3",      fullName: "Pre-Kindergarten 3", makePE: () => <PkThreeGrade /> },
+  "PK-4": { slug: "pk4",      label: "PK-4",      fullName: "Pre-Kindergarten 4", makePE: () => <PkFourthGrade /> },
+  "KG":   { slug: "kg",       label: "KG",        fullName: "Kindergarten",        makePE: () => <KgGrade /> },
+  "1°":   { slug: "first",    label: "1st Grade", fullName: "First Grade",         makePE: () => <FirstGrade /> },
+  "2°":   { slug: "second",   label: "2nd Grade", fullName: "Second Grade",        makePE: () => <SecondGrade /> },
+  "3°":   { slug: "third",    label: "3rd Grade", fullName: "Third Grade",         makePE: () => <ThirdGrade /> },
+  "4°":   { slug: "fourth",   label: "4th Grade", fullName: "Fourth Grade",        makePE: () => <FourthGrade /> },
+  "5°":   { slug: "fifth",    label: "5th Grade", fullName: "Fifth Grade",         makePE: () => <FifthGrade /> },
+  "6°":   { slug: "sixth",    label: "6th Grade", fullName: "Sixth Grade",         makePE: () => <SixthGrade /> },
+  "7°":   { slug: "seventh",  label: "7th Grade", fullName: "Seventh Grade",       makePE: () => <SeventhGrade /> },
+  "8°":   { slug: "eighth",   label: "8th Grade", fullName: "Eighth Grade",        makePE: () => <EighthGrade /> },
+  "9°":   { slug: "ninth",    label: "9th Grade", fullName: "Ninth Grade",         makePE: () => <NinthGrade /> },
+  "10°":  { slug: "tenth",    label: "10th Grade",fullName: "Tenth Grade",         makePE: () => <TenthGrade /> },
+  "11°":  { slug: "eleventh", label: "11th Grade",fullName: "Eleventh Grade",      makePE: () => <EleventhGrade /> },
+  "12°":  { slug: "twelfth",  label: "12th Grade",fullName: "Twelfth Grade",       makePE: () => <Twelfth /> },
 };
 
-export default Data;
+export default function Data() {
+  const { grade } = useLocalSearchParams<{ grade: string }>();
+  const config = GRADE_MAP[grade ?? ""];
+
+  const peContent = useMemo(
+    () => (config ? config.makePE() : null),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [grade]
+  );
+
+  if (!config || !peContent) {
+    return <View style={styles.empty} />;
+  }
+
+  return (
+    <View style={styles.screen}>
+      <GradeScreen
+        gradeSlug={config.slug}
+        gradeLabel={config.label}
+        peContent={peContent}
+      />
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
-    alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: "#F8FAFC",
+  },
+  empty: {
+    flex: 1,
   },
 });

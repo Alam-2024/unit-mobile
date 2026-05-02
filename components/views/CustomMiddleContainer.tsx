@@ -62,7 +62,7 @@ export default function CustomMiddleContainer({
   };
 
   return (
-    <>
+    <View style={styles.wrapper}>
       <Modal
         visible={showPaywall}
         animationType="slide"
@@ -77,7 +77,7 @@ export default function CustomMiddleContainer({
         unitTitle={unitTitle}
         accessToUnits={accessToUnits}
       />
-      <View>
+      <View style={styles.contentArea}>
         {isAuthenticated ? (
           renderContent()
         ) : (
@@ -87,11 +87,13 @@ export default function CustomMiddleContainer({
           </View>
         )}
       </View>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  wrapper: { flex: 1 },
+  contentArea: { flex: 1 },
   lockedContainer: {
     padding: spacing.xl,
     alignItems: "center",

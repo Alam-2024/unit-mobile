@@ -61,7 +61,7 @@ export default function CustomContainer({
   };
 
   return (
-    <>
+    <View style={styles.wrapper}>
       <Modal
         visible={showPaywall}
         animationType="slide"
@@ -76,7 +76,7 @@ export default function CustomContainer({
         unitTitle={unitTitle}
         accessToUnits={accessToUnits}
       />
-      <View>
+      <View style={styles.contentArea}>
         {isAuthenticated ? (
           renderContent()
         ) : (
@@ -86,11 +86,13 @@ export default function CustomContainer({
           </View>
         )}
       </View>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  wrapper: { flex: 1 },
+  contentArea: { flex: 1 },
   lockedContainer: {
     padding: spacing.xl,
     alignItems: "center",
