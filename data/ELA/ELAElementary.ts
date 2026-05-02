@@ -37,6 +37,8 @@ export const ReadingComprehensionElementary: IUnits = {
             },
           ],
           reflection: "How do you know which idea is the MAIN idea?",
+          imgUrl: "https://images.unsplash.com/photo-1549737221-bef65e2604a6?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=M6ZvUdGVOXI"],
         },
         {
           sessionNumber: 2,
@@ -53,6 +55,7 @@ export const ReadingComprehensionElementary: IUnits = {
             },
           ],
           reflection: "Can a paragraph have more than one main idea?",
+          imgUrl: "https://images.unsplash.com/photo-1554721299-e0b8aa7666ce?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
@@ -215,6 +218,8 @@ export const NarrativeWritingElementary: IUnits = {
             },
           ],
           reflection: "What small moment could only YOU tell?",
+          imgUrl: "https://images.unsplash.com/photo-1554721299-e0b8aa7666ce?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=DePFLpDRBiE"],
         },
         {
           sessionNumber: 2,
@@ -231,6 +236,7 @@ export const NarrativeWritingElementary: IUnits = {
             },
           ],
           reflection: "Did telling your story aloud change how you planned it? How?",
+          imgUrl: "https://images.unsplash.com/photo-1554721299-e0b8aa7666ce?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },

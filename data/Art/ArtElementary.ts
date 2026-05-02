@@ -37,6 +37,8 @@ export const ElementsOfArtElementary: IUnits = {
             },
           ],
           reflection: "How does the line quality in Van Gogh differ from a technical architect's drawing?",
+          imgUrl: "https://images.unsplash.com/photo-1761604478724-13fe879468cf?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=8Z3Vj7h_5bQ"],
         },
         {
           sessionNumber: 2,
@@ -53,6 +55,7 @@ export const ElementsOfArtElementary: IUnits = {
             },
           ],
           reflection: "What is the difference between a square and a cube? How do you show that difference in drawing?",
+          imgUrl: "https://images.unsplash.com/photo-1761604478724-13fe879468cf?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
@@ -214,6 +217,8 @@ export const SculptureElementary: IUnits = {
             },
           ],
           reflection: "What is the advantage of building up (additive) vs carving away (subtractive)?",
+          imgUrl: "https://images.unsplash.com/photo-1770096679916-2cd9c720d400?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=Oxx1nMvYIZ8"],
         },
         {
           sessionNumber: 2,
@@ -230,6 +235,7 @@ export const SculptureElementary: IUnits = {
             },
           ],
           reflection: "Which hand-building technique feels most natural? Which do you find most challenging?",
+          imgUrl: "https://images.unsplash.com/photo-1770096679916-2cd9c720d400?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },

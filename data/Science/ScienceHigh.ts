@@ -37,6 +37,8 @@ export const GeneticsHigh: IUnits = {
             },
           ],
           reflection: "Why is base pairing so important for DNA function?",
+          imgUrl: "https://images.unsplash.com/photo-lQGJCMY5qcM?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=CBezq1fFUEA"],
         },
         {
           sessionNumber: 2,
@@ -53,6 +55,7 @@ export const GeneticsHigh: IUnits = {
             },
           ],
           reflection: "What would happen if one base in a DNA sequence mutated?",
+          imgUrl: "https://images.unsplash.com/photo-lQGJCMY5qcM?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
@@ -215,6 +218,8 @@ export const ChemistryHigh: IUnits = {
             },
           ],
           reflection: "Why isn't a color change alone sufficient proof of a chemical reaction?",
+          imgUrl: "https://images.unsplash.com/photo-lQGJCMY5qcM?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=jdWkB3gJBt8"],
         },
         {
           sessionNumber: 2,
@@ -231,6 +236,7 @@ export const ChemistryHigh: IUnits = {
             },
           ],
           reflection: "Why can you change coefficients but not subscripts when balancing equations?",
+          imgUrl: "https://images.unsplash.com/photo-lQGJCMY5qcM?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },

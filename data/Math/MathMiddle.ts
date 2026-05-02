@@ -37,6 +37,8 @@ export const RatiosMiddle: IUnits = {
             },
           ],
           reflection: "What real-world situation can you describe with a ratio?",
+          imgUrl: "https://images.unsplash.com/photo-R5dKk1oXPAM?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=XRv-OBt9rJU"],
         },
         {
           sessionNumber: 2,
@@ -53,6 +55,7 @@ export const RatiosMiddle: IUnits = {
             },
           ],
           reflection: "When is a unit rate useful in everyday decisions?",
+          imgUrl: "https://images.unsplash.com/photo-RTFX0TQHXko?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
@@ -215,6 +218,8 @@ export const AlgebraMiddle: IUnits = {
             },
           ],
           reflection: "What is the difference between an expression and an equation?",
+          imgUrl: "https://images.unsplash.com/photo-RTFX0TQHXko?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=NybHckSEQBI"],
         },
         {
           sessionNumber: 2,
@@ -231,6 +236,7 @@ export const AlgebraMiddle: IUnits = {
             },
           ],
           reflection: "How does the area model help you understand distribution?",
+          imgUrl: "https://images.unsplash.com/photo-RTFX0TQHXko?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },

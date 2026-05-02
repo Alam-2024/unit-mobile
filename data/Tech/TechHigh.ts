@@ -37,6 +37,8 @@ export const WebDevHigh: IUnits = {
             },
           ],
           reflection: "What surprised you when you looked at the source code of a webpage?",
+          imgUrl: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=it1rTvBcfRg"],
         },
         {
           sessionNumber: 2,
@@ -53,6 +55,7 @@ export const WebDevHigh: IUnits = {
             },
           ],
           reflection: "Why is semantic HTML better than using only divs and spans?",
+          imgUrl: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
@@ -214,6 +217,8 @@ export const DataScienceHigh: IUnits = {
             },
           ],
           reflection: "Why might a data scientist spend more time cleaning data than analyzing it?",
+          imgUrl: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=ua-CiDNNj30"],
         },
         {
           sessionNumber: 2,
@@ -230,6 +235,7 @@ export const DataScienceHigh: IUnits = {
             },
           ],
           reflection: "How can the way a survey question is worded bias the data collected?",
+          imgUrl: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },

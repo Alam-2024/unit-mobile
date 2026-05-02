@@ -37,6 +37,8 @@ export const FunctionsHigh: IUnits = {
             },
           ],
           reflection: "Can a function have two inputs mapping to the same output? Explain.",
+          imgUrl: "https://images.unsplash.com/photo-R5dKk1oXPAM?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=52tpYl2tTqk"],
         },
         {
           sessionNumber: 2,
@@ -53,6 +55,7 @@ export const FunctionsHigh: IUnits = {
             },
           ],
           reflection: "What is the difference between f(x) and y?",
+          imgUrl: "https://images.unsplash.com/photo-ngssXH33ve0?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
@@ -215,6 +218,8 @@ export const StatisticsHigh: IUnits = {
             },
           ],
           reflection: "When is the median a better descriptor than the mean?",
+          imgUrl: "https://images.unsplash.com/photo-ngssXH33ve0?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=uhxtUt_-GyM"],
         },
         {
           sessionNumber: 2,
@@ -231,6 +236,7 @@ export const StatisticsHigh: IUnits = {
             },
           ],
           reflection: "What does a skewed distribution tell you about the data?",
+          imgUrl: "https://images.unsplash.com/photo-ngssXH33ve0?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },

@@ -19,10 +19,10 @@ const ThirdGrade = () => {
     InvasionGames: invasionGamesThird,
     Gymnastics: gymnasticsThird,
     Athletics: athleticsThird,
-    StrikeAndField: trackAndFieldThirdSpeed,
+    TrackAndField: trackAndFieldThirdSpeed,
     Swimming: SwimmingForThirdGrade,
     Badminton: badmintonThird,
-    FlagFootBall: flagFootballThird,
+    "Flag Football": flagFootballThird,
   };
   return (
     <CustomGradeContainer

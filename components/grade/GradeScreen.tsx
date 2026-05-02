@@ -76,7 +76,7 @@ export default function GradeScreen({ gradeSlug, gradeLabel, peContent }: Props)
             : (() => {
                 const units = getSubjectUnits(gradeSlug, selected.slug);
                 return units ? (
-                  <SubjectUnitsView units={units} gradeSlug={gradeSlug} />
+                  <SubjectUnitsView units={units} gradeSlug={gradeSlug} subjectSlug={selected.slug} />
                 ) : (
                   <ComingSoonView subject={selected} />
                 );

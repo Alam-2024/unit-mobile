@@ -5,13 +5,15 @@ import CustomGradeContainer from "@/components/views/CustomGradeContainer";
 interface Props {
   units: { [key: string]: IUnits };
   gradeSlug: string;
+  /** Subject slug used for progress tracking. */
+  subjectSlug: string;
 }
 
 /**
  * Generic view that renders any IUnits map via CustomGradeContainer.
  * Used for all non-PE subjects that have real content.
  */
-export default function SubjectUnitsView({ units, gradeSlug }: Props) {
+export default function SubjectUnitsView({ units, gradeSlug, subjectSlug }: Props) {
   const [unitTitle, setUnitTitle] = useState<string>("");
 
   return (
@@ -20,6 +22,7 @@ export default function SubjectUnitsView({ units, gradeSlug }: Props) {
       unitTitle={unitTitle}
       setUnitTitle={setUnitTitle}
       gradeSlug={gradeSlug}
+      subjectSlug={subjectSlug}
     />
   );
 }

@@ -148,13 +148,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [initializing, setInitializing] = useState(true);
-  console.log("🚀 ~ AppProvider ~ initializing:", initializing);
   const [user, setUser] = useState<PublicProfile | null>(null);
-  console.log("🚀 ~ AppProvider ~ user:", user);
   const [userDoc, setUserDoc] = useState<StoredUsers | null>(null);
-  console.log("🚀 ~ AppProvider ~ userDoc:", userDoc);
   const [claims, setClaims] = useState<AuthClaims | null>(null);
-  console.log("🚀 ~ AppProvider ~ claims:", claims);
 
   // Single source of truth: Firebase auth.
   useEffect(() => {
@@ -170,7 +166,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
           Promise.resolve(toPublicProfile(fbUser)),
           readClaims(fbUser, /* force */ true),
         ]);
-        console.log("🚀 ~ AppProvider ~ profile:", profile);
         setUser(profile);
         setClaims(c);
       } catch {
@@ -273,7 +268,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       if (!user) return false;
       // JWT claims take priority (signed by Firebase, tamper-proof).
       if (claims) {
-        if (claims.role === "admin" || claims.role === "superadmin") return true;
+        if (claims.role === "admin" || claims.role === "superadmin")
+          return true;
         const grants = new Set([
           ...claims.entitlements,
           ...(claims.manualOverride ?? []),
@@ -283,7 +279,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       // Firestore fallback — works in dev simulation (no Cloud Functions deployed)
       // and bridges the gap until the JWT cache refreshes (~1 h).
       if (userDoc) {
-        if (userDoc.role === "admin" || userDoc.role === "superadmin") return true;
+        if (userDoc.role === "admin" || userDoc.role === "superadmin")
+          return true;
         const firestoreGrants = new Set(userDoc.entitlements ?? []);
         if (firestoreGrants.has(unitSlug)) return true;
       }
@@ -304,7 +301,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
     if (claims?.role && claims.role !== "student") return claims.role;
     // Firestore has a promoted role → use it (dev sim or manual Console edit)
     const fsRole = userDoc?.role as Role | undefined;
-    if (fsRole && (fsRole === "admin" || fsRole === "superadmin" || fsRole === "teacher"))
+    if (
+      fsRole &&
+      (fsRole === "admin" || fsRole === "superadmin" || fsRole === "teacher")
+    )
       return fsRole;
     return claims?.role ?? "student";
   })();
@@ -326,8 +326,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
     return [...set];
   })();
 
-  const isAdmin =
-    effectiveRole === "admin" || effectiveRole === "superadmin";
+  const isAdmin = effectiveRole === "admin" || effectiveRole === "superadmin";
 
   const value = useMemo<AuthContextValue>(
     () => ({

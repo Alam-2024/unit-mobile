@@ -37,6 +37,8 @@ export const PhysicalScienceMiddle: IUnits = {
             },
           ],
           reflection: "Why can't you see the particles that make up a table?",
+          imgUrl: "https://images.unsplash.com/photo-yS3XM9qx3hQ?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=RnvCbquYeIM"],
         },
         {
           sessionNumber: 2,
@@ -53,6 +55,7 @@ export const PhysicalScienceMiddle: IUnits = {
             },
           ],
           reflection: "How do scientists use properties to identify unknown substances?",
+          imgUrl: "https://images.unsplash.com/photo-yS3XM9qx3hQ?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
@@ -215,6 +218,8 @@ export const EcosystemsMiddle: IUnits = {
             },
           ],
           reflection: "How does changing one abiotic factor (e.g., temperature) affect biotic factors?",
+          imgUrl: "https://images.unsplash.com/photo-yS3XM9qx3hQ?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=2uEMaR8CzFQ"],
         },
         {
           sessionNumber: 2,
@@ -231,6 +236,7 @@ export const EcosystemsMiddle: IUnits = {
             },
           ],
           reflection: "What would happen to the food web if all the plants disappeared?",
+          imgUrl: "https://images.unsplash.com/photo-yS3XM9qx3hQ?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },

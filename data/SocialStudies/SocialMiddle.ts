@@ -37,6 +37,8 @@ export const AncientCivilizationsMiddle: IUnits = {
             },
           ],
           reflection: "Could there be a civilization without writing? Why or why not?",
+          imgUrl: "https://images.unsplash.com/photo-1740635551152-eea7b5e4b1c1?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=VQ8XdEPfS0g"],
         },
         {
           sessionNumber: 2,
@@ -53,6 +55,7 @@ export const AncientCivilizationsMiddle: IUnits = {
             },
           ],
           reflection: "Why is a written law code more effective than unwritten rules?",
+          imgUrl: "https://images.unsplash.com/photo-1740635551152-eea7b5e4b1c1?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
@@ -214,6 +217,8 @@ export const CivicsMiddle: IUnits = {
             },
           ],
           reflection: "Is following government rules the same as giving up freedom? Explain.",
+          imgUrl: "https://images.unsplash.com/photo-1740635551152-eea7b5e4b1c1?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=8PIXkVWYAH4"],
         },
         {
           sessionNumber: 2,
@@ -230,6 +235,7 @@ export const CivicsMiddle: IUnits = {
             },
           ],
           reflection: "Why might some people prefer a strong central authority to democracy?",
+          imgUrl: "https://images.unsplash.com/photo-1740635551152-eea7b5e4b1c1?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },

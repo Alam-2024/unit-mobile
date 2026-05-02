@@ -17,8 +17,8 @@ const FifthGrade = () => {
     Soccer: soccerFifth,
     FloorHockey: floorHockeyFifth,
     Swimming: swimmingUnit,
-    FinnishBaseball: pesaPalloFifth,
-    FlagFootBall: flagFootballFourthFifth,
+    PesaPallo: pesaPalloFifth,
+    "Flag Football 4–5": flagFootballFourthFifth,
   };
   return (
     <CustomGradeContainer

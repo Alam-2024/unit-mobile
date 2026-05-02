@@ -37,6 +37,8 @@ export const PersonalHealthMiddle: IUnits = {
             },
           ],
           reflection: "If the digestive system stopped working, which other systems would be affected?",
+          imgUrl: "https://images.unsplash.com/photo-1655009316723-b6b4c9e7a41d?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=H2_EPJJhDxI"],
         },
         {
           sessionNumber: 2,
@@ -53,6 +55,7 @@ export const PersonalHealthMiddle: IUnits = {
             },
           ],
           reflection: "Why does your heart beat faster during exercise?",
+          imgUrl: "https://images.unsplash.com/photo-1655009316723-b6b4c9e7a41d?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
@@ -214,6 +217,8 @@ export const MentalHealthMiddle: IUnits = {
             },
           ],
           reflection: "Why is it important to talk about mental health without shame?",
+          imgUrl: "https://images.unsplash.com/photo-1655009316723-b6b4c9e7a41d?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=oTugjssqOT0"],
         },
         {
           sessionNumber: 2,
@@ -230,6 +235,7 @@ export const MentalHealthMiddle: IUnits = {
             },
           ],
           reflection: "Can you think of a time your amygdala took over? What happened?",
+          imgUrl: "https://images.unsplash.com/photo-1655009316723-b6b4c9e7a41d?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },

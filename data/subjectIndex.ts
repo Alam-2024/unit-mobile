@@ -45,6 +45,10 @@ import {
   AncientCivilizationsMiddle,
   CivicsMiddle,
 } from "./SocialStudies/SocialMiddle";
+import {
+  WorldHistoryHigh,
+  EconomicsHigh,
+} from "./SocialStudies/SocialHigh";
 
 // ── Art ──────────────────────────────────────────────────────────────────────
 import { ColorsShapesEarly, StorytellingArtEarly } from "./Art/ArtEarly";
@@ -79,6 +83,14 @@ import {
   FeelingsAwarenessEarly,
   FriendshipSELElementary,
 } from "./SEL/SELEarly";
+import {
+  EmotionalRegulationMiddle,
+  ConflictResolutionMiddle,
+} from "./SEL/SELMiddle";
+import {
+  IdentityPurposeHigh,
+  LeadershipAdvocacyHigh,
+} from "./SEL/SELHigh";
 
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -148,8 +160,8 @@ const SOCIAL: Record<string, UnitMap> = {
     [CivicsMiddle.unitDBTitle]: CivicsMiddle,
   },
   high: {
-    [AncientCivilizationsMiddle.unitDBTitle]: AncientCivilizationsMiddle,
-    [CivicsMiddle.unitDBTitle]: CivicsMiddle,
+    [WorldHistoryHigh.unitDBTitle]: WorldHistoryHigh,
+    [EconomicsHigh.unitDBTitle]: EconomicsHigh,
   },
 };
 
@@ -195,6 +207,14 @@ const SEL: Record<string, UnitMap> = {
   elementary: {
     [FeelingsAwarenessEarly.unitDBTitle]: FeelingsAwarenessEarly,
     [FriendshipSELElementary.unitDBTitle]: FriendshipSELElementary,
+  },
+  middle: {
+    [EmotionalRegulationMiddle.unitDBTitle]: EmotionalRegulationMiddle,
+    [ConflictResolutionMiddle.unitDBTitle]: ConflictResolutionMiddle,
+  },
+  high: {
+    [IdentityPurposeHigh.unitDBTitle]: IdentityPurposeHigh,
+    [LeadershipAdvocacyHigh.unitDBTitle]: LeadershipAdvocacyHigh,
   },
 };
 

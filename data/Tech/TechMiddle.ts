@@ -37,6 +37,8 @@ export const DigitalCitizenshipMiddle: IUnits = {
             },
           ],
           reflection: "Could software work without hardware? Could hardware be useful without software?",
+          imgUrl: "https://images.unsplash.com/photo-1629904853893-c2c8981a1dc5?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=uDDxKnQOUms"],
         },
         {
           sessionNumber: 2,
@@ -53,6 +55,7 @@ export const DigitalCitizenshipMiddle: IUnits = {
             },
           ],
           reflection: "Why would it be impractical for computers to use base-10 (our number system)?",
+          imgUrl: "https://images.unsplash.com/photo-1629904853893-c2c8981a1dc5?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
@@ -214,6 +217,8 @@ export const ProgrammingMiddle: IUnits = {
             },
           ],
           reflection: "Why must algorithms be precise and unambiguous?",
+          imgUrl: "https://images.unsplash.com/photo-1629904853893-c2c8981a1dc5?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=1vsmaEfbnoE"],
         },
         {
           sessionNumber: 2,
@@ -230,6 +235,7 @@ export const ProgrammingMiddle: IUnits = {
             },
           ],
           reflection: "Why plan with a flowchart before writing code?",
+          imgUrl: "https://images.unsplash.com/photo-1629904853893-c2c8981a1dc5?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },

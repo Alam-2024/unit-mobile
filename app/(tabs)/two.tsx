@@ -1,5 +1,5 @@
-import React from "react";
-import { ScrollView, View, Text, StyleSheet } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { Animated, ScrollView, View, Text, StyleSheet } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import GradeCard from "@/components/grade/GradeCard";
@@ -16,6 +16,22 @@ const ELEMENTARY_GRADES = [
 export default function ElementaryTab() {
   const insets = useSafeAreaInsets();
 
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(-8)).current;
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 600,
+      useNativeDriver: true,
+    }).start();
+    Animated.timing(slideAnim, {
+      toValue: 0,
+      duration: 600,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim, slideAnim]);
+
   return (
     <ScrollView
       style={styles.screen}
@@ -26,7 +42,12 @@ export default function ElementaryTab() {
       showsVerticalScrollIndicator={false}
     >
       {/* Header */}
-      <View style={styles.header}>
+      <Animated.View
+        style={[
+          styles.header,
+          { opacity: fadeAnim, transform: [{ translateY: slideAnim }] },
+        ]}
+      >
         <View style={styles.headerIcon}>
           <Feather name="book" size={20} color="#3B82F6" />
         </View>
@@ -34,7 +55,7 @@ export default function ElementaryTab() {
           <Text style={styles.title}>Elementary</Text>
           <Text style={styles.subtitle}>Ages 6–11 · Core academic skills</Text>
         </View>
-      </View>
+      </Animated.View>
 
       {/* Info chip */}
       <View style={styles.infoChip}>

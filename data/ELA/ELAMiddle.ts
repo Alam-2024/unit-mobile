@@ -37,6 +37,8 @@ export const LiteraryAnalysisMiddle: IUnits = {
             },
           ],
           reflection: "Can a story have more than one theme? Explain.",
+          imgUrl: "https://images.unsplash.com/photo-1583468982228-19f19164aee2?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=IfFD5LMQCCY"],
         },
         {
           sessionNumber: 2,
@@ -53,6 +55,7 @@ export const LiteraryAnalysisMiddle: IUnits = {
             },
           ],
           reflection: "What causes characters to change in stories? Is this realistic?",
+          imgUrl: "https://images.unsplash.com/photo-1554721299-e0b8aa7666ce?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
@@ -215,6 +218,8 @@ export const ArgumentWritingMiddle: IUnits = {
             },
           ],
           reflection: "What makes a claim worth arguing about?",
+          imgUrl: "https://images.unsplash.com/photo-1554721299-e0b8aa7666ce?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=2sZFaHAi9FU"],
         },
         {
           sessionNumber: 2,
@@ -231,6 +236,7 @@ export const ArgumentWritingMiddle: IUnits = {
             },
           ],
           reflection: "Why does the credibility of your source affect the strength of your argument?",
+          imgUrl: "https://images.unsplash.com/photo-1554721299-e0b8aa7666ce?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },

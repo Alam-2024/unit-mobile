@@ -17,6 +17,7 @@ import {
   typography,
   shadow,
 } from "@/constants/designTokens";
+import DashboardScreen from "@/components/dashboard/DashboardScreen";
 
 const PLAN_LABELS: Record<string, string> = {
   free: "Free",
@@ -140,6 +141,9 @@ const ProfileView = () => {
               </Pressable>
             </View>
           </View>
+
+          {/* Progress dashboard */}
+          <DashboardScreen />
 
           {/* Profile details */}
           <View style={{ marginBottom: 20 }}>

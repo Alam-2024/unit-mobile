@@ -18,7 +18,7 @@ const FourthGrade = () => {
   const [unitTitle, setUnitTitle] = React.useState<string>("");
 
   const units: { [key: string]: IUnits } = {
-    FinnishBaseball: pesaPalloFourth,
+    PesaPallo: pesaPalloFourth,
     Swimming: SwimmingFor4thGrade,
     Gymnastics: gymnasticsFourth,
     Badminton: badmintonFourth,
@@ -26,9 +26,9 @@ const FourthGrade = () => {
     CircuitTraining: circuitTrainingFourth,
     TrackAndField: trackAndFieldFourth,
     InvasionGames: invasionGamesFourth,
-    Football: soccerFourth,
+    Soccer: soccerFourth,
     Basketball: basketballFourth,
-    FlagFootBall: flagFootballFourthFifth,
+    "Flag Football 4–5": flagFootballFourthFifth,
   };
   return (
     <CustomGradeContainer

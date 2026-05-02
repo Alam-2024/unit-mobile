@@ -37,6 +37,8 @@ export const FeelingsAwarenessEarly: IUnits = {
             },
           ],
           reflection: "What feeling do you have most often at school?",
+          imgUrl: "https://images.unsplash.com/photo-FtL07GM9Q7Y?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=nCrjevx3-Js"],
         },
         {
           sessionNumber: 2,
@@ -53,6 +55,7 @@ export const FeelingsAwarenessEarly: IUnits = {
             },
           ],
           reflection: "How can you tell someone is sad even if they don't say anything?",
+          imgUrl: "https://images.unsplash.com/photo--Ux5mdMJNEA?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
@@ -214,6 +217,8 @@ export const FriendshipSELElementary: IUnits = {
             },
           ],
           reflection: "What kind of friend do YOU want to be?",
+          imgUrl: "https://images.unsplash.com/photo--Ux5mdMJNEA?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=R9YX-t23YoQ"],
         },
         {
           sessionNumber: 2,
@@ -230,6 +235,7 @@ export const FriendshipSELElementary: IUnits = {
             },
           ],
           reflection: "What is the hardest part about making a new friend?",
+          imgUrl: "https://images.unsplash.com/photo--Ux5mdMJNEA?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },

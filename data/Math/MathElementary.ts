@@ -37,6 +37,8 @@ export const NumberSenseElementary: IUnits = {
             },
           ],
           reflection: "What strategy helped you count accurately?",
+          imgUrl: "https://images.unsplash.com/photo-RTFX0TQHXko?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=wx2gI8iwMCA"],
         },
         {
           sessionNumber: 2,
@@ -53,6 +55,7 @@ export const NumberSenseElementary: IUnits = {
             },
           ],
           reflection: "Why is it helpful to group by tens?",
+          imgUrl: "https://images.unsplash.com/photo-ngssXH33ve0?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
@@ -214,6 +217,8 @@ export const FractionsElementary: IUnits = {
             },
           ],
           reflection: "Why must the parts be equal to name a fraction?",
+          imgUrl: "https://images.unsplash.com/photo-ngssXH33ve0?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=jgWqSjgMAtw"],
         },
         {
           sessionNumber: 2,
@@ -230,6 +235,7 @@ export const FractionsElementary: IUnits = {
             },
           ],
           reflection: "How does the number line help you understand fraction size?",
+          imgUrl: "https://images.unsplash.com/photo-ngssXH33ve0?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },

@@ -37,6 +37,8 @@ export const SoundRhythmEarly: IUnits = {
             },
           ],
           reflection: "Can silence be part of music?",
+          imgUrl: "https://images.unsplash.com/photo-1711048421235-3fcb9dcf82f7?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=x1oRXbAhkfY"],
         },
         {
           sessionNumber: 2,
@@ -53,6 +55,7 @@ export const SoundRhythmEarly: IUnits = {
             },
           ],
           reflection: "When would you use a soft voice instead of a loud one?",
+          imgUrl: "https://images.unsplash.com/photo-1711048421235-3fcb9dcf82f7?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
@@ -214,6 +217,8 @@ export const SingingSongElementary: IUnits = {
             },
           ],
           reflection: "Where in your body does your singing voice feel different from your speaking voice?",
+          imgUrl: "https://images.unsplash.com/photo-1711048421235-3fcb9dcf82f7?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=P_9FuCCJJGo"],
         },
         {
           sessionNumber: 2,
@@ -230,6 +235,7 @@ export const SingingSongElementary: IUnits = {
             },
           ],
           reflection: "Is it easier to sing high or low? Why might that be?",
+          imgUrl: "https://images.unsplash.com/photo-1711048421235-3fcb9dcf82f7?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },

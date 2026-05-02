@@ -1,5 +1,5 @@
-import React from "react";
-import { ScrollView, View, Text, StyleSheet } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { Animated, ScrollView, View, Text, StyleSheet } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import GradeCard from "@/components/grade/GradeCard";
@@ -14,6 +14,22 @@ const EARLY_GRADES = [
 export default function EarlyLearningTab() {
   const insets = useSafeAreaInsets();
 
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(-8)).current;
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 600,
+      useNativeDriver: true,
+    }).start();
+    Animated.timing(slideAnim, {
+      toValue: 0,
+      duration: 600,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim, slideAnim]);
+
   return (
     <ScrollView
       style={styles.screen}
@@ -24,7 +40,12 @@ export default function EarlyLearningTab() {
       showsVerticalScrollIndicator={false}
     >
       {/* Header */}
-      <View style={styles.header}>
+      <Animated.View
+        style={[
+          styles.header,
+          { opacity: fadeAnim, transform: [{ translateY: slideAnim }] },
+        ]}
+      >
         <View style={styles.headerIcon}>
           <Feather name="star" size={20} color="#F59E0B" />
         </View>
@@ -32,7 +53,7 @@ export default function EarlyLearningTab() {
           <Text style={styles.title}>Early Learning</Text>
           <Text style={styles.subtitle}>Ages 3–6 · Foundational development</Text>
         </View>
-      </View>
+      </Animated.View>
 
       {/* Info chip */}
       <View style={styles.infoChip}>

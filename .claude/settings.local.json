@@ -3,7 +3,25 @@
     "allow": [
       "Bash(npx tsc *)",
       "Bash(git -C /Users/developer/Dar/units-mobile status)",
-      "Bash(grep -v \"^$\")"
+      "Bash(grep -v \"^$\")",
+      "Bash(claude mcp *)",
+      "Bash(npm run *)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "mcp__Claude_in_Chrome__browser_batch",
+      "mcp__Claude_in_Chrome__navigate",
+      "WebFetch(domain:contribution.usercontent.google.com)",
+      "Read(//Users/developer/Stichi/**)",
+      "Bash(npm create *)",
+      "Bash(npm install *)",
+      "mcp__Claude_in_Chrome__tabs_create_mcp",
+      "WebSearch",
+      "WebFetch(domain:unsplash.com)",
+      "mcp__45b8aa3b-e980-4557-a10e-bcc5d99567d8__notion-fetch",
+      "mcp__45b8aa3b-e980-4557-a10e-bcc5d99567d8__notion-update-page",
+      "Read(//Users/developer/.claude/**)",
+      "Bash(mkdir -p ~/.claude/commands/)",
+      "mcp__45b8aa3b-e980-4557-a10e-bcc5d99567d8__notion-create-pages",
+      "mcp__45b8aa3b-e980-4557-a10e-bcc5d99567d8__notion-search"
     ]
   }
 }

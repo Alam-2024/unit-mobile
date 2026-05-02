@@ -37,6 +37,8 @@ export const CommunityCitizenshipElementary: IUnits = {
             },
           ],
           reflection: "Which type of community do you live in? What do you like about it?",
+          imgUrl: "https://images.unsplash.com/photo-1519406596751-b0d8f748cdec?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=7LFSz2bLiNs"],
         },
         {
           sessionNumber: 2,
@@ -53,6 +55,7 @@ export const CommunityCitizenshipElementary: IUnits = {
             },
           ],
           reflection: "What community helper job would you want? Why?",
+          imgUrl: "https://images.unsplash.com/photo-1519406596751-b0d8f748cdec?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
@@ -214,6 +217,8 @@ export const GeographyElementary: IUnits = {
             },
           ],
           reflection: "Why do maps need all these elements?",
+          imgUrl: "https://images.unsplash.com/photo-1519406596751-b0d8f748cdec?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=Ag_TV5BYDRY"],
         },
         {
           sessionNumber: 2,
@@ -230,6 +235,7 @@ export const GeographyElementary: IUnits = {
             },
           ],
           reflection: "If you were planning a hiking trip, which map type would you use? Why?",
+          imgUrl: "https://images.unsplash.com/photo-1519406596751-b0d8f748cdec?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },

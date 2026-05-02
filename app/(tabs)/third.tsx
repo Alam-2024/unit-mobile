@@ -1,5 +1,5 @@
-import React from "react";
-import { ScrollView, View, Text, StyleSheet } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { Animated, ScrollView, View, Text, StyleSheet } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import GradeCard from "@/components/grade/GradeCard";
@@ -21,6 +21,22 @@ const HIGH   = SECONDARY_GRADES.slice(3);
 export default function SecondaryTab() {
   const insets = useSafeAreaInsets();
 
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(-8)).current;
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 600,
+      useNativeDriver: true,
+    }).start();
+    Animated.timing(slideAnim, {
+      toValue: 0,
+      duration: 600,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim, slideAnim]);
+
   return (
     <ScrollView
       style={styles.screen}
@@ -31,7 +47,12 @@ export default function SecondaryTab() {
       showsVerticalScrollIndicator={false}
     >
       {/* Header */}
-      <View style={styles.header}>
+      <Animated.View
+        style={[
+          styles.header,
+          { opacity: fadeAnim, transform: [{ translateY: slideAnim }] },
+        ]}
+      >
         <View style={styles.headerIcon}>
           <Feather name="award" size={20} color="#8B5CF6" />
         </View>
@@ -39,7 +60,7 @@ export default function SecondaryTab() {
           <Text style={styles.title}>Secondary</Text>
           <Text style={styles.subtitle}>Ages 11–18 · Advanced curriculum</Text>
         </View>
-      </View>
+      </Animated.View>
 
       {/* Info chip */}
       <View style={styles.infoChip}>

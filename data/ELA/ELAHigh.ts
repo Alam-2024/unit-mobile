@@ -37,6 +37,8 @@ export const ResearchRhetoricHigh: IUnits = {
             },
           ],
           reflection: "Which rhetorical appeal do you find most convincing? Does it depend on the context?",
+          imgUrl: "https://images.unsplash.com/photo-1583468982228-19f19164aee2?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=SZ0mDIVCaFI"],
         },
         {
           sessionNumber: 2,
@@ -53,6 +55,7 @@ export const ResearchRhetoricHigh: IUnits = {
             },
           ],
           reflection: "How does knowing the author's purpose change how you read an argument?",
+          imgUrl: "https://images.unsplash.com/photo-1549737221-bef65e2604a6?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
@@ -215,6 +218,8 @@ export const ClosReadingHigh: IUnits = {
             },
           ],
           reflection: "What do you notice when you re-read a text compared to a first read?",
+          imgUrl: "https://images.unsplash.com/photo-1549737221-bef65e2604a6?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=d-TF2OGZ1wg"],
         },
         {
           sessionNumber: 2,
@@ -231,6 +236,7 @@ export const ClosReadingHigh: IUnits = {
             },
           ],
           reflection: "Can changing one word in a sentence fundamentally alter its meaning?",
+          imgUrl: "https://images.unsplash.com/photo-1549737221-bef65e2604a6?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },

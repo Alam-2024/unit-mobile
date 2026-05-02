@@ -49,8 +49,11 @@ const UserDetails: React.FC<UserDetailsProps> = ({
   userAccessData,
   updateUserName,
 }) => {
-  console.log("🚀 ~ UserDetails ~ userAccessData:", userAccessData);
-  const { effectiveRole, effectiveEntitlements, isAdmin: ctxIsAdmin } = useAppContext();
+  const {
+    effectiveRole,
+    effectiveEntitlements,
+    isAdmin: ctxIsAdmin,
+  } = useAppContext();
   const [showFields, setShowFields] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [updateName, setUpdateName] = useState({
@@ -249,9 +252,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({
         <Text style={userProfileStyles.email}>{userAccessData.email}</Text>
 
         <View style={userProfileStyles.row}>
-          <Text style={userProfileStyles.badgeRole}>
-            {effectiveRole}
-          </Text>
+          <Text style={userProfileStyles.badgeRole}>{effectiveRole}</Text>
           <View
             style={[
               userProfileStyles.badgeStatus,

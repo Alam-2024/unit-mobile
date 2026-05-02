@@ -37,6 +37,8 @@ export const ColorsShapesEarly: IUnits = {
             },
           ],
           reflection: "Which primary color is your favorite? Can you find it somewhere in nature?",
+          imgUrl: "https://images.unsplash.com/photo-1629652486845-eb09110a62b9?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=GYRByI5LLWE"],
         },
         {
           sessionNumber: 2,
@@ -53,6 +55,7 @@ export const ColorsShapesEarly: IUnits = {
             },
           ],
           reflection: "What color surprised you most when you mixed paints?",
+          imgUrl: "https://images.unsplash.com/photo-1629652486845-eb09110a62b9?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
@@ -214,6 +217,8 @@ export const StorytellingArtEarly: IUnits = {
             },
           ],
           reflection: "What do you look at first in a painting? Why?",
+          imgUrl: "https://images.unsplash.com/photo-1629652486845-eb09110a62b9?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=yFTyFkMNbzc"],
         },
         {
           sessionNumber: 2,
@@ -230,6 +235,7 @@ export const StorytellingArtEarly: IUnits = {
             },
           ],
           reflection: "Could your partner understand your story? What would make it clearer?",
+          imgUrl: "https://images.unsplash.com/photo-1629652486845-eb09110a62b9?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },

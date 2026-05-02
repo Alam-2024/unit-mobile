@@ -37,6 +37,8 @@ export const ReadingMusicElementary: IUnits = {
             },
           ],
           reflection: "What trick helps you remember the line notes? Create your own mnemonic!",
+          imgUrl: "https://images.unsplash.com/photo-1761243839303-618ae0906300?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=Bi8HiqjWLNo"],
         },
         {
           sessionNumber: 2,
@@ -53,6 +55,7 @@ export const ReadingMusicElementary: IUnits = {
             },
           ],
           reflection: "Which note on the staff is hardest to remember? How will you practice it?",
+          imgUrl: "https://images.unsplash.com/photo-1761243839303-618ae0906300?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
@@ -214,6 +217,8 @@ export const WorldMusicElementary: IUnits = {
             },
           ],
           reflection: "In what ways does the music we heard communicate something to the listener?",
+          imgUrl: "https://images.unsplash.com/photo-1774624345025-f73936b94dbf?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=cMj-XSqzGrg"],
         },
         {
           sessionNumber: 2,
@@ -230,6 +235,7 @@ export const WorldMusicElementary: IUnits = {
             },
           ],
           reflection: "Where else in your life have you experienced call-and-response?",
+          imgUrl: "https://images.unsplash.com/photo-1774624345025-f73936b94dbf?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },

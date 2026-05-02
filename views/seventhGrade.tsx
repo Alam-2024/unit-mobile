@@ -3,20 +3,15 @@ import CustomGradeContainer from "@/components/views/CustomGradeContainer";
 import SwimmingUnit1stGrade from "@/data/Swimming/SwimmingFirst";
 import { IUnits } from "@/interfaces/units/IUnit";
 import flagFootballSixthSeventh from "@/data/Flag/FlagSixthAndSeventh";
+import cooperativeGamesSeventh from "@/data/CooperativeGames/CooGamesSeven";
 
 export default function SeventhGrade() {
   const [unitTitle, setUnitTitle] = React.useState<string>("");
-  //TODO: Create the unit data for the first grade
+  //TODO: Create the unit data for the seventh grade
   const units: { [key: string]: IUnits } = {
-    CooperativeGames: SwimmingUnit1stGrade,
-    TerritoryGames: SwimmingUnit1stGrade,
-    Badminton: SwimmingUnit1stGrade,
-    HealthAndFitness: SwimmingUnit1stGrade,
-    Aquatics: SwimmingUnit1stGrade,
-    StrikeAndField: SwimmingUnit1stGrade,
-    Soccer: flagFootballSixthSeventh,
-    Frisbee: flagFootballSixthSeventh,
-    FlagFootBall: flagFootballSixthSeventh,
+    "Cooperative Games 7": cooperativeGamesSeventh,
+    Swimming: SwimmingUnit1stGrade,
+    "Flag Football 6–7": flagFootballSixthSeventh,
   };
   return (
     <CustomGradeContainer

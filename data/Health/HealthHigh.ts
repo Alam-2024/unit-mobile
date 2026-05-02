@@ -37,6 +37,8 @@ export const HealthLiteracyHigh: IUnits = {
             },
           ],
           reflection: "Why is it dangerous to follow health advice from unverified sources?",
+          imgUrl: "https://images.unsplash.com/photo-1658227412024-b5de9c4c3e4f?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=uVXf0nGfv7Q"],
         },
         {
           sessionNumber: 2,
@@ -53,6 +55,7 @@ export const HealthLiteracyHigh: IUnits = {
             },
           ],
           reflection: "What is the difference between 'increases risk' and 'causes' a disease?",
+          imgUrl: "https://images.unsplash.com/photo-1658227412024-b5de9c4c3e4f?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
@@ -214,6 +217,8 @@ export const SexualHealthHigh: IUnits = {
             },
           ],
           reflection: "Why is sexual health part of overall wellness rather than a separate topic?",
+          imgUrl: "https://images.unsplash.com/photo-1658227412024-b5de9c4c3e4f?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=3dqvUFbZwuI"],
         },
         {
           sessionNumber: 2,
@@ -230,6 +235,7 @@ export const SexualHealthHigh: IUnits = {
             },
           ],
           reflection: "Why is it important to use correct medical terminology when discussing anatomy?",
+          imgUrl: "https://images.unsplash.com/photo-1658227412024-b5de9c4c3e4f?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },

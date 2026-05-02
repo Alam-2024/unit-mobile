@@ -37,6 +37,8 @@ export const LifeScienceElementary: IUnits = {
             },
           ],
           reflection: "How do you know something is alive?",
+          imgUrl: "https://images.unsplash.com/photo-H9t723yPjYI?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=Vtb3I8Vzlfg"],
         },
         {
           sessionNumber: 2,
@@ -53,6 +55,7 @@ export const LifeScienceElementary: IUnits = {
             },
           ],
           reflection: "What do you think will happen to the plant that gets no light?",
+          imgUrl: "https://images.unsplash.com/photo-H9t723yPjYI?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },
@@ -214,6 +217,8 @@ export const EarthScienceElementary: IUnits = {
             },
           ],
           reflection: "How did today's weather affect what you wore or did?",
+          imgUrl: "https://images.unsplash.com/photo-H9t723yPjYI?auto=format&fit=crop&w=800&q=80",
+          videoUrl: ["https://www.youtube.com/watch?v=0BqfO_JmDC0"],
         },
         {
           sessionNumber: 2,
@@ -230,6 +235,7 @@ export const EarthScienceElementary: IUnits = {
             },
           ],
           reflection: "Why do we need tools to measure weather accurately?",
+          imgUrl: "https://images.unsplash.com/photo-H9t723yPjYI?auto=format&fit=crop&w=800&q=80",
         },
       ],
     },

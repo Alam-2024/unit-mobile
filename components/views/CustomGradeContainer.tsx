@@ -1,7 +1,8 @@
 import { useAppContext } from "@/hooks/useContextHook";
+import { useProgress } from "@/hooks/useProgress";
 import { IUnits } from "@/interfaces/units/IUnit";
 import React, { JSX, useState } from "react";
-import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import CustomText from "../customs/CustomText";
 import CustomContent from "../customs/CustomContent";
@@ -14,6 +15,8 @@ type Props = {
   unitTitle: string;
   setUnitTitle: (title: string) => void;
   gradeSlug: string;
+  /** Subject slug used for progress tracking. Defaults to "pe". */
+  subjectSlug?: string;
 };
 
 export default function CustomGradeContainer({
@@ -21,14 +24,29 @@ export default function CustomGradeContainer({
   unitTitle,
   setUnitTitle,
   gradeSlug,
+  subjectSlug = "pe",
 }: Props) {
   const { isAuthenticated, canAccessUnit } = useAppContext();
+  const { isComplete, markComplete, markIncomplete } = useProgress();
   const [showPaywall, setShowPaywall] = useState(false);
 
   const hasGradeAccess = canAccessUnit(gradeSlug);
   const accessToUnits = Object.fromEntries(
     Object.keys(units).map((k) => [k, hasGradeAccess])
   );
+
+  const completed = unitTitle
+    ? isComplete(gradeSlug, subjectSlug, unitTitle)
+    : false;
+
+  const handleToggleComplete = async () => {
+    if (!unitTitle) return;
+    if (completed) {
+      await markIncomplete(gradeSlug, subjectSlug, unitTitle);
+    } else {
+      await markComplete(gradeSlug, subjectSlug, unitTitle);
+    }
+  };
 
   const renderContent = (): JSX.Element | null => {
     if (!unitTitle) {
@@ -57,7 +75,46 @@ export default function CustomGradeContainer({
       );
     }
 
-    return units[unitTitle] ? <CustomContent {...units[unitTitle]} /> : null;
+    if (!units[unitTitle]) return null;
+
+    return (
+      <ScrollView
+        style={styles.contentScroll}
+        contentContainerStyle={styles.contentScrollInner}
+        showsVerticalScrollIndicator={false}
+      >
+        <CustomContent {...units[unitTitle]} />
+        {/* Mark complete button */}
+        <Pressable
+          onPress={handleToggleComplete}
+          style={({ pressed }) => [
+            styles.completeBtn,
+            completed ? styles.completeBtnDone : styles.completeBtnPending,
+            pressed && styles.completeBtnPressed,
+          ]}
+          accessibilityRole="button"
+          accessibilityLabel={
+            completed ? "Completed — tap to undo" : "Mark unit as completed"
+          }
+        >
+          <Feather
+            name="check-circle"
+            size={18}
+            color={completed ? palette.success : palette.textInverse}
+          />
+          <Text
+            style={[
+              styles.completeBtnText,
+              completed
+                ? styles.completeBtnTextDone
+                : styles.completeBtnTextPending,
+            ]}
+          >
+            {completed ? "Completed — Tap to undo" : "Mark unit as completed"}
+          </Text>
+        </Pressable>
+      </ScrollView>
+    );
   };
 
   return (
@@ -93,6 +150,11 @@ export default function CustomGradeContainer({
 const styles = StyleSheet.create({
   wrapper: { flex: 1 },
   contentArea: { flex: 1 },
+  contentScroll: { flex: 1 },
+  contentScrollInner: {
+    padding: spacing.lg,
+    paddingBottom: spacing["4xl"],
+  },
   lockedContainer: {
     padding: spacing.xl,
     alignItems: "center",
@@ -122,5 +184,37 @@ const styles = StyleSheet.create({
   upgradeBtnText: {
     ...typography.bodyStrong,
     color: palette.textInverse,
+  },
+  // Completion button
+  completeBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: spacing.sm,
+    marginTop: spacing.xl,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.xl,
+    borderRadius: radius.md,
+    minHeight: 48,
+  },
+  completeBtnPending: {
+    backgroundColor: palette.accent,
+  },
+  completeBtnDone: {
+    backgroundColor: palette.successSubtle,
+    borderWidth: 1,
+    borderColor: palette.success,
+  },
+  completeBtnPressed: {
+    opacity: 0.75,
+  },
+  completeBtnText: {
+    ...typography.bodyStrong,
+  },
+  completeBtnTextPending: {
+    color: palette.textInverse,
+  },
+  completeBtnTextDone: {
+    color: palette.success,
   },
 });
